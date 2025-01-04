@@ -88,7 +88,7 @@ To facilitate line-level processing, we created a folder for each set of lines e
 
 ### Step 2: Label Verification
 
-We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). During this process, we:
+We merged the newly labeled data with the previously labeled portion, creating a consolidated CSV file (`writer_filled.csv`). This was facilitated by the `manual_labeling/fuzzy_matching.py` Python script, which automates fuzzy string matching to identify and resolve duplicate writer names. Using the Levenshtein distance method, the script dynamically adjusts thresholds (85%-95%) and flags potential matches for manual review. During this process, we:
 
 1. Standardized writer names by aligning transliterations and formatting.
 2. Employed **fuzzy string matching** (using `fuzzywuzzy`) to identify and resolve potential duplicate writer names.
@@ -102,8 +102,6 @@ We merged the newly labeled data with the previously labeled portion (`writer_fi
 - `writer_filled.csv`: Original labled portion of the dataset.
 - `writer_merged.csv`: Consolidated labeled data.
 
-**Code Reference:**
-A Python script `manual_labeling/fuzzy_matching.py` was created to automate the fuzzy string matching process. The script uses the Levenshtein distance method to calculate similarity scores and flags potential duplicates for manual review. Dynamic thresholds were configured as script parameters to allow for flexibility during iterative runs. 
 
 
 ### Step 3: Error Corrections
