@@ -1,6 +1,6 @@
 # Writer Identification for Historical Arabic Manuscripts
 
-This repository contains the full implementation and supplementary materials for the paper: **"Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts"**
+This repository contains the full implementation and supplementary materials for the paper: **[Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts](url)**
 
 **Authors:** Hamza Ahmed Abushahla, Ariel Justine Navarro Panopio, Layth Al-Khairulla, Mohamed I. AlHajri
 
