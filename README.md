@@ -229,8 +229,8 @@ Writer-Identification/
 ## 9. Contact
 
 For inquiries, contact:  
-**Hamza Ahmed Abushahla**  
-Email: [b00090279@aus.edu](mailto:b00090279@aus.edu)
+**Ariel Justine Panopio**  
+Email: [b00088568@aus.edu](mailto:b00088568@aus.edu)
 
 
 
