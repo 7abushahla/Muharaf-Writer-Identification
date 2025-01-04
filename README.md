@@ -46,7 +46,9 @@ This repository serves as a comprehensive resource for researchers interested in
 
 ### Dataset Metadata and Excel File
 
-The manual labeling process used the **Muharaf Dataset**, which originally contained partially labeled and noisy metadata. To address this, we consolidated all metadata into a structured Excel file.  
+The manual labeling process used the public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215)),which was the portion accessible to us and originally contained partially labeled and noisy metadata. This was the portion accessible to us. To address this, we consolidated all metadata into a structured Excel file.  
+
+
 
 **File Location**: `manual_labeling/`  
 **File Details**:
