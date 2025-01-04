@@ -71,7 +71,7 @@ At this stage, we created an Excel sheet (`manual_labeling/manual_labeling.xlsx`
 |-------------------|--------|------------------------|--------------------------|
 | AF_304_01r        | AF     | Your son George        | ولدكم جورج              |
 | AR51_008          | AR     | Ameen Rihani           | أمين الريحاني           |
-| AR56_01_003_1     | AR     | Shibli N. Damus        | شبل نصيف دموس           |
+| EAC_A_039_059r    | EAC    | Elias Abu Shabaki      |إلياس أبو شبكة           |
 
 Manually labeling each page involved identifying writers based on document types and context. For personal letters, identifying the writer was straightforward as the sender’s name was often explicitly stated in the first line or included as a signature. These annotations were directly linked to the corresponding handwriting samples.
 
