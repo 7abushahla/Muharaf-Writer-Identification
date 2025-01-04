@@ -48,11 +48,83 @@ This repository serves as a comprehensive resource for researchers interested in
 
 The manual labeling process used the **public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215))**, which consisted of 1,216 pages. Of these, 309 pages had a writer tag, corresponding to 6,858 text lines and 94 unique writers. The remaining 907 pages, containing 17,637 text lines, lacked writer tags, necessitating manual intervention to expand the labeled data.
 
+**Writer Status in the Muharaf Dataset (Public):**
+
+| Writer Status | No. of Pages | % of Pages | No. of Lines | % of Lines |
+|---------------|--------------|------------|--------------|------------|
+| Present       | 309          | 25.41%     | 6,858        | 28.0%      |
+| Not Present   | 907          | 74.59%     | 17,637       | 72.0%      |
+| **Total**     | **1,216**    | **100%**   | **24,495**   | **100%**   |
+
+### Step 1: Manual Labeling
+
+At this stage, we created an Excel sheet (`manual_labeling/manual_labeling.xlsx`) to organize and annotate the data. The columns in the sheet are:
+
+- `Image Filename`: Refers to the page-level images in the dataset.
+- `Prefix`: Collection tag from the dataset.
+- `Writer Name (English)`: Transliterated writer name.
+- `Writer Name (Arabic)`: Original Arabic writer name.
+
+**Example Rows (non-consecutive):**
+
+| Image Filename    | Prefix | Writer Name (English)  | Writer Name (Arabic)    |
+|-------------------|--------|------------------------|--------------------------|
+| AF_304_01r        | AF     | Your son George        | ولدكم جورج              |
+| AR51_008          | AR     | Ameen Rihani           | أمين الريحاني           |
+| AR56_01_003_1     | AR     | Shibli N. Damus        | شبل نصيف دموس           |
+
+To facilitate line-level processing, we created a folder for each set of lines extracted from the page, named after the page image. All lines within the same folder are assumed to be written by the same author.
+
+### Step 2: Label Verification
+
+We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). During this process, we:
+
+1. Standardized writer names by aligning transliterations and formatting.
+2. Employed **fuzzy string matching** (using `fuzzywuzzy`) to identify and resolve potential duplicate writer names.
+   - **Similarity Thresholds:** Adjusted dynamically (85%-95%) based on confidence levels.
+   - Example Matches:
+     - "Botros Hassan" and "Boutros Hassan" → 98% similarity → Merged.
+     - "Botros Hassan" and "Botros Hasan" → 97% similarity → Flagged for manual review.
+
+**CSV Files:**
+- `manual_labeling.csv`: Original Excel file converted to CSV.
+- `writer_filled.csv`: Original labled portion of the dataset.
+- `writer_merged.csv`: Consolidated labeled data.
+
+### Step 3: Error Corrections
+
+We identified errors in the original dataset during label verification. For example:
+- A labeled page attributed to "Father Youssef Baissary" was corrected to "Father Youhanna Habib Baissary" after verifying handwriting and cross-referencing with other pages.
+- Transliterations were aligned with biblical origins (e.g., "Yousef" corresponds to "Joseph," not "John").
+
+### Step 4: Dataset Preparation
+
+Afterward, line-level images were mapped to their corresponding writers. Out of the 24,495 public text lines, 21,249 lines were successfully labeled, increasing the number of identified writers from 94 to 179. These lines were filtered to remove non-handwritten content, resulting in 18,987 usable lines for the dataset.
+
+**Writer Status After Manual Labeling:**
+
+| Writer Status | No. of Pages | % of Pages | No. of Lines | % of Lines |
+|---------------|--------------|------------|--------------|------------|
+| Labeled       | 1,015        | 83.5%      | 21,249       | 86.75%     |
+| Unlabeled     | 201          | 16.5%      | 3,246        | 13.25%     |
+| **Total**     | **1,216**    | **100%**   | **24,495**   | **100%**   |
+
+**Filtered Dataset After Manual Labeling and Excluding Non-Handwritten Content:**
+
+| Metric                     | Value   |
+|----------------------------|---------|
+| Total lines used           | 18,987  |
+| Total lines unused         | 2,262   |
+| % of lines used            | 77.51%  |
+| Total writers (classes)    | 179     |
+| Maximum images per writer  | 949     |
+| Minimum images per writer  | 10      |
+| Mean images per writer     | 106.07  |
+| Standard deviation         | 183.29  |
 
 
 
-
-- `Image Filename`: Refers to the page-level images in the dataset. 
+<!-- - `Image Filename`: Refers to the page-level images in the dataset. 
 - `Prefix`: Collection tag from the dataset.
 - `Writer Name (English)`: Transliterated writer name.
 - `Writer Name (Arabic)`: Original Arabic writer name.
@@ -94,7 +166,7 @@ Corrections included:
 | Unique Writers (Classes)| 179              |
 
 **Code Reference**:  
-`manual_labeling/corrections.py`
+`manual_labeling/corrections.py` -->
 
 ---
 
