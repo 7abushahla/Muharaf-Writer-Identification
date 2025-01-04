@@ -42,13 +42,14 @@ This repository serves as a comprehensive resource for researchers interested in
 ---
 
 
-## 1. Manual Labeling Process
+## 1. Data Labeling and Preparation
 
-### Dataset Metadata and Excel File
+### Overview
 
-The manual labeling process used the public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215)), which was the portion accessible to us and originally contained partially labeled and noisy metadata. This was the portion accessible to us. To address this, we consolidated all metadata into a structured Excel file.  
+The manual labeling process used the **public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215))**, which consisted of 1,216 pages. Of these, 309 pages had a writer tag, corresponding to 6,858 text lines and 94 unique writers. The remaining 907 pages, containing 17,637 text lines, lacked writer tags, necessitating manual intervention to expand the labeled data.
 
-The original Excel file is located at `manual_labeling/manual_labeling.xlsx` and includes the following columns:
+
+
 
 
 - `Image Filename`: Refers to the page-level images in the dataset. 
