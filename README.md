@@ -223,27 +223,94 @@ Dataset split into:
 
 ### Baseline Model
 
-**Architecture**: ResNet50  
-- Pretrained on ImageNet.  
-- Optimized using Adam (LR=0.001).  
-- Loss: Categorical Cross-Entropy.  
+Our architecture is a custom design based on the optimized Deep-TEN architecture by Chammas et al. ([link to paper](#)). We recreated and modified the architecture to better suit our objectives.
 
-**Code Reference**:  
-`models/`
+Our proposed end-to-end architecture is shown below:
 
-### Variations: Feature Extractors and Attention
+![proposed_model](models/proposed_model.png)
 
-#### Feature Extractors
-- **DenseNet201**: Encourages feature reuse.  
-- **Xception**: Efficient depthwise separable convolutions.  
-- **MobileNetV2**: Lightweight model for edge applications.
+Key modifications include:
 
-#### Attention Mechanisms
-- **Self-Attention**: Captures spatial relationships.  
-- **Cross-Attention**: Fuses local and global features.  
+- Relocating the SPP layer after convolution and L2-normalization layers for better generalization and reduced redundancy.
+- Adding a dense layer with 512 neurons, a dropout layer, and another L2-normalization layer to create compact representations and mitigate overfitting.
+- Incorporating L2-regularization and replacing triplet loss with categorical cross-entropy for enhanced training efficiency and robustness.
 
-**Code Reference**:  
-`models/architectural_variations.py`
+---
+
+### Incorporating Attention Mechanisms
+
+To capture the sequential and contextual nature of handwriting, attention mechanisms were added to enhance feature representations. These include:
+
+1. **Self-Attention**: After refining local features through convolution, L2-normalization, and Layer Normalization.
+2. **Self-Attention**: After layer-normalized outputs of the SPP layer.
+3. **Cross-Attention**: Between the NetVLAD layer and the refined local features of ResNet50.
+
+Dense layers were introduced to align queries (), keys (), and values () for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
+
+![attention_mode](models/attention_model.png)
+
+---
+
+### Feature Extractors and Variations
+
+We experimented with:
+
+- **ResNet50**, **DenseNet201**, **Xception**, and **MobileNetV3-Large** (for mobile deployment and quantization).
+
+Training variations included:
+
+1. **Frozen Weights (No Attention)**
+2. **Frozen Weights (With Attention)**
+3. **Training From Scratch (No Attention)**
+4. **Training From Scratch (With Attention)**
+5. **Full Fine-Tuning (No Attention)**
+6. **Full Fine-Tuning (With Attention)**
+7. **Fine-Tuned ImageNet (Last Layer, No Attention)**
+8. **Fine-Tuned ImageNet (Last Layer, With Attention)**
+9. **Fine-Tuned ImageNet (Last 5 Layers, No Attention)**
+10. **Fine-Tuned ImageNet (Last 5 Layers, With Attention)**
+
+Each experiment was repeated three times with different seeds to ensure robustness. Results were tracked systematically.
+
+---
+
+### Model Training Details
+
+The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data. Training spanned 450 epochs using the Adam optimizer with an initial learning rate of . Key training hyperparameters are summarized below:
+
+**GENERAL TRAINING HYPERPARAMETERS**
+
+| Parameter                    | Value                     |
+| ---------------------------- | ------------------------- |
+| Optimizer                    | Adam                      |
+| Loss Function                | Categorical Cross-Entropy |
+| Initial Learning Rate        | 1 × 10−3                  |
+| Batch Size                   | 256                       |
+| Number of Clusters (NetVLAD) | 64                        |
+| Number of Epochs             | 450                       |
+| Dropout Rate                 | 0.5                       |
+| L2-Regularization            | 1 × 10−4                  |
+
+**LEARNING RATE SCHEDULER PARAMETERS**
+
+| Parameter                  | Value             |
+| -------------------------- | ----------------- |
+| Learning Rate Scheduler    | ReduceLROnPlateau |
+| Scheduler Reduction Factor | 0.5               |
+| Scheduler Patience         | 10 epochs         |
+| Mode                       | Max               |
+| Minimum Learning Rate      | 1 × 10−8          |
+
+**EARLY STOPPING PARAMETERS**
+
+| Parameter               | Value               |
+| ----------------------- | ------------------- |
+| Early Stopping Metric   | Validation F1-Score |
+| Early Stopping Patience | 50 epochs           |
+| Mode                    | Max                 |
+
+**Additional Callbacks**:
+We employed callbacks like periodic model checkpointing every 50 epochs, displaying training metrics, and clearing Jupyter Notebook outputs every 10 epochs for clarity.
 
 ---
 
