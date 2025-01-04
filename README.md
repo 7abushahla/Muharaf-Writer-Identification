@@ -108,8 +108,13 @@ We merged the newly labeled data with the previously labeled portion (`writer_fi
 ### Step 3: Error Corrections
 
 We identified errors in the original dataset during label verification. For example:
-- A labeled page attributed to "Father Youssef Baissary" was corrected to "Father Youhanna Habib Baissary" after verifying handwriting and cross-referencing with other pages.
-- Transliterations were aligned with biblical origins (e.g., "Yousef" corresponds to "Joseph," not "John").
+- A labeled page attributed to "Father Youssef Baissary" (`JoM_Kobayat_002`) was corrected to "Father Youhanna Habib Baissary" after verifying handwriting and cross-referencing with other pages.
+- When cross-referencing this with other pages from the unlabeled portion of the dataset, we found identical handwriting and signature instances. For example:
+  - `JoM_Kobayat_0567`: Example of a similar signature transcribed as "al-Khoori Youhanna Habib" in the unlabeled portion.
+  - `JoM_Kobayat_0548`: Example of the full name and title "al-Khoori Youhanna Habib al-Baissary" found in the unlabeled portion.
+
+Additionally, transliterations were aligned with biblical origins (e.g., "Yousef" corresponds to "Joseph," not "John") to ensure consistency and accuracy in the dataset.
+
 
 ### Step 4: Dataset Preparation
 
