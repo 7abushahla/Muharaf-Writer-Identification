@@ -32,10 +32,10 @@ This repository serves as a comprehensive resource for researchers interested in
     - [Variations: Feature Extractors and Attention](#variations-feature-extractors-and-attention)  
 4. [Evaluation Metrics](#4-evaluation-metrics)  
 5. [Experimental Results](#5-experimental-results)  
-6. [Reproducibility and Setup](#6-reproducibility-and-setup)  
+6. [Repository File Structure](#6-repository-file-structure)  
+7. [Reproducibility and Setup](#7-reproducibility-and-setup)  
     - [Setup and Installation](#setup-and-installation)  
     - [Reproducing Results](#reproducing-results)  
-7. [Repository File Structure](#7-repository-file-structure)  
 8. [Citation](#8-citation)  
 9. [Contact](#9-contact)  
 
@@ -170,7 +170,23 @@ The following metrics were used for evaluation:
 
 ---
 
-## 6. Reproducibility and Setup
+## 6. Repository File Structure
+
+```
+Writer-Identification/
+├── manual_labeling/
+├── data_preprocessing/
+├── models/
+├── evaluation/
+├── environment.yaml
+├── requirements.txt
+├── README.md
+├── LICENSE
+```
+
+---
+
+## 7. Reproducibility and Setup
 
 ### Setup and Installation
 
@@ -188,33 +204,17 @@ python data_preprocessing/preprocess_pipeline.py
 
 #### Training
 ```bash
-python models/train.py --config 5_configs/train_config.yaml
+python models/train.py --config configs/train_config.yaml
 ```
 
 #### Evaluation
 ```bash
-python evaluation/evaluate.py --config 5_configs/eval_config.yaml
+python evaluation/evaluate.py --config configs/eval_config.yaml
 ```
 
----
-
-## 7. Repository File Structure
-
-```
-Writer-Identification/
-├── manual_labeling/
-├── data_preprocessing/
-├── models/
-├── evaluation/
-├── environment.yaml
-├── requirements.txt
-├── README.md
-├── LICENSE
-```
 ---
 
 ## 8. Citation
-
 ```bibtex
 @article{abushahla2024writerid,
   title={Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts},
