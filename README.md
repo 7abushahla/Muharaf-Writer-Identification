@@ -88,11 +88,12 @@ To facilitate line-level processing, we created a folder for each set of lines e
 
 ### Step 2: Label Verification
 
-We merged the newly labeled data with the previously labeled portion, creating a consolidated CSV file (`writer_filled.csv`). This was facilitated by the `manual_labeling/fuzzy_matching.py` Python script, which automates fuzzy string matching to identify and resolve duplicate writer names. Using the Levenshtein distance method, the script dynamically adjusts thresholds (85%-95%) and flags potential matches for manual review. During this process, we:
+We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). The process included manually reviewing potential matches flagged by the `manual_labeling/fuzzy_matching.py` Python script. The script used fuzzy string matching (via Levenshtein distance) to calculate similarity scores and flag matches within thresholds (85%-95%), which were manually reviewed. Matches were flagged by the script and reviewed manually to ensure accuracy and consistency in labeling. During this process, we:
+
 
 1. Standardized writer names by aligning transliterations and formatting.
 2. Employed **fuzzy string matching** (using `fuzzywuzzy`) to identify and resolve potential duplicate writer names.
-   - **Similarity Thresholds:** Adjusted dynamically (85%-95%) based on confidence levels.
+   - **Similarity Thresholds:** Selected manually based on the specific requirements of each review step, lowering it to 85% to capture less obvious duplicates or raising it to 95% to focus on highly confident matches.
    - Example Matches:
      - "Botros Hassan" and "Boutros Hassan" → 98% similarity → Merged.
      - "Botros Hassan" and "Botros Hasan" → 97% similarity → Flagged for manual review.
