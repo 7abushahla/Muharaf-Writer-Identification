@@ -245,7 +245,7 @@ To capture the sequential and contextual nature of handwriting, attention mechan
 2. **Self-Attention**: After layer-normalized outputs of the SPP layer.
 3. **Cross-Attention**: Between the NetVLAD layer and the refined local features of ResNet50.
 
-Dense layers were introduced to align queries (), keys (), and values () for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
+Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$) for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
 
 ![attention_mode](models/attention_model.png)
 
