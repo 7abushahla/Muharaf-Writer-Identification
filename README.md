@@ -48,20 +48,24 @@ This repository serves as a comprehensive resource for researchers interested in
 
 The manual labeling process used the public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215)), which was the portion accessible to us and originally contained partially labeled and noisy metadata. This was the portion accessible to us. To address this, we consolidated all metadata into a structured Excel file.  
 
+The original Excel file is located at `manual_labeling/manual_labeling.xlsx` and includes the following columns:
 
 
-**File Location**: `manual_labeling/`  
-**File Details**:
-- `Image Filename`: Unique identifier for each line image.  
-- `Writer Name (Arabic)`: Original Arabic names.  
-- `Writer Name (English)`: Transliteration for consistency.  
+- `Image Filename`: Refers to the page-level images in the dataset. 
+- `Prefix`: Collection tag from the dataset.
+- `Writer Name (English)`: Transliterated writer name.
+- `Writer Name (Arabic)`: Original Arabic writer name.
 
-| Image Filename    | Writer Name (Arabic) | Writer Name (English) |
-|-------------------|-----------------------|------------------------|
-| line001.png       | خالد البصري           | Khalid Al-Basri        |
-| line002.png       | يوسف جابر            | Yousef Jaber           |
+**Example Rows (non-consecutive):**
 
-This file serves as the foundation for preprocessing, splitting, and training.
+| Image Filename    | Prefix | Writer Name (English)  | Writer Name (Arabic)    |
+|-------------------|--------|------------------------|--------------------------|
+| AF_304_01r        | AF     | Your son George        | ولدكم جورج              |
+| AR51_008          | AR     | Ameen Rihani           | أمين الريحاني           |
+| AR56_01_003_1     | AR     | Shibli N. Damus        | شبل نصيف دموس           |  
+
+
+We created a folder for each set of lines extracted from the page, named after the page image. All lines within the same folder are assumed to be written by the same author.
 
 ### Duplicate Detection
 
