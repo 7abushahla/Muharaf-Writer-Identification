@@ -19,7 +19,7 @@ This repository serves as a comprehensive resource for researchers interested in
 
 ## Table of Contents
 
-1. [Data Labeling and Preparation](#1-manual-labeling-process)  
+1. [Data Labeling and Preparation](#1-Data-Labeling-and-Preparation)  
     - [Dataset Metadata and Excel File](#dataset-metadata-and-excel-file)  
     - [Duplicate Detection](#duplicate-detection)  
     - [Error Corrections and Final Dataset](#error-corrections-and-final-dataset)  
