@@ -88,7 +88,7 @@ To facilitate line-level processing, we created a folder for each set of lines e
 
 ### Step 2: Label Verification
 
-We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). The process included manually reviewing potential matches flagged by the `manual_labeling/fuzzy_matching.py` Python script. The script used fuzzy string matching (via Levenshtein distance) to calculate similarity scores and flag matches within thresholds (85%-95%), which were manually reviewed. Matches were flagged by the script and reviewed manually to ensure accuracy and consistency in labeling. During this process, we:
+We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). The process included manually reviewing potential matches flagged by the `manual_labeling/fuzzy_matching.ipynb` Python script. The script used fuzzy string matching (via Levenshtein distance) to calculate similarity scores and flag matches within thresholds (85%-95%), which were manually reviewed. Matches were flagged by the script and reviewed manually to ensure accuracy and consistency in labeling. During this process, we:
 
 
 1. Standardized writer names by aligning transliterations and formatting.
