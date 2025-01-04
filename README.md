@@ -102,6 +102,10 @@ We merged the newly labeled data with the previously labeled portion (`writer_fi
 - `writer_filled.csv`: Original labled portion of the dataset.
 - `writer_merged.csv`: Consolidated labeled data.
 
+**Code Reference:**
+A Python script `manual_labeling/fuzzy_matching.py` was created to automate the fuzzy string matching process. The script uses the Levenshtein distance method to calculate similarity scores and flags potential duplicates for manual review. Dynamic thresholds were configured as script parameters to allow for flexibility during iterative runs. 
+
+
 ### Step 3: Error Corrections
 
 We identified errors in the original dataset during label verification. For example:
