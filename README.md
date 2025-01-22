@@ -227,7 +227,7 @@ Our architecture is a custom design based on the optimized Deep-TEN architecture
 
 Our proposed end-to-end architecture is shown below:
 
-![proposed_model](models/proposed_model.png)
+![proposed_model](figures/proposed_model.png)
 
 Key modifications include:
 
@@ -247,7 +247,7 @@ To capture the sequential and contextual nature of handwriting, attention mechan
 
 Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$) for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
 
-![attention_mode](models/attention_model.png)
+![attention_mode](figures/attention_model.png)
 
 ---
 
