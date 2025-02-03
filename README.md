@@ -276,7 +276,7 @@ Each experiment was repeated three times with different seeds to ensure robustne
 
 ### Model Training Details
 
-The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data. Training spanned 450 epochs using the Adam optimizer with an initial learning rate of . Key training hyperparameters are summarized below:
+The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data (This train-val-test split was achieved using Scikit-learn's train\_test\_split function, where we first split the data into a 70-30 split, then split the 30\% into half for validation and testing data). Training spanned 450 epochs using the Adam optimizer with an initial learning rate of . Key training hyperparameters are summarized below:
 
 **GENERAL TRAINING HYPERPARAMETERS**
 
@@ -310,7 +310,10 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | Mode                    | Max                 |
 
 **Additional Callbacks**:
-We employed callbacks like periodic model checkpointing every 50 epochs, displaying training metrics, and clearing Jupyter Notebook outputs every 10 epochs for clarity.
+We employed callbacks like periodic model checkpointing every 50 epochs, displaying training metrics, and clearing Jupyter Notebook outputs every 10 epochs for clarity. 
+
+(To complement the training process, we employed several callback functions. These included periodic model checkpointing every 50 epochs to save intermediate models, outputting training metrics for each epoch, and clearing displayed outputs in the Jupyter Notebook every 10 epochs to improve readability during training.)
+
 
 ---
 
@@ -332,6 +335,15 @@ The following metrics were used for evaluation:
 | ResNet50 (Baseline) | 85.3             | 84.1         | 93.4                   |
 | DenseNet201         | 87.5             | 86.3         | 94.8                   |
 | Xception            | 88.2             | 87.8         | 95.2                   |
+
+### Experimental Conditions
+
+To ensure the robustness of the model, we repeated the entire training process using three different random seeds: 42, 570, and 1073. This produced three distinct models for the same architecture, allowing us to compute the average and standard deviation of evaluation metrics across all three runs. This approach helped verify the model’s stability and reliability when applied to real-world data.
+
+A notable challenge we encountered during experimentation was ensuring that full models could be loaded seamlessly to either resume training or obtain evaluation metrics. This difficulty arose because we defined custom layers for SPP, NetVLAD, and L2-normalization, requiring careful handling to guarantee compatibility with TensorFlow’s serialization and deserialization framework. To address this, each custom layer was implemented with the necessary methods to enable full serialization and deserialization. 
+
+The \begin{small}\texttt{get\_config()}\end{small} method was included to store initialization parameters, making sure that the layer configurations could be correctly reconstructed. Additionally, the \begin{small}\texttt{@tf.keras.utils.register\_keras\_serializable()}\end{small} decorator was applied to make these layers recognizable by TensorFlow's saving and loading mechanisms. The \texttt{call()} method defined the forward pass logic, ensuring consistency during both training and inference. For layers with trainable parameters, such as NetVLAD, the \texttt{build()} method was used to initialize the weights, allowing for proper reconstruction when the model was reloaded. By adhering to these practices, our custom layers were seamlessly integrated into TensorFlow workflows, enabling efficient experimentation and deployment across various setups.
+
 
 ---
 
