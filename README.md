@@ -393,7 +393,7 @@ python evaluation/evaluate.py --config configs/eval_config.yaml
 
 ## 8. Citation
 ```bibtex
-@article{abushahla2024writerid,
+@article{abushahla2025writerid,
   title={Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts},
   author={Hamza A. Abushahla, Ariel J.N. Panopio, Layth M. Al-Khairulla, Mohamed I. AlHajri},
   journal={IEEE Access},
