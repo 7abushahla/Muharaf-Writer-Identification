@@ -1,4 +1,4 @@
-# Writer Identification for Historical Arabic Manuscripts
+# Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts
 
 This repository contains the full implementation and supplementary materials for the paper: **[Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts](url)**
 
