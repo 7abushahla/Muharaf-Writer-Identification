@@ -212,6 +212,20 @@ To adapt the architecture for better performance and compatibility with attentio
 
 Figures illustrating the updated SPP and NetVLAD modules are provided below.
 
+<table>
+  <tr>
+    <td align="center" width="60%">
+      <img src="figures/SPP.jpg" height="320px" alt="Modified SPP Layer" /><br/>
+      <em>Figure 2: Modified SPP module. Unlike the original, our variant upsamples pooled outputs to 7×7 and concatenates them channel-wise to preserve spatial structure and enable attention integration.</em>
+    </td>
+    <td align="center" width="40%">
+      <img src="figures/NetVLAD.jpg" height="220px" alt="Modified NetVLAD Layer" /><br/>
+      <em>Figure 3: Modified NetVLAD module. We replace learned convolutional assignments with cosine similarity via dot product between descriptors and cluster centers, reducing parameters and improving deployment readiness.</em>
+    </td>
+  </tr>
+</table>
+
+
 
 ### 2.5 Model Configurations and Training Regimes
 
