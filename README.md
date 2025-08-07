@@ -146,7 +146,7 @@ These lines were filtered to remove non-handwritten content, resulting in 18,987
 | Mean images per writer     | 106.07  |
 | Standard deviation         | 183.29  |
 
-This manual labeling process significantly increased the usability of the Muharaf dataset for writer identification. However, the dataset remains highly imbalanced, with certain classes having a disproportionately large number of labeled samples compared to others. For example, the top three classes include "Ameen Rihani" with 949 images, "Hanna Ghayth" with 934 images, and "Hanna Moussa" with 876 images. Conversely, the lowest classes include "Nehme Elias Mikhail" with 12 images, "Shibli Barakat Witnesses" with 11 images, and "Father Elias" with only 10 images. The mean number of images per writer is 106.07, with a standard deviation of 183.29, reflecting the highly skewed distribution of labeled samples (see Appendix~\ref{FirstAppendix} for the histogram of the dataset distribution).
+This manual labeling process significantly increased the usability of the Muharaf dataset for writer identification. However, the dataset remains highly imbalanced, with certain classes having a disproportionately large number of labeled samples compared to others. For example, the top three classes include "Ameen Rihani" with 949 images, "Hanna Ghayth" with 934 images, and "Hanna Moussa" with 876 images. Conversely, the lowest classes include "Nehme Elias Mikhail" with 12 images, "Shibli Barakat Witnesses" with 11 images, and "Father Elias" with only 10 images. The mean number of images per writer is 106.07, with a standard deviation of 183.29, reflecting the highly skewed distribution of labeled samples (see the histogram in the `Supplemental Results` folder).
 
 
 ### Step 5: Dataset Preprocessing
@@ -287,22 +287,23 @@ All experiments were conducted using two NVIDIA A100 (SXM4) Tensor Core GPUs, ea
 
 **Table 10. Average Training Time per Configuration**
 
-| **Model Configuration**                    | ResNet50            | DenseNet201   | Xception            | MobileNetV3-Large   |
-|:-------------------------------------------|:--------------------|:--------------|:--------------------|:--------------------|
-| Frozen + No Attention (Baseline)           | 8 hrs 19 min 29 sec | 8:50:46           | 7:25:29                 | N/A                 |
-| Frozen + Attention                         | 7 hrs 3 min 13 sec  | 7:19:12           | 7:46:16                | N/A                 |
-| Fine-tuned + Last Layer + No Attention     | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last Layer + Attention        | 7:20:02                 | 7:54:17           | 7:55:02                 | N/A                 |
-| Fine-tuned + Last 5 Layers + No Attention  | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last 5 Layers + Attention     | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last 10 Layers + No Attention | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last 10 Layers + Attention    | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last 25 Layers + No Attention | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + Last 25 Layers + Attention    | N/A                 | N/A           | N/A                 | N/A                 |
-| Fine-tuned + No Attention                  | 7:07:02                 | 7:45:56          | 8:40:30                | N/A                 |
-| Fine-tuned + Attention                     | 5:55:00                 | 6:50:51           | 6 hrs 55 min 40 sec | N/A                 |
-| From Scratch + No Attention                | 8:18:32                 | 7:56:10           | 8:49:11 | N/A                 |
-| From Scratch + Attention                   | 9:05:55                 | 7:09:54           | 7 hrs 35 min 20 sec | N/A                 |
+| **Model Configuration**                    | **ResNet50**        | **DenseNet201**     | **Xception**           | **MobileNetV3-Large**  |
+|:-------------------------------------------|:--------------------|:--------------------|:------------------------|:------------------------|
+| Frozen + No Attention (Baseline)           | 8 hrs 19 min 29 sec | 8 hrs 50 min 46 sec | 7 hrs 25 min 29 sec     | 7 hrs 37 min 23 sec     |
+| Frozen + Attention                         | 7 hrs 3 min 13 sec  | 7 hrs 19 min 12 sec | 7 hrs 46 min 16 sec     | 7 hrs 5 min 10 sec      |
+| Fine-tuned + Last Layer + No Attention     | 8 hrs 26 min 17 sec | 8 hrs 27 min 51 sec | 8 hrs 14 min 52 sec     | 7 hrs 33 min 5 sec      |
+| Fine-tuned + Last Layer + Attention        | 7 hrs 20 min 2 sec  | 7 hrs 54 min 17 sec | 7 hrs 55 min 2 sec      | 6 hrs 44 min 52 sec     |
+| Fine-tuned + Last 5 Layers + No Attention  | 8 hrs 12 min 24 sec | 8 hrs 43 min 54 sec | 8 hrs 24 min 3 sec      | 7 hrs 49 min 52 sec     |
+| Fine-tuned + Last 5 Layers + Attention     | 7 hrs 20 min 28 sec | 7 hrs 3 min 0 sec   | 8 hrs 37 min 11 sec     | 6 hrs 18 min 10 sec     |
+| Fine-tuned + Last 10 Layers + No Attention | 6 hrs 53 min 30 sec | 8 hrs 18 min 45 sec | 6 hrs 51 min 26 sec     | 7 hrs 34 min 4 sec      |
+| Fine-tuned + Last 10 Layers + Attention    | 5 hrs 58 min 40 sec | 6 hrs 49 min 27 sec | 5 hrs 36 min 10 sec     | 6 hrs 35 min 25 sec     |
+| Fine-tuned + Last 25 Layers + No Attention | 6 hrs 58 min 23 sec | 7 hrs 54 min 12 sec | 6 hrs 50 min 25 sec     | 7 hrs 33 min 52 sec     |
+| Fine-tuned + Last 25 Layers + Attention    | 5 hrs 59 min 11 sec | 6 hrs 24 min 6 sec  | 6 hrs 8 min 58 sec      | 6 hrs 15 min 58 sec     |
+| Fine-tuned + No Attention                  | 7 hrs 7 min 2 sec   | 7 hrs 45 min 56 sec | 8 hrs 40 min 30 sec     | 8 hrs 21 min 34 sec     |
+| Fine-tuned + Attention                     | 5 hrs 55 min 0 sec  | 6 hrs 50 min 51 sec | 6 hrs 55 min 40 sec     | 6 hrs 30 min 3 sec      |
+| From Scratch + No Attention                | 8 hrs 18 min 32 sec | 7 hrs 56 min 10 sec | 8 hrs 49 min 11 sec     | 5 hrs 29 min 50 sec     |
+| From Scratch + Attention                   | 9 hrs 5 min 55 sec  | 7 hrs 9 min 54 sec  | 7 hrs 35 min 20 sec     | 1 hrs 31 min 21 sec     |
+
 
 ### 2.8 Custom Layer Serialization
 
@@ -375,8 +376,9 @@ Each script's output is logged to a separate `.log` file with the same base name
 
 ## 4. Experimental Results
 
+All primary evaluation metrics—**Top-1 Accuracy**, **Top-5 Accuracy**, and **F1-Score**—averaged over three random seeds, are reported in the tables within the main paper. Additional metrics such as **Precision**, **Recall**, and **Test Loss** are included in the supplementary materials (see *Online Resource 2*) and can also be found in the `Supplemental Results` folder.
 
-
+Moreover, we provide **per-seed results** and full **classification reports** for each model configuration in the `Results` directory. Pretrained model checkpoints may be released in the future to facilitate further evaluation or fine-tuning by other researchers.
 
 ----
 
