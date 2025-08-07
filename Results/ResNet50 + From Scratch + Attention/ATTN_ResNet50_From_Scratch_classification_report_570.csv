@@ -1,0 +1,183 @@
+,precision,recall,f1-score,support
+Malvina Choieree,1.0,1.0,1.0,3.0
+Your nephew Maroun,1.0,1.0,1.0,10.0
+Sister Victor N. Khoury,1.0,1.0,1.0,9.0
+Maroun Al-Khoury Maroun (Joseph Benjamin El-Khouri ),1.0,1.0,1.0,5.0
+Father Youssef Nassar,1.0,1.0,1.0,2.0
+Shibli Barakat witnesses,1.0,1.0,1.0,1.0
+Mousssa Farhat Farah,1.0,1.0,1.0,2.0
+Nassar Tanios Al Samarani,1.0,1.0,1.0,2.0
+Keserwan Finance Officer,1.0,0.5,0.6666666666666666,2.0
+Serhal Ounaissy,1.0,1.0,1.0,2.0
+Elias Abdallah,1.0,1.0,1.0,3.0
+Your son George,1.0,1.0,1.0,21.0
+Amin Farhat,1.0,1.0,1.0,10.0
+Patriarch Elias Hoayek,0.8888888888888888,0.8,0.8421052631578947,10.0
+Bishop Boulos Akl,1.0,0.8571428571428571,0.9230769230769231,7.0
+Ameen Rihani,0.9791666666666666,0.986013986013986,0.9825783972125436,143.0
+Shibli N. Damus,0.9473684210526315,0.9,0.9230769230769231,40.0
+Naoum Mokarzel,0.9,1.0,0.9473684210526315,9.0
+Eissa alKhouri,0.8947368421052632,0.8947368421052632,0.8947368421052632,19.0
+Girgi Dimitri Sursock,0.7777777777777778,0.9333333333333333,0.8484848484848485,15.0
+Felix Faris,0.9852941176470589,0.9305555555555556,0.9571428571428572,72.0
+Muhammad Hussain Najafi,0.8333333333333334,1.0,0.9090909090909091,5.0
+May Ziadeh,0.9375,0.967741935483871,0.9523809523809523,31.0
+Victor Shemil,1.0,1.0,1.0,2.0
+Ahmed Shakir alKarmi,1.0,1.0,1.0,2.0
+Elia Abu Madi,0.6,0.6,0.6,5.0
+Abdulaziz bin Abdul Rahman Al Faisal Al Saud,0.9069767441860465,0.9512195121951219,0.9285714285714286,41.0
+Mohammed Amin al-Husseini ,0.8333333333333334,0.625,0.7142857142857143,8.0
+Prof. Ign. Kratchkovsky,0.8666666666666667,0.9285714285714286,0.896551724137931,14.0
+Jirjis alKsus,1.0,1.0,1.0,4.0
+Ibrahim Mejahid Al-Jaza'eri,1.0,1.0,1.0,10.0
+Daoud Mujaes,0.8571428571428571,1.0,0.9230769230769231,12.0
+Bechara El Khoury,0.9375,0.9375,0.9375,16.0
+Tawfiq,1.0,1.0,1.0,2.0
+Youssef Ibrahim Yazbek,1.0,1.0,1.0,11.0
+Margaret El Haddad,1.0,1.0,1.0,6.0
+Elias Abu Shabaki,1.0,1.0,1.0,20.0
+Habib,1.0,0.5,0.6666666666666666,2.0
+Adham Al Jundi,1.0,1.0,1.0,2.0
+Abd al-Khaliq Farid,1.0,1.0,1.0,8.0
+Elie Maroun Khalil,0.9166666666666666,1.0,0.9565217391304348,11.0
+Habib Abi Rached,1.0,1.0,1.0,3.0
+Aziz Khoury,1.0,1.0,1.0,7.0
+Mary Khoury,1.0,0.5,0.6666666666666666,2.0
+Ghnatyos Mbarak,0.7777777777777778,0.9333333333333333,0.8484848484848485,15.0
+Abdallah Sfeir,0.0,0.0,0.0,3.0
+Youssef Nakad,1.0,0.6666666666666666,0.8,3.0
+Tanos Youssef Harfouche,1.0,1.0,1.0,3.0
+JerJi Ass'ad Nader,0.0,0.0,0.0,2.0
+Habib Abdallah al-Khoury,1.0,1.0,1.0,3.0
+Serhal Maroun 'Tiyyeh,1.0,0.3333333333333333,0.5,3.0
+Hanna Estphan,1.0,1.0,1.0,5.0
+Slayman al-Farkh,1.0,1.0,1.0,2.0
+Habib Boulos Nasr,1.0,1.0,1.0,3.0
+Botros Feghaly,1.0,0.9,0.9473684210526315,10.0
+Toufiq Wehbeh,1.0,1.0,1.0,24.0
+Maronite Bishop of Sidon,0.8571428571428571,1.0,0.9230769230769231,6.0
+Halim Khoury Saadeh,1.0,1.0,1.0,7.0
+Jebrayel Sa'd al 'Alam,1.0,1.0,1.0,3.0
+Najib Ayoub,0.8571428571428571,1.0,0.9230769230769231,6.0
+Youhanna Sfeir,0.7142857142857143,0.8333333333333334,0.7692307692307693,6.0
+Bishop Mkhayel Akhrass,0.5416666666666666,0.9285714285714286,0.6842105263157895,14.0
+George Saad,1.0,0.9411764705882353,0.9696969696969697,17.0
+Bishop Youseef El Khazen,0.75,1.0,0.8571428571428571,3.0
+Father Elias Najm,1.0,1.0,1.0,8.0
+Bishop Aghnathios Mbarak,0.6956521739130435,0.64,0.6666666666666666,25.0
+Dr. Abdo Harb,1.0,1.0,1.0,3.0
+Fathallah Khoury,1.0,1.0,1.0,11.0
+Antonios Elias,1.0,1.0,1.0,3.0
+Francis Hcheme,0.75,1.0,0.8571428571428571,3.0
+Antoine Richa,1.0,1.0,1.0,3.0
+Botros El Kfouny,0.0,0.0,0.0,2.0
+Salim Maalouf,1.0,1.0,1.0,2.0
+Father Yaacoub Awad,0.6666666666666666,0.6666666666666666,0.6666666666666666,3.0
+Wadih Salim Karam,0.0,0.0,0.0,3.0
+Father Youhanna El Khoury,1.0,1.0,1.0,5.0
+Georges Jarjoura,0.6666666666666666,1.0,0.8,2.0
+Father Jerjes El Alam,1.0,0.6666666666666666,0.8,3.0
+Father Botros Dib,0.6666666666666666,0.6666666666666666,0.6666666666666666,3.0
+Elias Sarkis,1.0,1.0,1.0,49.0
+Fouad Chehab,1.0,1.0,1.0,40.0
+Hanna Moussa,1.0,0.9924242424242424,0.9961977186311787,132.0
+Zaghloul ad-Damour,1.0,1.0,1.0,3.0
+Habib Massoud,1.0,1.0,1.0,15.0
+Zaghloul,0.9868421052631579,0.9868421052631579,0.9868421052631579,76.0
+Father Youhanna Habib Baysari,0.9090909090909091,1.0,0.9523809523809523,30.0
+Mkhayel Daher,0.9090909090909091,0.9090909090909091,0.9090909090909091,11.0
+Father Youssef Hanna,1.0,0.8571428571428571,0.9230769230769231,7.0
+Father Youssef Iskandar,1.0,1.0,1.0,3.0
+Adib Shiha,1.0,1.0,1.0,3.0
+Father Youssef Hanna & Father Botros Hasan,1.0,1.0,1.0,10.0
+Father Botros Hasan,0.9375,0.7894736842105263,0.8571428571428571,19.0
+Youssef Ibrahim,1.0,1.0,1.0,5.0
+Father Youssef Hajj,1.0,0.9,0.9473684210526315,10.0
+Abdallah Daher,1.0,0.5,0.6666666666666666,2.0
+Mkhayel & Ibrahim Daher,1.0,0.8333333333333334,0.9090909090909091,6.0
+Tannous Semaan,0.5,0.5,0.5,2.0
+Father Mkhayel Zreiby,0.9375,1.0,0.967741935483871,30.0
+People of Rablah,1.0,0.5,0.6666666666666666,2.0
+Father Boutros Chidiac,1.0,0.5,0.6666666666666666,2.0
+Bishop Antoun Jbeir,1.0,0.6666666666666666,0.8,3.0
+Father Yousef,1.0,1.0,1.0,2.0
+Maronite children of Akkar district,0.0,0.0,0.0,2.0
+Elias Asaf,1.0,1.0,1.0,8.0
+Muhawwel Harouh,1.0,1.0,1.0,2.0
+Father Mikhael Hanna,0.9166666666666666,1.0,0.9565217391304348,11.0
+Warda El Khoury,1.0,1.0,1.0,2.0
+Jean Philipp Kmeid,1.0,1.0,1.0,80.0
+Jerji Nicola Khattar al-Chuayri,1.0,1.0,1.0,4.0
+Abd al-Hajj,1.0,1.0,1.0,4.0
+Michel Saykali,0.9831932773109243,0.9831932773109243,0.9831932773109243,119.0
+Hanna Ghayth (Juan Gait),1.0,0.9928571428571429,0.996415770609319,140.0
+Yousef Hobeiche,0.9846153846153847,0.9846153846153847,0.9846153846153847,65.0
+Angele Ellis,0.8571428571428571,1.0,0.9230769230769231,12.0
+Yousef Hobeiche & Angele Ellis,1.0,0.5,0.6666666666666666,2.0
+Khalil Yossuf Nader Raad,0.9577464788732394,1.0,0.9784172661870504,68.0
+Mansour Eid,1.0,1.0,1.0,41.0
+Nassif Mansour,1.0,1.0,1.0,2.0
+Peter the Patriarch of Antioch,1.0,1.0,1.0,3.0
+Youssef,1.0,1.0,1.0,3.0
+Mkhayel Meneem,1.0,0.9473684210526315,0.972972972972973,19.0
+Constantine Elias,0.8666666666666667,1.0,0.9285714285714286,13.0
+Maurice Gemayel,1.0,1.0,1.0,10.0
+Murshid Habashi,1.0,0.9333333333333333,0.9655172413793104,15.0
+Father Elias Abi Khair,0.8,1.0,0.8888888888888888,4.0
+Hassan Khalil,1.0,1.0,1.0,6.0
+Michel Kahwaji,0.9682539682539683,0.9838709677419355,0.976,62.0
+Mayor of Kfarshima,0.9375,0.9375,0.9375,64.0
+Sohayl Tohmeh,1.0,1.0,1.0,127.0
+Shukri Kanaan,0.8,0.8,0.8,20.0
+Emily Nasrallah,0.978494623655914,1.0,0.9891304347826086,91.0
+Thomas & John Oussani,0.0,0.0,0.0,2.0
+Brother of Joseph Oussani,1.0,1.0,1.0,4.0
+Joseph Oussani,1.0,1.0,1.0,60.0
+Shukri Kordahi,1.0,1.0,1.0,5.0
+Negib Aboussouan,1.0,0.6666666666666666,0.8,3.0
+Toubia Hanna Rizk & Touma Chidiac,1.0,1.0,1.0,2.0
+Hanna Younes Abboud,1.0,0.6666666666666666,0.8,3.0
+Youssef Bey Al-Helou,1.0,1.0,1.0,2.0
+Father Elias,0.0,0.0,0.0,1.0
+Magistrate of Batroun,0.6666666666666666,1.0,0.8,2.0
+Jirjis Yuhanna Basil ,0.6666666666666666,1.0,0.8,2.0
+Estephan Adib Salloum,1.0,1.0,1.0,8.0
+Father Boulos El-Mender,0.9629629629629629,1.0,0.9811320754716981,26.0
+Joseph,1.0,1.0,1.0,5.0
+Salah Tizani,1.0,1.0,1.0,132.0
+Father Elias Bassil,1.0,1.0,1.0,8.0
+Yahia Mansour & Asaad Koury,0.0,0.0,0.0,2.0
+Father Tobia al-Issa,1.0,1.0,1.0,6.0
+Assad Darouich Zacharias,1.0,1.0,1.0,14.0
+Asaad Koury Tobia Attallah,1.0,1.0,1.0,7.0
+Krouger Tobia Attallah,0.9672131147540983,0.9833333333333333,0.9752066115702479,60.0
+Nadim Attallah,1.0,1.0,1.0,4.0
+Toufic El Bacha,0.9473684210526315,1.0,0.972972972972973,18.0
+Rahma Raad,0.0,0.0,0.0,2.0
+Youssef Abdullah Maroun,0.5,1.0,0.6666666666666666,4.0
+Youssef Moussa Sadaqa,1.0,0.5,0.6666666666666666,2.0
+Catherine Yazbek Al-Badawi,1.0,1.0,1.0,10.0
+Nehme Elias Mikhail,1.0,1.0,1.0,2.0
+Assad Al-Khoury,1.0,1.0,1.0,3.0
+Tanios Zakhia Elias Basil,1.0,1.0,1.0,2.0
+Bishara Mar'i Mansour,1.0,1.0,1.0,7.0
+Francis Lahoud,1.0,1.0,1.0,3.0
+K. John,1.0,1.0,1.0,2.0
+Brother Ibrahim,1.0,1.0,1.0,2.0
+Youssef Fadlallah Salemeh,1.0,1.0,1.0,30.0
+Nehad,0.0,0.0,0.0,2.0
+Lebanese immigrants,1.0,1.0,1.0,5.0
+Dani Al-Sibaqa,1.0,1.0,1.0,3.0
+Abdo Fares,1.0,1.0,1.0,2.0
+Jamil Youssef Noah,1.0,0.75,0.8571428571428571,4.0
+Elias Karbaj,0.8333333333333334,1.0,0.9090909090909091,5.0
+Jarhas Hanna Al-Shabtini,1.0,1.0,1.0,2.0
+Bishop Youssef Darian,0.9615384615384616,1.0,0.9803921568627451,25.0
+Youssef Hanna El-Sawda,0.9622641509433962,1.0,0.9807692307692307,51.0
+Sally Aad,0.75,1.0,0.8571428571428571,3.0
+Daud Barkaat,1.0,1.0,1.0,3.0
+Talaat,1.0,1.0,1.0,4.0
+Maurice Paul Sarrail,1.0,0.6666666666666666,0.8,6.0
+accuracy,0.9617409617409617,0.9617409617409617,0.9617409617409617,0.9617409617409617
+macro avg,0.896392949647737,0.8783199758357773,0.8791038250892006,2849.0
+weighted avg,0.9584801018704482,0.9617409617409617,0.9581688240371047,2849.0
