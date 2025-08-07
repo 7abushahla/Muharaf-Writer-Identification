@@ -5,7 +5,7 @@ _Hamza A. Abushahla, Ariel Justine Navarro Panopio, Layth Al-Khairulla, and Dr. 
 This repository contains the full implementation and supplementary materials for our paper, **Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts**. It includes all code, configurations, and documentation needed to reproduce the experiments and extend the methodology — as well as full access to our manually curated dataset and labeling effort.
 
 <div align="center">
-  <img src="figures/proposed_model.jpg" height="350px" alt="Khat 1" />
+  <img src="figures/proposed_model.jpg" height="350px" alt="E2E" />
 </div>
 <p align="center"><em>Figure 1: Proposed end-to-end architecture illustrating both the attention-based and no-attention variants. The dashed
 blocks and arrows represent the optional attention path, which is active only in the attention-based version.</em></p>
@@ -51,11 +51,13 @@ Writer-Identification/
 
 Each folder contains line-level images extracted from a page, and all lines in the same folder are assumed to be written by the same author. The `merged_writer.csv` file maps each image to its writer label.
 
-### 🖊️ Manual Labeling Overview
+---
 
-The manual labeling process used the **public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215))**, which consisted of 1,216 pages. Of these, 309 pages had a writer tag, corresponding to 6,858 text lines and 94 unique writers. The remaining 907 pages, containing 17,637 text lines, lacked writer tags, necessitating manual intervention to expand the labeled data.
+### 🖊️ Dataset Labeling and Preparation
 
-**Writer Status in the Muharaf Dataset (Public):**
+The manual labeling process was conducted on the **public portion of the Muharaf dataset** ([Zenodo](https://zenodo.org/records/11492215)), which consists of 1,216 scanned manuscript pages. Initially, only 309 pages (25.4%) contained writer tags, covering 6,858 line images. The remaining 907 pages (74.6%), comprising 17,637 lines, lacked writer annotations and required manual labeling. The table below shows how writer metadata was distributed across pages and line images in the original dataset.
+
+**Table 1. Writer Status in the Muharaf Dataset (Public)**
 
 | Writer Status | No. of Pages | % of Pages | No. of Lines | % of Lines |
 |---------------|--------------|------------|--------------|------------|
@@ -65,14 +67,9 @@ The manual labeling process used the **public part of the Muharaf Dataset ([Muha
 
 ### Step 1: Manual Labeling
 
-At this stage, we created an Excel sheet (`manual_labeling/manual_labeling.xlsx`) to organize and annotate the data. The columns in the sheet are:
+To annotate the previously unlabeled portion, we created an Excel spreadsheet (`manual_labeling/manual_labeling.xlsx`) with structured metadata fields. Each row includes the filename of the page-level image, a collection prefix, and the writer’s name in both English transliteration and Arabic script.
 
-- `Image Filename`: Refers to the page-level images in the dataset.
-- `Prefix`: Collection tag from the dataset.
-- `Writer Name (English)`: Transliterated writer name.
-- `Writer Name (Arabic)`: Original Arabic writer name.
-
-**Example Rows (non-consecutive):**
+**Table 2. Example Rows from the Manual Labeling Sheet (non-consecutive):**
 
 | Image Filename    | Prefix | Writer Name (English)  | Writer Name (Arabic)    |
 |-------------------|--------|------------------------|--------------------------|
@@ -90,27 +87,28 @@ For pages without clear signatures or identifying features, handwriting styles w
 
 We also referred to the [Moise A. Khayrallah Center for Lebanese Diaspora Studies Archive](https://lebanesestudies.omeka.chass.ncsu.edu) to find writers for the pages in the Muharaf Dataset, specifically for those included in collections provided by the Khayrallah Center. Using their advanced search by 'Identifier,' we retrieved many writer names, such as those in the Ellis Family collection.
 
-To facilitate line-level processing, we created a folder for each set of lines extracted from the page, named after the page image. All lines within the same folder are assumed to be written by the same author.
+To facilitate line-level processing, we created a folder for each set of lines extracted from the page, named after the page image. All lines within the same folder are assumed to be written by the same author. This is available in the `Lines` folder.
 
 
 ### Step 2: Label Verification
 
-We merged the newly labeled data with the previously labeled portion (`writer_filled.csv`), creating a consolidated CSV file (`writer_merged.csv`). The process included manually reviewing potential matches flagged by the `manual_labeling/fuzzy_matching.ipynb` Python script. The script used fuzzy string matching (via Levenshtein distance) to calculate similarity scores and flag matches within thresholds (85%-95%), which were manually reviewed. Matches were flagged by the script and reviewed manually to ensure accuracy and consistency in labeling. During this process, we:
+After labeling, we merged the new annotations with the previously labeled subset (`writer_filled.csv`) into a unified file: `merged_writer.csv`. We validated the labels through semi-automated duplicate detection and manual review. We used fuzzy string matching (via Levenshtein distance in `manual_labeling/fuzzy_matching.ipynb`) to detect inconsistent transliterations and possible duplicate entries.
 
+To illustrate, Table 3 shows example matches and decisions:
+
+**Table 3. Sample Fuzzy Matching Decisions**
+
+| Name A         | Name B           | Similarity | Action         |
+|----------------|------------------|------------|----------------|
+| Botros Hassan  | Boutros Hassan   | 98%        | Merged         |
+| Botros Hassan  | Botros Hasan     | 97%        | Manual Review  |
+
+
+Key steps included:
 
 1. Standardized writer names by aligning transliterations and formatting.
-2. Employed **fuzzy string matching** (using `fuzzywuzzy`) to identify and resolve potential duplicate writer names.
-   - **Similarity Thresholds:** Selected manually based on the specific requirements of each review step, lowering it to 85% to capture less obvious duplicates or raising it to 95% to focus on highly confident matches.
-   - Example Matches:
-     - "Botros Hassan" and "Boutros Hassan" → 98% similarity → Merged.
-     - "Botros Hassan" and "Botros Hasan" → 97% similarity → Flagged for manual review.
-
-**CSV Files:**
-- `manual_labeling.csv`: Original Excel file converted to CSV.
-- `writer_filled.csv`: Original labled portion of the dataset.
-- `merged_writer.csv`: Consolidated labeled data.
-
-
+2. Using multiple thresholds (85–95%) to balance recall and precision.
+3. Reviewing all borderline cases manually.
 
 ### Step 3: Error Corrections
 
@@ -125,9 +123,9 @@ Additionally, transliterations were aligned with biblical origins (e.g., "Yousef
 
 ### Step 4: Dataset Preparation
 
-Afterward, line-level images were mapped to their corresponding writers. Out of the 24,495 public text lines, 21,249 lines were successfully labeled, increasing the number of identified writers from 94 to 179. These lines were filtered to remove non-handwritten content, resulting in 18,987 usable lines for the dataset.
+Once verified, labled line-level images were mapped to their corresponding writers. From the original 24,495 lines, we successfully labeled 21,249 lines, increasing the number of identified writers from 94 to 179. Table 4 summarizes the post-labeling status:
 
-**Writer Status After Manual Labeling:**
+**Table 4. Writer Status After Manual Labeling**
 
 | Writer Status | No. of Pages | % of Pages | No. of Lines | % of Lines |
 |---------------|--------------|------------|--------------|------------|
@@ -135,7 +133,9 @@ Afterward, line-level images were mapped to their corresponding writers. Out of 
 | Unlabeled     | 201          | 16.5%      | 3,246        | 13.25%     |
 | **Total**     | **1,216**    | **100%**   | **24,495**   | **100%**   |
 
-**Filtered Dataset After Manual Labeling and Excluding Non-Handwritten Content:**
+These lines were filtered to remove non-handwritten content, resulting in 18,987 usable lines for the dataset. The final statistics of the cleaned dataset are shown below:
+
+**Table 5. Filtered Dataset Summary (Post-Cleanup)**
 
 | Metric                     | Value   |
 |----------------------------|---------|
@@ -149,50 +149,6 @@ Afterward, line-level images were mapped to their corresponding writers. Out of 
 | Standard deviation         | 183.29  |
 
 
-
-<!-- - `Image Filename`: Refers to the page-level images in the dataset. 
-- `Prefix`: Collection tag from the dataset.
-- `Writer Name (English)`: Transliterated writer name.
-- `Writer Name (Arabic)`: Original Arabic writer name.
-
-**Example Rows (non-consecutive):**
-
-| Image Filename    | Prefix | Writer Name (English)  | Writer Name (Arabic)    |
-|-------------------|--------|------------------------|--------------------------|
-| AF_304_01r        | AF     | Your son George        | ولدكم جورج              |
-| AR51_008          | AR     | Ameen Rihani           | أمين الريحاني           |
-| AR56_01_003_1     | AR     | Shibli N. Damus        | شبل نصيف دموس           |  
-
-
-We created a folder for each set of lines extracted from the page, named after the page image. All lines within the same folder are assumed to be written by the same author.
-
-### Duplicate Detection
-
-To detect and handle duplicate writer names:  
-- **Tool**: `fuzzywuzzy` library for string similarity.  
-- **Threshold**: Similarity scores ≥85% flagged for manual review.  
-
-**Example**:  
-- "Boutros Hassan" and "Botros Hassan" → 98% similarity → Merged.
-
-**Code Reference**:  
-`manual_labeling/fuzzy_matching.py`
-
-### Error Corrections and Final Dataset
-
-Corrections included:
-1. Resolving ambiguous writer names using context.  
-2. Standardizing transliterations (e.g., "Khaleel" → "Khalil").  
-
-**Final Dataset Statistics**:
-| Metric                  | Value            |
-|-------------------------|------------------|
-| Total Lines             | 36,311           |
-| Total Labeled Lines     | 21,249           |
-| Unique Writers (Classes)| 179              |
-
-**Code Reference**:  
-`manual_labeling/corrections.py` -->
 
 ---
 
