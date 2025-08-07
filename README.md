@@ -92,9 +92,7 @@ To facilitate line-level processing, we created a folder for each set of lines e
 
 ### Step 2: Label Verification
 
-After labeling, we merged the new annotations with the previously labeled subset (`writer_filled.csv`) into a unified file: `merged_writer.csv`. We validated the labels through semi-automated duplicate detection and manual review. We used fuzzy string matching (via Levenshtein distance in `manual_labeling/fuzzy_matching.ipynb`) to detect inconsistent transliterations and possible duplicate entries.
-
-To illustrate, Table 3 shows example matches and decisions:
+After labeling, we merged the new annotations with the previously labeled subset (`writer_filled.csv`) into a unified file: `merged_writer.csv`. We validated the labels through semi-automated duplicate detection and manual review. We used fuzzy string matching (via Levenshtein distance in `manual_labeling/fuzzy_matching.ipynb`) to detect inconsistent transliterations and possible duplicate entries. To illustrate, Table 3 shows example matches and decisions:
 
 **Table 3. Sample Fuzzy Matching Decisions**
 
@@ -148,91 +146,96 @@ These lines were filtered to remove non-handwritten content, resulting in 18,987
 | Mean images per writer     | 106.07  |
 | Standard deviation         | 183.29  |
 
+This manual labeling process significantly increased the usability of the Muharaf dataset for writer identification. However, the dataset remains highly imbalanced, with certain classes having a disproportionately large number of labeled samples compared to others. For example, the top three classes include "Ameen Rihani" with 949 images, "Hanna Ghayth" with 934 images, and "Hanna Moussa" with 876 images. Conversely, the lowest classes include "Nehme Elias Mikhail" with 12 images, "Shibli Barakat Witnesses" with 11 images, and "Father Elias" with only 10 images. The mean number of images per writer is 106.07, with a standard deviation of 183.29, reflecting the highly skewed distribution of labeled samples (see Appendix~\ref{FirstAppendix} for the histogram of the dataset distribution).
 
 
----
+### Step 5: Dataset Preprocessing
 
-## 2. Data Preprocessing
+To prepare the data for training, we used the filtered line-level images and corresponding writer labels in a 70-15-15 train-validation-test split. To address the severe class imbalance, we employed Keras' data augmentation tool, `ImageDataGenerator`, to increase the size of the dataset and the number of instances per writer. Our data augmentations included image rotation, zoom, shear, width and height shifts, and fill mode set to nearest. Moreover, we do not binarize the images because we utilized the preprocessing functions provided by each of the feature extractors that we used. The exact parameter values used for these augmentations are described in Table 6 below.
 
-### Resizing and Normalization
+**Table 6. Data Augmentation Parameters for Training**
 
-Images were resized to **224x224 pixels** and normalized to pixel intensity values between [0, 1].  
+| **Augmentation Parameter** | **Value**                    |
+|----------------------------|------------------------------|
+| Rotation Range             | ±15°                         |
+| Zoom Range                 | ±30%                         |
+| Shear Range                | ±30%                         |
+| Width Shift Range          | ±20% of image width          |
+| Height Shift Range         | ±20% of image height         |
+| Fill Mode                  | Nearest                      |
 
-**Code Reference**:  
-`data_preprocessing/`
-
-### Augmentation Techniques
-
-To improve generalization and balance the dataset:  
-- **Rotation**: ±15°.  
-- **Zoom**: ±30%.  
-- **Width/Height Shifts**: ±20%.  
-
-**Code Reference**:  
-`data_preprocessing/augmentation.py`
-
-### Train-Test Split
-
-Dataset split into:
-- **70% Training**, **15% Validation**, **15% Testing**.  
-- **Seed Values**: 42, 570, 1073 (for reproducibility).  
-
-**Code Reference**:  
-`data_preprocessing/split.py`
+These data transformations were applied exclusively to the training set to avoid data leakage and to make sure that the validation and test sets accurately reflect the model's performance on real-world data. Furthermore, to prevent order bias or the bias in which the sequence in the training data is seen by a model, which may influence the model's learning process, we only shuffle the training set and not the validation or test set. We should not shuffle the validation or test set to ensure reproducibility and consistency during model evaluation and inference. In our case, the labels, the writers' names, are one-hot-encoded for later use with our categorical cross-entropy loss function.
 
 ---
 
-## 3. Models and Architectures
+## 🧱 2. Proposed Architecture
 
-### Baseline Model
+This section describes our proposed architecture for writer identification, including both the standard (no-attention) and attention-enhanced variants. The pipeline is illustrated in Figure 1, and shows both versions. The overall pipeline consists of three main stages: feature extraction, encoding, and classification, integrated into a single end-to-end system.
 
-Our architecture is a custom design based on the optimized Deep-TEN architecture by Chammas et al. ([link to paper](#)). We recreated and modified the architecture to better suit our objectives.
+### 2.1 Overall Design
 
+Our architecture builds on the Deep-TEN framework by Chammas et al. (), which we recreated and modified for improved generalization and deployment efficiency. The final model is composed of the following stages:
 
-Key modifications include:
+1. **Convolutional Backbone**: A CNN (ResNet50, DenseNet201, or Xception) extracts hierarchical features from the 224×224 input image.
+2. **L2-Normalization**: Applied to ensure scale-invariant features.
+3. **Spatial Pyramid Pooling (SPP)**: Provides fixed-length feature maps by aggregating local features across multiple scales.
+4. **Feature Aggregation**:
 
-- Relocating the SPP layer after convolution and L2-normalization layers for better generalization and reduced redundancy.
-- Adding a dense layer with 512 neurons, a dropout layer, and another L2-normalization layer to create compact representations and mitigate overfitting.
-- Incorporating L2-regularization and replacing triplet loss with categorical cross-entropy for enhanced training efficiency and robustness.
+   * **NetVLAD** aggregates local descriptors into a compact global representation.
+   * **Attention Mechanisms** (for attention-based models only) further refine the global features through self- and cross-attention.
+5. **Dense Layers**: A fully connected layer (512 units), followed by dropout and L2-normalization, generates the final feature embedding.
+6. **Classification Head**: Outputs writer probabilities using a softmax activation function with categorical cross-entropy loss.
 
-To capture the sequential and contextual nature of handwriting, attention mechanisms were added to enhance feature representations. These include:
+### 2.2 Key Modifications from Deep-TEN
+- Repositioned the Spatial Pyramid Pooling (SPP) layer after the L2-normalization layer for improved generalization.
+- Used categorical cross-entropy instead of triplet loss for training efficiency and stability.
+* Introduced L2-regularization to mitigate overfitting.
+* Added a compact dense layer and dropout before the classification head.
 
-1. **Self-Attention**: After refining local features through convolution, L2-normalization, and Layer Normalization.
-2. **Self-Attention**: After layer-normalized outputs of the SPP layer.
-3. **Cross-Attention**: Between the NetVLAD layer and the refined local features of ResNet50.
+### 2.3 Attention-Based Enhancements
+
+To better capture the contextual and sequential nature of handwriting, we introduced the following attention modules:
+
+1. **Self-Attention I:**  After refining local features through convolution, L2-normalization, and Layer Normalization.
+2. **Self-Attention II**: After layer-normalized outputs of the SPP layer.
+3. **Cross-Attention**: Between NetVLAD and the base CNN features using dense QKV projections.
 
 Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$) for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
 
----
+### 2.4 Model Configurations and Training Regimes
 
-### Feature Extractors and Variations
+We evaluated the following backbones:
 
-We experimented with:
+* ResNet50
+* DenseNet201
+* Xception
+* MobileNetV3-Large (for future deployment on edge devices)
 
-- **ResNet50**, **DenseNet201**, **Xception**, and **MobileNetV3-Large** (for mobile deployment and quantization).
+We evaluated 14 architectural variations combining different levels of attention, training regimes, and fine-tuning depths. The configurations, as used in experiments, are listed below in their exact form:
 
-Training variations included:
+1. Frozen + No Attention (Baseline)  
+2. Frozen + Attention  
+3. Fine-tuned + Last Layer + No Attention  
+4. Fine-tuned + Last Layer + Attention  
+5. Fine-tuned + Last 5 Layers + No Attention  
+6. Fine-tuned + Last 5 Layers + Attention  
+7. Fine-tuned + Last 10 Layers + No Attention  
+8. Fine-tuned + Last 10 Layers + Attention  
+9. Fine-tuned + Last 25 Layers + No Attention  
+10. Fine-tuned + Last 25 Layers + Attention  
+11. Fine-tuned + No Attention  
+12. Fine-tuned + Attention  
+13. From Scratch + No Attention  
+14. From Scratch + Attention
 
-1. **Frozen Weights (No Attention)**
-2. **Frozen Weights (With Attention)**
-3. **Training From Scratch (No Attention)**
-4. **Training From Scratch (With Attention)**
-5. **Full Fine-Tuning (No Attention)**
-6. **Full Fine-Tuning (With Attention)**
-7. **Fine-Tuned ImageNet (Last Layer, No Attention)**
-8. **Fine-Tuned ImageNet (Last Layer, With Attention)**
-9. **Fine-Tuned ImageNet (Last 5 Layers, No Attention)**
-10. **Fine-Tuned ImageNet (Last 5 Layers, With Attention)**
+Each configuration was evaluated across three random seeds (42, 570, 1073) to ensure statistical robustness.
 
-Each experiment was repeated three times with different seeds to ensure robustness. Results were tracked systematically.
 
----
+### 2.5 Training Setup and Hyperparameters
 
-### Model Training Details
+The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data (This train-val-test split was achieved using Scikit-learn's `train_test_split` function, where we first split the data into a 70-30 split, then split the 30\% into half for validation and testing data). Key training hyperparameters are summarized below:
 
-The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data (This train-val-test split was achieved using Scikit-learn's train\_test\_split function, where we first split the data into a 70-30 split, then split the 30\% into half for validation and testing data). Training spanned 450 epochs using the Adam optimizer with an initial learning rate of . Key training hyperparameters are summarized below:
-
-**GENERAL TRAINING HYPERPARAMETERS**
+**Table 7. General Hyperparameters**
 
 | Parameter                    | Value                     |
 | ---------------------------- | ------------------------- |
@@ -245,7 +248,7 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | Dropout Rate                 | 0.5                       |
 | L2-Regularization            | 1 × 10−4                  |
 
-**LEARNING RATE SCHEDULER PARAMETERS**
+**Table 8. Learning Rate Scheduler**
 
 | Parameter                  | Value             |
 | -------------------------- | ----------------- |
@@ -255,7 +258,7 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | Mode                       | Max               |
 | Minimum Learning Rate      | 1 × 10−8          |
 
-**EARLY STOPPING PARAMETERS**
+**Table 9. Early Stopping**
 
 | Parameter               | Value               |
 | ----------------------- | ------------------- |
@@ -264,23 +267,61 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | Mode                    | Max                 |
 
 **Additional Callbacks**:
-We employed callbacks like periodic model checkpointing every 50 epochs, displaying training metrics, and clearing Jupyter Notebook outputs every 10 epochs for clarity. 
+To complement the training process, we employed several callback functions. These included periodic model checkpointing every 50 epochs to save intermediate models, outputting training metrics for each epoch, and clearing displayed outputs in the Jupyter Notebook every 10 epochs to improve readability during training.
 
-(To complement the training process, we employed several callback functions. These included periodic model checkpointing every 50 epochs to save intermediate models, outputting training metrics for each epoch, and clearing displayed outputs in the Jupyter Notebook every 10 epochs to improve readability during training.)
 
+
+### 2.6 Experimental Setup
+
+All experiments were conducted using two NVIDIA A100 (SXM4) Tensor Core GPUs, each equipped with 80 GB of memory. One GPU was accessed remotely through the American University of Sharjah's (AUS) Computer Science and Engineering (CSE) Artificial Intelligence (AI) Lab, while the other was rented via the RunPod platform to facilitate parallel runs of different models and seeds. The training setup utilized Python 3 and TensorFlow tools and libraries, running on Ubuntu 24.04.1. CUDA version 12.4 and cuDNN were employed to optimize GPU computations, ensuring efficient use of resources. Training times varied depending on factors such as the model's configuration and the sharing of CPU usage on the AUS CSE AI Lab's A100. These details are summarized in Table 10 below.
+
+**Table 10. Average Training Time per Configuration**
+
+| **Model Configuration**                     | **Average Training Time**    |
+|---------------------------------------------|-------------------------------|
+| ResNet50 + Frozen (Baseline)                | 8 hrs 19 min 29 sec           |
+| ResNet50 + Attention (Frozen)               | 7 hrs 3 min 13 sec            |
+| DenseNet201 + Attention (Frozen)            | 7 hrs 19 min 12 sec           |
+| Xception + Attention (From Scratch)         | 7 hrs 35 min 20 sec           |
+| Xception + Attention (Finetuned)            | 6 hrs 55 min 40 sec           |
+| Xception + Attention (Frozen)               | 7 hrs 46 min 16 sec           |
+
+
+### 2.7 Custom Layer Serialization
+
+A notable challenge we encountered during experimentation was ensuring that full models could be loaded seamlessly to either resume training or obtain evaluation metrics. This difficulty arose because we defined custom layers for `SPP`, `NetVLAD`, and `L2Normalization`, which required careful handling to guarantee compatibility with TensorFlow’s serialization and deserialization mechanisms.
+
+To address this, each custom layer was implemented with the necessary methods to support full serialization. The `get_config()` method was defined to store initialization parameters and ensure that layer configurations could be correctly reconstructed when loading the model. We also used the `@tf.keras.utils.register_keras_serializable()` decorator to make the custom layers recognizable by TensorFlow's saving and loading routines.
+
+The `call()` method defined the forward pass logic, ensuring consistency during both training and inference. For layers with trainable parameters—such as `NetVLAD`—the `build()` method was used to initialize weights appropriately, enabling proper reconstruction during deserialization. By adhering to these practices, our custom layers were seamlessly integrated into TensorFlow workflows, supporting robust training, evaluation, and deployment across different environments.
 
 ---
 
-## 4. Evaluation Metrics
-The following metrics were used for evaluation:
-1. **Accuracy**: Proportion of correct classifications.  
-2. **Macro F1-Score**: Harmonic mean of precision and recall, averaged across classes.  
-3. **Top-5 Accuracy**: Probability of the correct class being in the top-5 predictions.  
+## 🛠️ 3. Reproducibility and Setup
 
-**Code Reference**:  
-`evaluation/`
+### Setup and Installation
+
+```bash
+conda env create -f PROJtfgpu310.yml
+conda activate PROJtfgpu310.yml
+```
+
+
+### 🏋️ Training Instructions
+
+Training scripts are available in the `models/` directory. Each model configuration is defined in its own python script.
+
+#### Example: Train DenseNet201 with Attention (Frozen)
+
+
+
+#### Evaluation
+```bash
+python evaluation/evaluate.py --config configs/eval_config.yaml
+```
 
 ---
+
 
 ## 5. Experimental Results
 
@@ -290,60 +331,8 @@ The following metrics were used for evaluation:
 | DenseNet201         | 87.5             | 86.3         | 94.8                   |
 | Xception            | 88.2             | 87.8         | 95.2                   |
 
-### Experimental Conditions
 
-To ensure the robustness of the model, we repeated the entire training process using three different random seeds: 42, 570, and 1073. This produced three distinct models for the same architecture, allowing us to compute the average and standard deviation of evaluation metrics across all three runs. This approach helped verify the model’s stability and reliability when applied to real-world data.
-
-A notable challenge we encountered during experimentation was ensuring that full models could be loaded seamlessly to either resume training or obtain evaluation metrics. This difficulty arose because we defined custom layers for SPP, NetVLAD, and L2-normalization, requiring careful handling to guarantee compatibility with TensorFlow’s serialization and deserialization framework. To address this, each custom layer was implemented with the necessary methods to enable full serialization and deserialization. 
-
-The \begin{small}\texttt{get\_config()}\end{small} method was included to store initialization parameters, making sure that the layer configurations could be correctly reconstructed. Additionally, the \begin{small}\texttt{@tf.keras.utils.register\_keras\_serializable()}\end{small} decorator was applied to make these layers recognizable by TensorFlow's saving and loading mechanisms. The \texttt{call()} method defined the forward pass logic, ensuring consistency during both training and inference. For layers with trainable parameters, such as NetVLAD, the \texttt{build()} method was used to initialize the weights, allowing for proper reconstruction when the model was reloaded. By adhering to these practices, our custom layers were seamlessly integrated into TensorFlow workflows, enabling efficient experimentation and deployment across various setups.
-
-
----
-
-## 6. Repository File Structure
-
-```
-Writer-Identification/
-├── manual_labeling/
-├── data_preprocessing/
-├── models/
-├── evaluation/
-├── environment.yaml
-├── requirements.txt
-├── README.md
-├── LICENSE
-```
-
----
-
-## 7. Reproducibility and Setup
-
-### Setup and Installation
-
-```bash
-conda env create -f environment.yaml
-conda activate writer-id
-```
-
-### Reproducing Results
-
-#### Preprocessing
-```bash
-python data_preprocessing/preprocess_pipeline.py
-```
-
-#### Training
-```bash
-python models/train.py --config configs/train_config.yaml
-```
-
-#### Evaluation
-```bash
-python evaluation/evaluate.py --config configs/eval_config.yaml
-```
-
----
+----
 
 ## 8. Citation
 ```bibtex
