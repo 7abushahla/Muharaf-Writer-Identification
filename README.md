@@ -202,7 +202,18 @@ To better capture the contextual and sequential nature of handwriting, we introd
 
 Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$) for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
 
-### 2.4 Model Configurations and Training Regimes
+
+### 2.4 Custom Modifications to SPP and NetVLAD
+To adapt the architecture for better performance and compatibility with attention modules, we introduce key modifications to both the Spatial Pyramid Pooling (SPP) and NetVLAD layers.
+
+* **Modified SPP**: In the original SPP design, multi-scale max pooling is applied across the feature map, and the resulting pooled outputs are flattened and concatenated into a single vector. In contrast, our modified version retains the spatial structure of the pooled outputs. After applying max pooling at different scales (such as 1×1, 2×2, and 4×4), we upsample each pooled output back to the original spatial resolution. These upsampled outputs are then concatenated along the channel dimension, forming a multi-scale feature map that maintains consistent spatial dimensions across all inputs. This design is particularly beneficial for attention-based models, as it preserves the alignment required for self-attention and cross-attention operations, while also capturing both fine and coarse-grained context.
+
+* **Modified NetVLAD**: The original NetVLAD layer computes soft assignments using a learnable 1×1 convolution layer, which introduces extra parameters and computational cost. In our modification, we simplify this by removing the learnable assignment layer and instead computing similarity scores using a dot product between each local feature descriptor and a set of learnable cluster centers. Both the features and cluster centers are normalized beforehand, so this dot product effectively measures cosine similarity. These similarity scores are softmax-normalized to produce soft assignments indicating how much each feature belongs to each cluster. Residuals between features and their assigned centers are then aggregated, followed by normalization steps to yield a compact and discriminative global descriptor. This approach not only simplifies the computation but also improves compatibility with deployment on resource-constrained devices.
+
+Figures illustrating the updated SPP and NetVLAD modules are provided below.
+
+
+### 2.5 Model Configurations and Training Regimes
 
 We evaluated the following backbones:
 
@@ -231,7 +242,7 @@ We evaluated 14 architectural variations combining different levels of attention
 Each configuration was evaluated across three random seeds (42, 570, 1073) to ensure statistical robustness.
 
 
-### 2.5 Training Setup and Hyperparameters
+### 2.6 Training Setup and Hyperparameters
 
 The model was trained on 70% of the data, validated on 15%, and tested on the remaining 15% to ensure unseen test data (This train-val-test split was achieved using Scikit-learn's `train_test_split` function, where we first split the data into a 70-30 split, then split the 30\% into half for validation and testing data). Key training hyperparameters are summarized below:
 
@@ -241,12 +252,12 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | ---------------------------- | ------------------------- |
 | Optimizer                    | Adam                      |
 | Loss Function                | Categorical Cross-Entropy |
-| Initial Learning Rate        | 1 × 10−3                  |
+| Initial Learning Rate        | $1 × 10^{-3}$                  |
 | Batch Size                   | 256                       |
 | Number of Clusters (NetVLAD) | 64                        |
 | Number of Epochs             | 450                       |
 | Dropout Rate                 | 0.5                       |
-| L2-Regularization            | 1 × 10−4                  |
+| L2-Regularization            | $1 × 10^{-4}$                  |
 
 **Table 8. Learning Rate Scheduler**
 
@@ -256,7 +267,7 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 | Scheduler Reduction Factor | 0.5               |
 | Scheduler Patience         | 10 epochs         |
 | Mode                       | Max               |
-| Minimum Learning Rate      | 1 × 10−8          |
+| Minimum Learning Rate      | $1 × 10^{-8}$          |
 
 **Table 9. Early Stopping**
 
@@ -270,24 +281,30 @@ The model was trained on 70% of the data, validated on 15%, and tested on the re
 To complement the training process, we employed several callback functions. These included periodic model checkpointing every 50 epochs to save intermediate models, outputting training metrics for each epoch, and clearing displayed outputs in the Jupyter Notebook every 10 epochs to improve readability during training.
 
 
-
-### 2.6 Experimental Setup
+### 2.7 Experimental Setup
 
 All experiments were conducted using two NVIDIA A100 (SXM4) Tensor Core GPUs, each equipped with 80 GB of memory. One GPU was accessed remotely through the American University of Sharjah's (AUS) Computer Science and Engineering (CSE) Artificial Intelligence (AI) Lab, while the other was rented via the RunPod platform to facilitate parallel runs of different models and seeds. The training setup utilized Python 3 and TensorFlow tools and libraries, running on Ubuntu 24.04.1. CUDA version 12.4 and cuDNN were employed to optimize GPU computations, ensuring efficient use of resources. Training times varied depending on factors such as the model's configuration and the sharing of CPU usage on the AUS CSE AI Lab's A100. These details are summarized in Table 10 below.
 
 **Table 10. Average Training Time per Configuration**
 
-| **Model Configuration**                     | **Average Training Time**    |
-|---------------------------------------------|-------------------------------|
-| ResNet50 + Frozen (Baseline)                | 8 hrs 19 min 29 sec           |
-| ResNet50 + Attention (Frozen)               | 7 hrs 3 min 13 sec            |
-| DenseNet201 + Attention (Frozen)            | 7 hrs 19 min 12 sec           |
-| Xception + Attention (From Scratch)         | 7 hrs 35 min 20 sec           |
-| Xception + Attention (Finetuned)            | 6 hrs 55 min 40 sec           |
-| Xception + Attention (Frozen)               | 7 hrs 46 min 16 sec           |
+| **Model Configuration**                    | ResNet50            | DenseNet201   | Xception            | MobileNetV3-Large   |
+|:-------------------------------------------|:--------------------|:--------------|:--------------------|:--------------------|
+| Frozen + No Attention (Baseline)           | 8 hrs 19 min 29 sec | 8:50:46           | 7:25:29                 | N/A                 |
+| Frozen + Attention                         | 7 hrs 3 min 13 sec  | 7:19:12           | 7:46:16                | N/A                 |
+| Fine-tuned + Last Layer + No Attention     | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last Layer + Attention        | 7:20:02                 | 7:54:17           | 7:55:02                 | N/A                 |
+| Fine-tuned + Last 5 Layers + No Attention  | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last 5 Layers + Attention     | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last 10 Layers + No Attention | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last 10 Layers + Attention    | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last 25 Layers + No Attention | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + Last 25 Layers + Attention    | N/A                 | N/A           | N/A                 | N/A                 |
+| Fine-tuned + No Attention                  | 7:07:02                 | 7:45:56          | 8:40:30                | N/A                 |
+| Fine-tuned + Attention                     | 5:55:00                 | 6:50:51           | 6 hrs 55 min 40 sec | N/A                 |
+| From Scratch + No Attention                | 8:18:32                 | 7:56:10           | 8:49:11 | N/A                 |
+| From Scratch + Attention                   | 9:05:55                 | 7:09:54           | 7 hrs 35 min 20 sec | N/A                 |
 
-
-### 2.7 Custom Layer Serialization
+### 2.8 Custom Layer Serialization
 
 A notable challenge we encountered during experimentation was ensuring that full models could be loaded seamlessly to either resume training or obtain evaluation metrics. This difficulty arose because we defined custom layers for `SPP`, `NetVLAD`, and `L2Normalization`, which required careful handling to guarantee compatibility with TensorFlow’s serialization and deserialization mechanisms.
 
@@ -309,48 +326,75 @@ conda activate PROJtfgpu310.yml
 
 ### 🏋️ Training Instructions
 
-Training scripts are available in the `models/` directory. Each model configuration is defined in its own python script.
+All training scripts are organized under the `models/` directory. Each model configuration has its own subfolder, named clearly to reflect the architecture, training strategy, and attention mechanism.
 
-#### Example: Train DenseNet201 with Attention (Frozen)
+For example:
 
-
-
-#### Evaluation
-```bash
-python evaluation/evaluate.py --config configs/eval_config.yaml
 ```
+models/
+├── ResNet50 + From Scratch + No Attention/
+│   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 42 450 Epochs EarlyStop 50.py
+│   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 570 450 Epochs EarlyStop 50.py
+│   └── ResNet50 - E2E WriterIdent - From Scratch - Seed 1073 450 Epochs EarlyStop 50.py
+├── Xception + Fine-Tuned + Attention/
+│   ├── ...
+```
+
+The naming format of the files follows this pattern:
+```
+<ModelName> - E2E WriterIdent - <Training Strategy> - Seed <Seed> <Epochs> Epochs EarlyStop <Patience>.py
+```
+Each script includes the full training pipeline with:
+
+- Model initialization (feature extractor, NetVLAD/SPP/L2Norm layers)
+- Loss function and optimizer setup
+- Dataset loading and augmentation
+- Callbacks (EarlyStopping, ReduceLROnPlateau, Checkpointing, Logging)
+- Evaluation and metrics tracking
+
+This modular layout makes it easy to locate and reproduce any experiment.
+
+### 🔁 Batch Training Utility
+
+To streamline experimentation and avoid manual starting/stopping, we also provide a script `run_files.py` that allows running multiple training scripts one after another while logging their output and releasing GPU memory.
+
+#### 📌 Example Usage
+
+```bash
+(PROJtfgpu310) python run_files.py "models/ResNet50 + From Scratch + No Attention/ResNet50 - E2E WriterIdent - From Scratch - Seed 42 450 Epochs EarlyStop 50.py" "models/ResNet50 + From Scratch + No Attention/ResNet50 - E2E WriterIdent - From Scratch - Seed 570 450 Epochs EarlyStop 50.py"
+```
+
+Each script's output is logged to a separate `.log` file with the same base name. The script automatically handles:
+
+- Execution time logging (start, end, and duration).
+- Output redirection to log files.
+- GPU memory release by terminating the completed process.
 
 ---
 
 
-## 5. Experimental Results
+## 4. Experimental Results
 
-| **Model**           | **Accuracy (%)** | **Macro F1** | **Top-5 Accuracy (%)** |
-|----------------------|------------------|--------------|-------------------------|
-| ResNet50 (Baseline) | 85.3             | 84.1         | 93.4                   |
-| DenseNet201         | 87.5             | 86.3         | 94.8                   |
-| Xception            | 88.2             | 87.8         | 95.2                   |
+
 
 
 ----
 
-## 8. Citation
+## 📚 Citation & Reaching out
+If you find our work useful in your research, please consider citing it using the following:
 ```bibtex
 @article{abushahla2025writerid,
   title={Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts},
   author={Hamza A. Abushahla, Ariel J.N. Panopio, Layth M. Al-Khairulla, Mohamed I. AlHajri},
-  journal={IEEE Access},
+  journal={},
   year={2025}
 }
 ```
 
----
+For questions, collaborations, or feedback, feel free to reach out via email:
 
-## 9. Contact
-
-For inquiries, contact:  
-**Ariel Justine Panopio**  
-Email: [b00088568@aus.edu](mailto:b00088568@aus.edu)
-
+* **Hamza Abushahla** — `b00090279@alumni.aus.edu`
+* **Ariel Justine Panopio** — `b00088568@alumni.aus.edu`
+* **Dr. Mohamed AlHajri** — `mialhajri@aus.edu`
 
 
