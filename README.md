@@ -174,11 +174,11 @@ This section describes our proposed architecture for writer identification, incl
 
 ### 2.1 Overall Design
 
-Our architecture builds on the Deep-TEN framework by Chammas et al. (), which we recreated and modified for improved generalization and deployment efficiency. The final model is composed of the following stages:
+Our architecture builds on the Deep-TEN framework by Chammas et al.[^1], which we recreated and modified for improved generalization and deployment efficiency. The final model is composed of the following stages:
 
 1. **Convolutional Backbone**: A CNN (ResNet50, DenseNet201, or Xception) extracts hierarchical features from the 224×224 input image.
 2. **L2-Normalization**: Applied to ensure scale-invariant features.
-3. **Spatial Pyramid Pooling (SPP)**: Provides fixed-length feature maps by aggregating local features across multiple scales.
+3. **Spatial Pyramid Pooling (SPP)**: Provides fixed-size feature maps by aggregating local features across multiple scales.
 4. **Feature Aggregation**:
 
    * **NetVLAD** aggregates local descriptors into a compact global representation.
@@ -206,9 +206,9 @@ Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$
 ### 2.4 Custom Modifications to SPP and NetVLAD
 To adapt the architecture for better performance and compatibility with attention modules, we introduce key modifications to both the Spatial Pyramid Pooling (SPP) and NetVLAD layers.
 
-* **Modified SPP**: In the original SPP design, multi-scale max pooling is applied across the feature map, and the resulting pooled outputs are flattened and concatenated into a single vector. In contrast, our modified version retains the spatial structure of the pooled outputs. After applying max pooling at different scales (such as 1×1, 2×2, and 4×4), we upsample each pooled output back to the original spatial resolution. These upsampled outputs are then concatenated along the channel dimension, forming a multi-scale feature map that maintains consistent spatial dimensions across all inputs. This design is particularly beneficial for attention-based models, as it preserves the alignment required for self-attention and cross-attention operations, while also capturing both fine and coarse-grained context.
+* **Modified SPP**: In the original SPP design[^2], multi-scale max pooling is applied across the feature map, and the resulting pooled outputs are flattened and concatenated into a single vector. In contrast, our modified version retains the spatial structure of the pooled outputs. After applying max pooling at different scales (such as 1×1, 2×2, and 4×4), we upsample each pooled output back to the original spatial resolution. These upsampled outputs are then concatenated along the channel dimension, forming a multi-scale feature map that maintains consistent spatial dimensions across all inputs. This design is particularly beneficial for attention-based models, as it preserves the alignment required for self-attention and cross-attention operations, while also capturing both fine and coarse-grained context.
 
-* **Modified NetVLAD**: The original NetVLAD layer computes soft assignments using a learnable 1×1 convolution layer, which introduces extra parameters and computational cost. In our modification, we simplify this by removing the learnable assignment layer and instead computing similarity scores using a dot product between each local feature descriptor and a set of learnable cluster centers. Both the features and cluster centers are normalized beforehand, so this dot product effectively measures cosine similarity. These similarity scores are softmax-normalized to produce soft assignments indicating how much each feature belongs to each cluster. Residuals between features and their assigned centers are then aggregated, followed by normalization steps to yield a compact and discriminative global descriptor. This approach not only simplifies the computation but also improves compatibility with deployment on resource-constrained devices.
+* **Modified NetVLAD**: The original NetVLAD layer[^3] computes soft assignments using a learnable 1×1 convolution layer, which introduces extra parameters and computational cost. In our modification, we simplify this by removing the learnable assignment layer and instead computing similarity scores using a dot product between each local feature descriptor and a set of learnable cluster centers. Both the features and cluster centers are normalized beforehand, so this dot product effectively measures cosine similarity. These similarity scores are softmax-normalized to produce soft assignments indicating how much each feature belongs to each cluster. Residuals between features and their assigned centers are then aggregated, followed by normalization steps to yield a compact and discriminative global descriptor. This approach not only simplifies the computation but also improves compatibility with deployment on resource-constrained devices.
 
 Figures illustrating the updated SPP and NetVLAD modules are provided below.
 
@@ -411,6 +411,11 @@ For questions, collaborations, or feedback, feel free to reach out via email:
 
 * **Hamza Abushahla** — `b00090279@alumni.aus.edu`
 * **Ariel Justine Panopio** — `b00088568@alumni.aus.edu`
+* **Layth Al-Khairulla** — `b00087225@alumni.aus.edu`
 * **Dr. Mohamed AlHajri** — `mialhajri@aus.edu`
 
 
+
+[^1]: https://link.springer.com/article/10.1007/s11042-023-17303-8
+[^2]: https://ieeexplore.ieee.org/abstract/document/7005506
+[^3]: https://ieeexplore.ieee.org/abstract/document/7937898
