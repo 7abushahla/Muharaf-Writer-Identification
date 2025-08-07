@@ -1,50 +1,57 @@
 # Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts
 
-This repository contains the full implementation and supplementary materials for the paper: **[Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts](url)**
+_Hamza A. Abushahla, Ariel Justine Navarro Panopio, Layth Al-Khairulla, and Dr. Mohamed I. AlHajri_
 
-**Authors:** Hamza Ahmed Abushahla, Ariel Justine Navarro Panopio, Layth Al-Khairulla, Mohamed I. AlHajri
+This repository contains the full implementation and supplementary materials for our paper, **Different Strokes for Different Folks: Writer Identification for Historical Arabic Manuscripts**. It includes all code, configurations, and documentation needed to reproduce the experiments and extend the methodology — as well as full access to our manually curated dataset and labeling effort.
 
-This repository showcases the tools, methods, and results behind our work on writer identification in historical Arabic manuscripts, using the **[Muharaf Dataset](https://github.com/MehreenMehreen/muharaf)**. It provides everything needed to reproduce our experiments and extend the methodology.
+<div align="center">
+  <img src="figures/proposed_model.jpg" height="350px" alt="Khat 1" />
+</div>
+<p align="center"><em>Figure 1: Proposed end-to-end architecture illustrating both the attention-based and no-attention variants. The dashed
+blocks and arrows represent the optional attention path, which is active only in the attention-based version.</em></p>
 
-### What’s Included:
-- A **manual labeling process** showcasing how the dataset was prepared and optimized for the writer identification task, including methods to clean and expand the metadata and ensure consistency.
-- **Data preprocessing pipelines** describing the steps to prepare the dataset for training, including image resizing, normalization, data augmentation, and train-validation-test splitting.
-- Comprehensive implementations of **baseline and advanced models**, showcasing the architectures used and enhancements like self-attention and cross-attention mechanisms for improved writer identification performance.
-- Scripts demonstrating the process for **model training and evaluation**, with detailed metric computations and aids for reproducibility to facilitate experimentation.
-- **Benchmark results** summarizing the performance of models and configurations on writer identification tasks, providing insights and pre-trained checkpoints for further research.  
- 
-This repository serves as a comprehensive resource for researchers interested in handwriting recognition, writer identification, or historical document analysis.
 
----
+## 📌 Overview
 
-## Table of Contents
+This work presents the **first** application of the **[Muharaf dataset](https://github.com/MehreenMehreen/muharaf)** for **writer identification** on historical Arabic manuscripts. Our contributions can be summarized as follows:
 
-1. [Data Labeling and Preparation](#1-Data-Labeling-and-Preparation)  
-    - [Dataset Metadata and Excel File](#dataset-metadata-and-excel-file)  
-    - [Duplicate Detection](#duplicate-detection)  
-    - [Error Corrections and Final Dataset](#error-corrections-and-final-dataset)  
-2. [Data Preprocessing](#2-data-preprocessing)  
-    - [Resizing and Normalization](#resizing-and-normalization)  
-    - [Augmentation Techniques](#augmentation-techniques)  
-    - [Train-Test Split](#train-test-split)  
-3. [Models and Architectures](#3-models-and-architectures)  
-    - [Baseline Model](#baseline-model)  
-    - [Variations: Feature Extractors and Attention](#variations-feature-extractors-and-attention)  
-4. [Evaluation Metrics](#4-evaluation-metrics)  
-5. [Experimental Results](#5-experimental-results)  
-6. [Repository File Structure](#6-repository-file-structure)  
-7. [Reproducibility and Setup](#7-reproducibility-and-setup)  
-    - [Setup and Installation](#setup-and-installation)  
-    - [Reproducing Results](#reproducing-results)  
-8. [Citation](#8-citation)  
-9. [Contact](#9-contact)  
-
+- We manually verified and labeled a substantial chunk of the public portion of the Muharaf dataset, significantly expanding the amount of labeled data from 6,858 lines (28.00\%) to 21,249 lines (86.75\%), thereby enhancing its applicability for supervised learning and writer identification.
+- We developed an end-to-end CNN-based DL system with attention mechanisms for line-level writer identification in historical Arabic handwritten manuscripts, accommodating up to two authors per line.
+- We demonstrate that fine-tuning pre-trained feature extractors achieves performance that matches or surpasses that of non-fine-tuned models while significantly reducing training time.
+- We provide an in-depth analysis of the optimal number of layers to unfreeze during fine-tuning, showing that when executed correctly, fine-tuning far surpasses training from scratch---thereby highlighting the benefits of transfer learning.
+- We highlight the challenges and potential of leveraging partially annotated datasets, such as Muharaf, for writer identification, offering valuable insights for future research in writer identification and related domains.
+  
 ---
 
 
-## 1. Data Labeling and Preparation
+## 📂 1. Dataset and Manual Labeling Effort
 
-### Overview
+We provide our cleaned and labeled dataset through Google Drive:
+
+- 📦 **Lines folder**: [Download here](https://drive.google.com/file/d/1nyuI01sw17BObYh6N-eLFe4-1m-p2lq_/view?usp=sharing)
+- 📑 **Writer labels (`merged_writer.csv`)**: [Download here](https://drive.google.com/file/d/1phlCpHYRqa-9z8YQ5Wewg5VtkjjkfQFG/view?usp=share_link)
+
+After downloading, the folder structure should look something like:
+
+```bash
+Writer-Identification/
+├── Lines/
+│   ├── AF_279r/
+│   │   ├── AF_279r-1.png
+│   │   ├── AF_279r-2.png
+│   │   └── ...
+│   ├── AR51_008/
+│   │   ├── AR51_008-1.png
+│   │   ├── AR51_008-2.png
+│   │   └── ...
+│   └── ...
+├── merged_writer.csv
+└── ...
+```
+
+Each folder contains line-level images extracted from a page, and all lines in the same folder are assumed to be written by the same author. The `merged_writer.csv` file maps each image to its writer label.
+
+### 🖊️ Manual Labeling Overview
 
 The manual labeling process used the **public part of the Muharaf Dataset ([Muharaf-public](https://zenodo.org/records/11492215))**, which consisted of 1,216 pages. Of these, 309 pages had a writer tag, corresponding to 6,858 text lines and 94 unique writers. The remaining 907 pages, containing 17,637 text lines, lacked writer tags, necessitating manual intervention to expand the labeled data.
 
@@ -225,19 +232,12 @@ Dataset split into:
 
 Our architecture is a custom design based on the optimized Deep-TEN architecture by Chammas et al. ([link to paper](#)). We recreated and modified the architecture to better suit our objectives.
 
-Our proposed end-to-end architecture is shown below:
-
-![proposed_model](figures/proposed_model.png)
 
 Key modifications include:
 
 - Relocating the SPP layer after convolution and L2-normalization layers for better generalization and reduced redundancy.
 - Adding a dense layer with 512 neurons, a dropout layer, and another L2-normalization layer to create compact representations and mitigate overfitting.
 - Incorporating L2-regularization and replacing triplet loss with categorical cross-entropy for enhanced training efficiency and robustness.
-
----
-
-### Incorporating Attention Mechanisms
 
 To capture the sequential and contextual nature of handwriting, attention mechanisms were added to enhance feature representations. These include:
 
@@ -246,8 +246,6 @@ To capture the sequential and contextual nature of handwriting, attention mechan
 3. **Cross-Attention**: Between the NetVLAD layer and the refined local features of ResNet50.
 
 Dense layers were introduced to align queries ($Q$), keys ($K$), and values ($V$) for cross-attention. The architecture integrates ResNet50, DenseNet201, and Xception as feature extractors.
-
-![attention_mode](figures/attention_model.png)
 
 ---
 
