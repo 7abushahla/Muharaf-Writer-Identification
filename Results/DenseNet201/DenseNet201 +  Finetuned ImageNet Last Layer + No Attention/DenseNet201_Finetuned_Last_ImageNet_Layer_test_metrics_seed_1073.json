@@ -1,0 +1,1 @@
+{"test_loss": 0.5697534084320068, "test_accuracy": 0.8648648858070374, "test_top_5_accuracy": 0.9666549563407898, "test_precision": 0.7323514819145203, "test_recall": 0.660149335861206, "test_f1_score": 0.6943784356117249}
