@@ -113,8 +113,8 @@ Key steps included:
 We identified errors in the original dataset during label verification. For example:
 - A labeled page attributed to "Father Youssef Baissary" (`JoM_Kobayat_002`) was corrected to "Father Youhanna Habib Baissary" after verifying handwriting and cross-referencing with other pages.
 - When cross-referencing this with other pages from the unlabeled portion of the dataset, we found identical handwriting and signature instances. For example:
-  - `JoM_Kobayat_0567`: Example of a similar signature transcribed as "al-Khoori Youhanna Habib" in the unlabeled portion.
-  - `JoM_Kobayat_0548`: Example of the full name and title "al-Khoori Youhanna Habib al-Baissary" found in the unlabeled portion.
+  - `JoM_Kobayat_0567`: Example of a similar signature transcribed as "Al-Khoori Youhanna Habib" in the unlabeled portion.
+  - `JoM_Kobayat_0548`: Example of the full name and title "Al-Khoori Youhanna Habib Al-Baissary" found in the unlabeled portion.
 
 Additionally, transliterations were aligned with biblical origins (e.g., "Yousef" corresponds to "Joseph," not "John") to ensure consistency and accuracy in the dataset.
 
@@ -347,12 +347,22 @@ For example:
 
 ```
 models/
-├── ResNet50 + From Scratch + No Attention/
-│   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 42 450 Epochs EarlyStop 50.py
-│   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 570 450 Epochs EarlyStop 50.py
-│   └── ResNet50 - E2E WriterIdent - From Scratch - Seed 1073 450 Epochs EarlyStop 50.py
-├── Xception + Fine-Tuned + Attention/
-│   ├── ...
+├── ResNet50/
+│   ├── ResNet50 + From Scratch + No Attention/
+│   │   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 42 450 Epochs EarlyStop 50.py
+│   │   ├── ResNet50 - E2E WriterIdent - From Scratch - Seed 570 450 Epochs EarlyStop 50.py
+│   │   └── ResNet50 - E2E WriterIdent - From Scratch - Seed 1073 450 Epochs EarlyStop 50.py
+│   ├── ResNet50 + Frozen + No Attention/
+│   │   ├── ...
+│   └── ...
+├── Xception/
+│   ├── Xception + Frozen + No Attention/
+│   │   ├── ...
+│   └── ...
+├── DenseNet201/
+│   └── ...
+├── MobileNetV3-Large/
+│   └── ...
 ```
 
 The naming format of the files follows this pattern:
