@@ -1,4 +1,13 @@
 #!/usr/bin/env python
+import sys
+
+# Add repo root to sys.path for shared utilities
+import os
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..", ".."))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
+from utils.page_disjoint import load_split_map, validate_split_map
 # coding: utf-8
 
 # In[1]:
@@ -346,8 +355,13 @@ def build_writer_identification_model(input_shape, num_clusters, num_classes):
 
 
 # Define the path to the main directory containing writer folders
-main_dir = './Lines'
-csv_file = 'merged_writer.csv'  # Update with the actual path to the CSV file
+main_dir = os.environ.get("LINES_DIR", "./Lines")
+csv_file = os.environ.get("MERGED_WRITER_CSV", "manual_labeling/merged_writer.csv")
+if not os.path.exists(csv_file) and os.path.exists("merged_writer.csv"):
+    csv_file = "merged_writer.csv"
+SPLIT_MODE = os.environ.get("SPLIT_MODE", "line")
+SPLIT_DIR = os.environ.get("SPLIT_DIR", "./splits")
+OUTPUT_PREFIX = "PD_" if SPLIT_MODE == "page_disjoint" else ""
 DIMENSIONS = 224
 EPOCHS = 450
 BATCH_SIZE = 256
@@ -376,6 +390,7 @@ current_label = 0
 # Initialize lists to store image data and labels
 images = []
 labels = []
+page_ids = []
 
 
 # In[15]:
@@ -456,6 +471,7 @@ from tensorflow.keras.applications.mobilenet_v3 import preprocess_input
 # Initialize lists to store images and labels
 images = []
 labels = []
+page_ids = []
 
 # Loop through each row in the CSV file
 for index, row in writer_data.iterrows():
@@ -494,7 +510,7 @@ for index, row in writer_data.iterrows():
                     # Append the image and the corresponding label
                     images.append(processed_img)
                     labels.append(writer_to_label[writer_name])
-
+                    page_ids.append(image_filename)
                     del img_array, processed_img
                 except Exception as e:
                     print(f"Error processing image {img_path}: {e}")             
@@ -550,21 +566,37 @@ print("Number of non-augmented data (total):", len(images))
 # In[23]:
 
 
-# First split: 70% training and 30% (validation + test)
-train_images, temp_images, train_labels, temp_labels = train_test_split(
-    images, labels, test_size=0.3, random_state=SEED, stratify=labels
-)
+# Split data (line-level or page-disjoint)
+page_ids = np.array(page_ids)
+if SPLIT_MODE == "page_disjoint":
+    split_map = load_split_map(SPLIT_DIR, SEED)
+    validate_split_map(split_map, page_ids)
+    split_labels = np.array([split_map[pid] for pid in page_ids])
+    train_mask = split_labels == "train"
+    val_mask = split_labels == "val"
+    test_mask = split_labels == "test"
 
+    train_images, train_labels = images[train_mask], labels[train_mask]
+    val_images, val_labels = images[val_mask], labels[val_mask]
+    test_images, test_labels = images[test_mask], labels[test_mask]
 
-# In[24]:
+    train_pages = len(set(page_ids[train_mask]))
+    val_pages = len(set(page_ids[val_mask]))
+    test_pages = len(set(page_ids[test_mask]))
+    print(f"Page-disjoint split pages: train={train_pages}, val={val_pages}, test={test_pages}")
+    print(f"Page-disjoint split lines: train={len(train_images)}, val={len(val_images)}, test={len(test_images)}")
+else:
+    # First split: 70% training and 30% (validation + test)
+    train_images, temp_images, train_labels, temp_labels = train_test_split(
+        images, labels, test_size=0.3, random_state=SEED, stratify=labels
+    )
 
-
-# Second split: Split the temporary set into 50% validation and 50% test
-# Since the temporary set is 30% of the original data,
-# this results in 15% validation and 15% test
-val_images, test_images, val_labels, test_labels = train_test_split(
-    temp_images, temp_labels, test_size=0.5, random_state=SEED, stratify=temp_labels
-)
+    # Second split: Split the temporary set into 50% validation and 50% test
+    # Since the temporary set is 30% of the original data,
+    # this results in 15% validation and 15% test
+    val_images, test_images, val_labels, test_labels = train_test_split(
+        temp_images, temp_labels, test_size=0.5, random_state=SEED, stratify=temp_labels
+    )
 
 
 # In[25]:
@@ -612,9 +644,11 @@ assert len(test_classes) <= num_classes, "Test set has more classes than expecte
 # In[28]:
 
 
-del images, labels, writer_data, csv_file, temp_images, temp_labels
-
-
+del images, labels, writer_data, csv_file
+if 'temp_images' in locals():
+    del temp_images, temp_labels
+if 'page_ids' in locals():
+    del page_ids
 # In[29]:
 
 
@@ -937,14 +971,14 @@ model.summary()
 clear_output_callback = ClearOutputEveryNEpochs(n=10)
 
 # Define ModelCheckpoint to save the best model based on F1-score
-checkpoint_path = f"ATTN_MobileNetV3_E2E_WriterIdent_best_model_val_f1_{SEED}.keras"
+checkpoint_path = f"{OUTPUT_PREFIX}ATTN_MobileNetV3_E2E_WriterIdent_best_model_val_f1_{SEED}.keras"
 checkpoint_callback = ModelCheckpoint(
     checkpoint_path, monitor='val_f1_score', save_best_only=True, mode='max', verbose=1
 )
 
 # Define the file path template for periodic checkpointing
 # Including epoch number in the filename to differentiate saved models
-periodic_checkpoint_path = f"ATTN_MobileNetV3_E2E_WriterIdent_Last_Saved_Epoch_{SEED}.keras"
+periodic_checkpoint_path = f"{OUTPUT_PREFIX}ATTN_MobileNetV3_E2E_WriterIdent_Last_Saved_Epoch_{SEED}.keras"
 
 # Initialize the PeriodicModelCheckpoint callback
 periodic_checkpoint_callback = PeriodicModelCheckpoint(
@@ -1145,7 +1179,7 @@ report_dict = classification_report(test_true_classes, test_pred_classes, target
 report_df = pd.DataFrame(report_dict).transpose()
 
 # Save the DataFrame to a CSV file
-report_df.to_csv(f'ATTN_MobileNetV3_classification_report_{SEED}.csv', index=True)
+report_df.to_csv(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_classification_report_{SEED}.csv', index=True)
 
 print(f"Final Classification Report saved as 'ATTN_MobileNetV3_classification_report_{SEED}.csv'.")
 
@@ -1154,7 +1188,7 @@ print(f"Final Classification Report saved as 'ATTN_MobileNetV3_classification_re
 
 
 # Save the history.history dictionary to a file
-with open(f'ATTN_MobileNetV3_history_seed_{SEED}.pkl', 'wb') as f:
+with open(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_history_seed_{SEED}.pkl', 'wb') as f:
     pickle.dump(history.history, f)
 
 # Save the evaluation metrics to a JSON file, including top-5 accuracy
@@ -1166,11 +1200,11 @@ test_metrics = {
     'test_recall': test_recall,
     'test_f1_score': test_f1_score
 }
-with open(f'ATTN_MobileNetV3_test_metrics_seed_{SEED}.json', 'w') as f:
+with open(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_test_metrics_seed_{SEED}.json', 'w') as f:
     json.dump(test_metrics, f)
 
 # Save the elapsed time to a file
-with open(f'ATTN_MobileNetV3_elapsed_time_seed_{SEED}.txt', 'w') as f:
+with open(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_elapsed_time_seed_{SEED}.txt', 'w') as f:
     f.write(str(elapsed_time))
 
 
@@ -1200,7 +1234,7 @@ plt.xlabel('Predicted Label')
 plt.ylabel('True Label')
 plt.title('Confusion Matrix on Test Set')
 # plt.show()
-plt.savefig(f'ATTN_MobileNetV3_confusion_matrix_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_confusion_matrix_{SEED}.png')
 # plt.close()
 
 
@@ -1223,7 +1257,7 @@ plt.title('Model Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Accuracy')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_accuracy_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_accuracy_{SEED}.png')
 plt.show()
 plt.close()
 
@@ -1241,7 +1275,7 @@ plt.title('Model Top-5 Accuracy')
 plt.xlabel('Epoch')
 plt.ylabel('Top-5 Accuracy')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_top_5_accuracy_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_top_5_accuracy_{SEED}.png')
 plt.show()
 plt.close()
 
@@ -1259,7 +1293,7 @@ plt.title('Model Loss')
 plt.xlabel('Epoch')
 plt.ylabel('Loss')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_loss_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_loss_{SEED}.png')
 plt.show()
 plt.close()
 
@@ -1277,7 +1311,7 @@ plt.title('Model F1 Score')
 plt.xlabel('Epoch')
 plt.ylabel('F1 Score')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_f1_score_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_f1_score_{SEED}.png')
 plt.show()
 plt.close()
 
@@ -1295,7 +1329,7 @@ plt.title('Model Precision')
 plt.xlabel('Epoch')
 plt.ylabel('Precision')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_precision_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_precision_{SEED}.png')
 plt.show()
 plt.close()
 
@@ -1313,7 +1347,7 @@ plt.title('Model Recall')
 plt.xlabel('Epoch')
 plt.ylabel('Recall')
 plt.legend()
-plt.savefig(f'ATTN_MobileNetV3_recall_{SEED}.png')
+plt.savefig(f'{OUTPUT_PREFIX}ATTN_MobileNetV3_recall_{SEED}.png')
 plt.show()
 plt.close()
 

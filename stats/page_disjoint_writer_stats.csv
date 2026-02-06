@@ -1,0 +1,538 @@
+seed,writer,pages_total,lines_total,pages_train,pages_val,pages_test,lines_train,lines_val,lines_test,min_lines_page,max_lines_page,splittable_3_way,has_val,has_test
+42,Malvina Choieree,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Your nephew Maroun,4,68,1,1,2,13,16,39,13,20,True,True,True
+42,Sister Victor N. Khoury,3,57,1,1,1,20,18,19,18,20,True,True,True
+42,Maroun Al-Khoury Maroun,2,37,1,0,1,18,0,19,18,19,False,False,True
+42,Father Youssef Nassar,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Shibli Barakat witnesses,1,11,1,0,0,11,0,0,11,11,False,False,False
+42,Mousssa Farhat Farah,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Nassar Tanios Al Samarani,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Keserwan Finance Officer,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Serhal Ounaissy,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Elias Abdallah,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Your son George,11,135,2,5,4,25,58,52,7,15,True,True,True
+42,Amin Farhat,3,66,1,1,1,25,20,21,20,25,True,True,True
+42,Patriarch Elias Hoayek,4,68,2,1,1,38,12,18,12,22,True,True,True
+42,Bishop Boulos Akl,3,47,1,1,1,16,13,18,13,18,True,True,True
+42,Ameen Rihani,43,949,41,1,1,914,21,14,11,37,True,True,True
+42,Shibli N. Damus,13,266,11,1,1,228,19,19,11,48,True,True,True
+42,Naoum Mokarzel,3,58,1,1,1,18,20,20,18,20,True,True,True
+42,Eissa alKhouri,6,127,4,1,1,86,22,19,18,25,True,True,True
+42,Girgi Dimitri Sursock,8,100,6,1,1,77,13,10,7,15,True,True,True
+42,Felix Faris,27,480,9,9,9,143,167,170,5,27,True,True,True
+42,Muhammad Hussain Najafi,2,32,1,1,0,14,18,0,14,18,False,True,False
+42,May Ziadeh,12,202,4,4,4,56,69,77,10,23,True,True,True
+42,Victor Shemil,1,12,1,0,0,12,0,0,12,12,False,False,False
+42,Ahmed Shakir alKarmi,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Elia Abu Madi,2,35,1,1,0,17,18,0,17,18,False,True,False
+42,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,7,5,8,91,81,98,3,27,True,True,True
+42,Mohammed Amin al-Husseini ,3,49,1,1,1,19,17,13,13,19,True,True,True
+42,Prof. Ign. Kratchkovsky,6,89,1,3,2,9,38,42,9,21,True,True,True
+42,Jirjis alKsus,2,26,1,0,1,13,0,13,13,13,False,False,True
+42,Ibrahim Mejahid Al-Jaza'eri,3,62,1,1,1,12,25,25,12,25,True,True,True
+42,Daoud Mujaes,4,76,1,1,2,21,19,36,18,21,True,True,True
+42,Bechara El Khoury,6,107,4,1,1,75,24,8,8,26,True,True,True
+42,Tawfiq,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Youssef Ibrahim Yazbek,3,72,1,1,1,20,24,28,20,28,True,True,True
+42,Margaret El Haddad,2,40,1,1,0,14,26,0,14,26,False,True,False
+42,Elias Abu Shabaki,8,132,6,1,1,96,19,17,13,19,True,True,True
+42,Habib,1,18,1,0,0,18,0,0,18,18,False,False,False
+42,Adham Al Jundi,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Abd al-Khaliq Farid,2,53,1,0,1,26,0,27,26,27,False,False,True
+42,Elie Maroun Khalil,4,69,1,2,1,21,39,9,9,22,True,True,True
+42,Habib Abi Rached,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Aziz Khoury,3,47,1,1,1,21,12,14,12,21,True,True,True
+42,Mary Khoury,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Ghnatyos Mbarak,5,95,3,1,1,52,17,26,15,26,True,True,True
+42,Abdallah Sfeir,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Youssef Nakad,1,22,1,0,0,22,0,0,22,22,False,False,False
+42,Tanos Youssef Harfouche,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,JerJi Ass'ad Nader,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Habib Abdallah al-Khoury,1,22,1,0,0,22,0,0,22,22,False,False,False
+42,Serhal Maroun 'Tiyyeh,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Hanna Estphan,2,34,1,0,1,17,0,17,17,17,False,False,True
+42,Slayman al-Farkh,1,18,1,0,0,18,0,0,18,18,False,False,False
+42,Habib Boulos Nasr,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Botros Feghaly,3,66,1,1,1,21,21,24,21,24,True,True,True
+42,Toufiq Wehbeh,8,157,1,3,4,17,65,75,17,22,True,True,True
+42,Maronite Bishop of Sidon,2,38,1,0,1,18,0,20,18,20,False,False,True
+42,Halim Khoury Saadeh,2,44,1,0,1,21,0,23,21,23,False,False,True
+42,Jebrayel Sa'd al 'Alam,1,19,1,0,0,19,0,0,19,19,False,False,False
+42,Najib Ayoub,2,40,1,0,1,19,0,21,19,21,False,False,True
+42,Youhanna Sfeir,2,35,1,0,1,16,0,19,16,19,False,False,True
+42,Bishop Mkhayel Akhrass,5,93,3,1,1,55,17,21,14,22,True,True,True
+42,George Saad,7,111,2,3,2,29,44,38,10,19,True,True,True
+42,Bishop Youseef El Khazen,1,22,1,0,0,22,0,0,22,22,False,False,False
+42,Father Elias Najm,2,53,1,1,0,23,30,0,23,30,False,True,False
+42,Bishop Aghnathios Mbarak,9,163,7,1,1,131,17,15,15,23,True,True,True
+42,Dr. Abdo Harb,1,22,1,0,0,22,0,0,22,22,False,False,False
+42,Fathallah Khoury,4,73,1,2,1,17,36,20,14,22,True,True,True
+42,Antonios Elias,1,19,1,0,0,19,0,0,19,19,False,False,False
+42,Francis Hcheme,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Antoine Richa,1,25,1,0,0,25,0,0,25,25,False,False,False
+42,Botros El Kfouny,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Salim Maalouf,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Father Yaacoub Awad,1,19,1,0,0,19,0,0,19,19,False,False,False
+42,Wadih Salim Karam,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Father Youhanna El Khoury,2,32,1,1,0,15,17,0,15,17,False,True,False
+42,Georges Jarjoura,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Father Jerjes El Alam,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Father Botros Dib,1,25,1,0,0,25,0,0,25,25,False,False,False
+42,Elias Sarkis,18,325,16,1,1,283,22,20,5,25,True,True,True
+42,Fouad Chehab,21,264,19,1,1,242,11,11,6,21,True,True,True
+42,Hanna Moussa,41,876,39,1,1,831,24,21,17,27,True,True,True
+42,Zaghloul ad-Damour,1,19,1,0,0,19,0,0,19,19,False,False,False
+42,Habib Massoud,5,100,3,1,1,60,26,14,14,26,True,True,True
+42,Zaghloul,28,505,6,12,10,105,209,191,13,26,True,True,True
+42,Father Youhanna Habib Baysari,9,198,7,1,1,146,28,24,13,28,True,True,True
+42,Mkhayel Daher,3,73,1,1,1,25,24,24,24,25,True,True,True
+42,Father Youssef Hanna,2,46,1,1,0,22,24,0,22,24,False,True,False
+42,Father Youssef Iskandar,1,23,1,0,0,23,0,0,23,23,False,False,False
+42,Adib Shiha,1,24,1,0,0,24,0,0,24,24,False,False,False
+42,Father Youssef Hanna & Father Botros Hasan,3,63,1,1,1,23,18,22,18,23,True,True,True
+42,Father Botros Hasan,6,128,2,2,2,39,48,41,19,24,True,True,True
+42,Youssef Ibrahim,2,37,1,0,1,18,0,19,18,19,False,False,True
+42,Father Youssef Hajj,3,63,1,1,1,21,22,20,20,22,True,True,True
+42,Abdallah Daher,1,13,1,0,0,13,0,0,13,13,False,False,False
+42,Mkhayel & Ibrahim Daher,2,36,1,1,0,16,20,0,16,20,False,True,False
+42,Tannous Semaan,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Father Mkhayel Zreiby,9,200,3,3,3,65,65,70,13,26,True,True,True
+42,People of Rablah,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Father Boutros Chidiac,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Bishop Antoun Jbeir,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Father Yousef,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Maronite children of Akkar district,1,12,1,0,0,12,0,0,12,12,False,False,False
+42,Elias Asaf,2,53,1,0,1,26,0,27,26,27,False,False,True
+42,Muhawwel Harouh,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Father Mikhael Hanna,4,71,2,1,1,38,17,16,16,21,True,True,True
+42,Warda El Khoury,1,18,1,0,0,18,0,0,18,18,False,False,False
+42,Jean Philipp Kmeid,24,532,5,10,9,96,236,200,5,30,True,True,True
+42,Jerji Nicola Khattar al-Chuayri,2,29,1,1,0,11,18,0,11,18,False,True,False
+42,Abd al-Hajj,2,27,1,1,0,10,17,0,10,17,False,True,False
+42,Michel Saykali,45,791,32,6,7,561,119,111,5,28,True,True,True
+42,Hanna Ghayth (Juan Gait),68,934,66,1,1,907,13,14,9,16,True,True,True
+42,Yousef Hobeiche,23,432,21,1,1,392,22,18,14,25,True,True,True
+42,Angele Ellis,4,75,2,1,1,33,15,27,10,27,True,True,True
+42,Yousef Hobeiche & Angele Ellis,1,12,1,0,0,12,0,0,12,12,False,False,False
+42,Khalil Yossuf Nader Raad,22,453,20,1,1,410,21,22,5,32,True,True,True
+42,Mansour Eid,12,271,10,1,1,228,21,22,18,29,True,True,True
+42,Nassif Mansour,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Peter the Patriarch of Antioch,1,24,1,0,0,24,0,0,24,24,False,False,False
+42,Youssef,1,21,1,0,0,21,0,0,21,21,False,False,False
+42,Mkhayel Meneem,5,123,3,1,1,74,24,25,23,26,True,True,True
+42,Constantine Elias,5,84,3,1,1,46,20,18,8,21,True,True,True
+42,Maurice Gemayel,6,67,4,1,1,49,6,12,6,17,True,True,True
+42,Murshid Habashi,4,96,2,1,1,48,22,26,22,26,True,True,True
+42,Father Elias Abi Khair,1,26,1,0,0,26,0,0,26,26,False,False,False
+42,Hassan Khalil,2,40,1,0,1,9,0,31,9,31,False,False,True
+42,Michel Kahwaji,25,412,23,1,1,374,17,21,6,22,True,True,True
+42,Mayor of Kfarshima,13,426,11,1,1,361,33,32,23,40,True,True,True
+42,Sohayl Tohmeh,28,848,26,1,1,797,33,18,14,37,True,True,True
+42,Shukri Kanaan,4,134,1,2,1,36,66,32,32,36,True,True,True
+42,Emily Nasrallah,48,602,46,1,1,578,12,12,8,15,True,True,True
+42,Thomas & John Oussani,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Brother of Joseph Oussani,1,28,1,0,0,28,0,0,28,28,False,False,False
+42,Joseph Oussani,16,400,14,1,1,349,26,25,23,29,True,True,True
+42,Shukri Kordahi,1,32,1,0,0,32,0,0,32,32,False,False,False
+42,Negib Aboussouan,1,24,1,0,0,24,0,0,24,24,False,False,False
+42,Toubia Hanna Rizk & Touma Chidiac,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Hanna Younes Abboud,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Youssef Bey Al-Helou,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Father Elias,1,10,1,0,0,10,0,0,10,10,False,False,False
+42,Magistrate of Batroun,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Jirjis Yuhanna Basil ,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Estephan Adib Salloum,2,53,1,0,1,24,0,29,24,29,False,False,True
+42,Father Boulos El-Mender,10,171,4,3,3,56,55,60,12,23,True,True,True
+42,Joseph,2,34,1,0,1,13,0,21,13,21,False,False,True
+42,Salah Tizani,48,875,46,1,1,840,15,20,15,22,True,True,True
+42,Father Elias Bassil,3,50,1,1,1,21,12,17,12,21,True,True,True
+42,Yahia Mansour & Asaad Koury,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Father Tobia al-Issa,3,37,1,1,1,12,12,13,12,13,True,True,True
+42,Assad Darouich Zacharias,5,94,3,1,1,59,17,18,17,25,True,True,True
+42,Asaad Koury Tobia Attallah,3,42,1,1,1,10,20,12,10,20,True,True,True
+42,Krouger Tobia Attallah,14,401,4,5,5,115,142,144,25,32,True,True,True
+42,Nadim Attallah,1,26,1,0,0,26,0,0,26,26,False,False,False
+42,Toufic El Bacha,6,118,4,1,1,77,20,21,17,22,True,True,True
+42,Rahma Raad,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Youssef Abdullah Maroun,2,30,1,1,0,15,15,0,15,15,False,True,False
+42,Youssef Moussa Sadaqa,1,16,1,0,0,16,0,0,16,16,False,False,False
+42,Catherine Yazbek Al-Badawi,4,67,2,1,1,34,15,18,15,18,True,True,True
+42,Nehme Elias Mikhail,1,12,1,0,0,12,0,0,12,12,False,False,False
+42,Assad Al-Khoury,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,Tanios Zakhia Elias Basil,1,14,1,0,0,14,0,0,14,14,False,False,False
+42,Bishara Mar'i Mansour,2,42,1,1,0,21,21,0,21,21,False,True,False
+42,Francis Lahoud,1,20,1,0,0,20,0,0,20,20,False,False,False
+42,K. John,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Brother Ibrahim,1,15,1,0,0,15,0,0,15,15,False,False,False
+42,Youssef Fadlallah Salemeh,12,199,10,1,1,165,17,17,12,20,True,True,True
+42,Nehad,2,18,1,0,1,6,0,12,6,12,False,False,True
+42,Lebanese immigrants,2,35,1,0,1,13,0,22,13,22,False,False,True
+42,Dani Al-Sibaqa,1,24,1,0,0,24,0,0,24,24,False,False,False
+42,Abdo Fares,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Jamil Youssef Noah,2,28,1,0,1,9,0,19,9,19,False,False,True
+42,Elias Karbaj,2,32,1,0,1,16,0,16,16,16,False,False,True
+42,Jarhas Hanna Al-Shabtini,1,17,1,0,0,17,0,0,17,17,False,False,False
+42,Bishop Youssef Darian,9,163,7,1,1,126,22,15,14,22,True,True,True
+42,Youssef Hanna El-Sawda,17,339,15,1,1,290,28,21,10,28,True,True,True
+42,Sally Aad,1,23,1,0,0,23,0,0,23,23,False,False,False
+42,Daud Barkaat,1,19,1,0,0,19,0,0,19,19,False,False,False
+42,Talaat,2,30,1,1,0,13,17,0,13,17,False,True,False
+42,Maurice Paul Sarrail,2,37,1,1,0,15,22,0,15,22,False,True,False
+570,Malvina Choieree,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Your nephew Maroun,4,68,1,2,1,20,35,13,13,20,True,True,True
+570,Sister Victor N. Khoury,3,57,1,1,1,18,20,19,18,20,True,True,True
+570,Maroun Al-Khoury Maroun,2,37,1,1,0,18,19,0,18,19,False,True,False
+570,Father Youssef Nassar,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Shibli Barakat witnesses,1,11,1,0,0,11,0,0,11,11,False,False,False
+570,Mousssa Farhat Farah,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Nassar Tanios Al Samarani,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Keserwan Finance Officer,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Serhal Ounaissy,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Elias Abdallah,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Your son George,11,135,9,1,1,111,11,13,7,15,True,True,True
+570,Amin Farhat,3,66,1,1,1,21,25,20,20,25,True,True,True
+570,Patriarch Elias Hoayek,4,68,2,1,1,34,12,22,12,22,True,True,True
+570,Bishop Boulos Akl,3,47,1,1,1,18,13,16,13,18,True,True,True
+570,Ameen Rihani,43,949,41,1,1,896,33,20,11,37,True,True,True
+570,Shibli N. Damus,13,266,11,1,1,235,20,11,11,48,True,True,True
+570,Naoum Mokarzel,3,58,1,1,1,18,20,20,18,20,True,True,True
+570,Eissa alKhouri,6,127,1,2,3,19,40,68,18,25,True,True,True
+570,Girgi Dimitri Sursock,8,100,2,3,3,29,37,34,7,15,True,True,True
+570,Felix Faris,27,480,25,1,1,442,17,21,5,27,True,True,True
+570,Muhammad Hussain Najafi,2,32,1,0,1,14,0,18,14,18,False,False,True
+570,May Ziadeh,12,202,10,1,1,157,23,22,10,23,True,True,True
+570,Victor Shemil,1,12,1,0,0,12,0,0,12,12,False,False,False
+570,Ahmed Shakir alKarmi,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Elia Abu Madi,2,35,1,0,1,17,0,18,17,18,False,False,True
+570,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,18,1,1,240,17,13,3,27,True,True,True
+570,Mohammed Amin al-Husseini ,3,49,1,1,1,17,19,13,13,19,True,True,True
+570,Prof. Ign. Kratchkovsky,6,89,4,1,1,63,13,13,9,21,True,True,True
+570,Jirjis alKsus,2,26,1,1,0,13,13,0,13,13,False,True,False
+570,Ibrahim Mejahid Al-Jaza'eri,3,62,1,1,1,12,25,25,12,25,True,True,True
+570,Daoud Mujaes,4,76,2,1,1,37,18,21,18,21,True,True,True
+570,Bechara El Khoury,6,107,4,1,1,67,16,24,8,26,True,True,True
+570,Tawfiq,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Youssef Ibrahim Yazbek,3,72,1,1,1,20,24,28,20,28,True,True,True
+570,Margaret El Haddad,2,40,1,1,0,14,26,0,14,26,False,True,False
+570,Elias Abu Shabaki,8,132,6,1,1,95,19,18,13,19,True,True,True
+570,Habib,1,18,1,0,0,18,0,0,18,18,False,False,False
+570,Adham Al Jundi,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Abd al-Khaliq Farid,2,53,1,0,1,26,0,27,26,27,False,False,True
+570,Elie Maroun Khalil,4,69,2,1,1,39,9,21,9,22,True,True,True
+570,Habib Abi Rached,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Aziz Khoury,3,47,1,1,1,21,12,14,12,21,True,True,True
+570,Mary Khoury,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Ghnatyos Mbarak,5,95,3,1,1,63,17,15,15,26,True,True,True
+570,Abdallah Sfeir,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Youssef Nakad,1,22,1,0,0,22,0,0,22,22,False,False,False
+570,Tanos Youssef Harfouche,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,JerJi Ass'ad Nader,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Habib Abdallah al-Khoury,1,22,1,0,0,22,0,0,22,22,False,False,False
+570,Serhal Maroun 'Tiyyeh,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Hanna Estphan,2,34,1,0,1,17,0,17,17,17,False,False,True
+570,Slayman al-Farkh,1,18,1,0,0,18,0,0,18,18,False,False,False
+570,Habib Boulos Nasr,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Botros Feghaly,3,66,1,1,1,21,24,21,21,24,True,True,True
+570,Toufiq Wehbeh,8,157,6,1,1,119,17,21,17,22,True,True,True
+570,Maronite Bishop of Sidon,2,38,1,1,0,18,20,0,18,20,False,True,False
+570,Halim Khoury Saadeh,2,44,1,0,1,21,0,23,21,23,False,False,True
+570,Jebrayel Sa'd al 'Alam,1,19,1,0,0,19,0,0,19,19,False,False,False
+570,Najib Ayoub,2,40,1,0,1,19,0,21,19,21,False,False,True
+570,Youhanna Sfeir,2,35,1,0,1,16,0,19,16,19,False,False,True
+570,Bishop Mkhayel Akhrass,5,93,3,1,1,53,19,21,14,22,True,True,True
+570,George Saad,7,111,5,1,1,82,19,10,10,19,True,True,True
+570,Bishop Youseef El Khazen,1,22,1,0,0,22,0,0,22,22,False,False,False
+570,Father Elias Najm,2,53,1,1,0,23,30,0,23,30,False,True,False
+570,Bishop Aghnathios Mbarak,9,163,7,1,1,123,21,19,15,23,True,True,True
+570,Dr. Abdo Harb,1,22,1,0,0,22,0,0,22,22,False,False,False
+570,Fathallah Khoury,4,73,2,1,1,39,14,20,14,22,True,True,True
+570,Antonios Elias,1,19,1,0,0,19,0,0,19,19,False,False,False
+570,Francis Hcheme,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Antoine Richa,1,25,1,0,0,25,0,0,25,25,False,False,False
+570,Botros El Kfouny,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Salim Maalouf,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Father Yaacoub Awad,1,19,1,0,0,19,0,0,19,19,False,False,False
+570,Wadih Salim Karam,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Father Youhanna El Khoury,2,32,1,0,1,15,0,17,15,17,False,False,True
+570,Georges Jarjoura,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Father Jerjes El Alam,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Father Botros Dib,1,25,1,0,0,25,0,0,25,25,False,False,False
+570,Elias Sarkis,18,325,16,1,1,297,23,5,5,25,True,True,True
+570,Fouad Chehab,21,264,19,1,1,242,11,11,6,21,True,True,True
+570,Hanna Moussa,41,876,39,1,1,835,21,20,17,27,True,True,True
+570,Zaghloul ad-Damour,1,19,1,0,0,19,0,0,19,19,False,False,False
+570,Habib Massoud,5,100,1,3,1,14,60,26,14,26,True,True,True
+570,Zaghloul,28,505,9,8,11,150,164,191,13,26,True,True,True
+570,Father Youhanna Habib Baysari,9,198,2,4,3,54,78,66,13,28,True,True,True
+570,Mkhayel Daher,3,73,1,1,1,24,24,25,24,25,True,True,True
+570,Father Youssef Hanna,2,46,1,0,1,22,0,24,22,24,False,False,True
+570,Father Youssef Iskandar,1,23,1,0,0,23,0,0,23,23,False,False,False
+570,Adib Shiha,1,24,1,0,0,24,0,0,24,24,False,False,False
+570,Father Youssef Hanna & Father Botros Hasan,3,63,1,1,1,23,22,18,18,23,True,True,True
+570,Father Botros Hasan,6,128,4,1,1,89,20,19,19,24,True,True,True
+570,Youssef Ibrahim,2,37,1,1,0,18,19,0,18,19,False,True,False
+570,Father Youssef Hajj,3,63,1,1,1,21,22,20,20,22,True,True,True
+570,Abdallah Daher,1,13,1,0,0,13,0,0,13,13,False,False,False
+570,Mkhayel & Ibrahim Daher,2,36,1,0,1,16,0,20,16,20,False,False,True
+570,Tannous Semaan,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Father Mkhayel Zreiby,9,200,7,1,1,153,21,26,13,26,True,True,True
+570,People of Rablah,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Father Boutros Chidiac,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Bishop Antoun Jbeir,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Father Yousef,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Maronite children of Akkar district,1,12,1,0,0,12,0,0,12,12,False,False,False
+570,Elias Asaf,2,53,1,1,0,26,27,0,26,27,False,True,False
+570,Muhawwel Harouh,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Father Mikhael Hanna,4,71,2,1,1,34,21,16,16,21,True,True,True
+570,Warda El Khoury,1,18,1,0,0,18,0,0,18,18,False,False,False
+570,Jean Philipp Kmeid,24,532,22,1,1,479,27,26,5,30,True,True,True
+570,Jerji Nicola Khattar al-Chuayri,2,29,1,0,1,11,0,18,11,18,False,False,True
+570,Abd al-Hajj,2,27,1,1,0,10,17,0,10,17,False,True,False
+570,Michel Saykali,45,791,19,14,12,338,227,226,5,28,True,True,True
+570,Hanna Ghayth (Juan Gait),68,934,66,1,1,906,13,15,9,16,True,True,True
+570,Yousef Hobeiche,23,432,21,1,1,390,17,25,14,25,True,True,True
+570,Angele Ellis,4,75,2,1,1,37,15,23,10,27,True,True,True
+570,Yousef Hobeiche & Angele Ellis,1,12,1,0,0,12,0,0,12,12,False,False,False
+570,Khalil Yossuf Nader Raad,22,453,20,1,1,413,22,18,5,32,True,True,True
+570,Mansour Eid,12,271,10,1,1,228,20,23,18,29,True,True,True
+570,Nassif Mansour,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Peter the Patriarch of Antioch,1,24,1,0,0,24,0,0,24,24,False,False,False
+570,Youssef,1,21,1,0,0,21,0,0,21,21,False,False,False
+570,Mkhayel Meneem,5,123,3,1,1,76,23,24,23,26,True,True,True
+570,Constantine Elias,5,84,3,1,1,46,17,21,8,21,True,True,True
+570,Maurice Gemayel,6,67,4,1,1,49,6,12,6,17,True,True,True
+570,Murshid Habashi,4,96,2,1,1,48,26,22,22,26,True,True,True
+570,Father Elias Abi Khair,1,26,1,0,0,26,0,0,26,26,False,False,False
+570,Hassan Khalil,2,40,1,0,1,9,0,31,9,31,False,False,True
+570,Michel Kahwaji,25,412,23,1,1,386,12,14,6,22,True,True,True
+570,Mayor of Kfarshima,13,426,11,1,1,367,36,23,23,40,True,True,True
+570,Sohayl Tohmeh,28,848,9,10,9,245,305,298,14,37,True,True,True
+570,Shukri Kanaan,4,134,2,1,1,65,36,33,32,36,True,True,True
+570,Emily Nasrallah,48,602,46,1,1,577,11,14,8,15,True,True,True
+570,Thomas & John Oussani,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Brother of Joseph Oussani,1,28,1,0,0,28,0,0,28,28,False,False,False
+570,Joseph Oussani,16,400,14,1,1,352,23,25,23,29,True,True,True
+570,Shukri Kordahi,1,32,1,0,0,32,0,0,32,32,False,False,False
+570,Negib Aboussouan,1,24,1,0,0,24,0,0,24,24,False,False,False
+570,Toubia Hanna Rizk & Touma Chidiac,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Hanna Younes Abboud,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Youssef Bey Al-Helou,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Father Elias,1,10,1,0,0,10,0,0,10,10,False,False,False
+570,Magistrate of Batroun,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Jirjis Yuhanna Basil ,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Estephan Adib Salloum,2,53,1,1,0,24,29,0,24,29,False,True,False
+570,Father Boulos El-Mender,10,171,8,1,1,137,17,17,12,23,True,True,True
+570,Joseph,2,34,1,1,0,13,21,0,13,21,False,True,False
+570,Salah Tizani,48,875,15,16,17,278,293,304,15,22,True,True,True
+570,Father Elias Bassil,3,50,1,1,1,12,17,21,12,21,True,True,True
+570,Yahia Mansour & Asaad Koury,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Father Tobia al-Issa,3,37,1,1,1,12,13,12,12,13,True,True,True
+570,Assad Darouich Zacharias,5,94,3,1,1,52,25,17,17,25,True,True,True
+570,Asaad Koury Tobia Attallah,3,42,1,1,1,12,10,20,10,20,True,True,True
+570,Krouger Tobia Attallah,14,401,3,5,6,88,152,161,25,32,True,True,True
+570,Nadim Attallah,1,26,1,0,0,26,0,0,26,26,False,False,False
+570,Toufic El Bacha,6,118,4,1,1,83,17,18,17,22,True,True,True
+570,Rahma Raad,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Youssef Abdullah Maroun,2,30,1,1,0,15,15,0,15,15,False,True,False
+570,Youssef Moussa Sadaqa,1,16,1,0,0,16,0,0,16,16,False,False,False
+570,Catherine Yazbek Al-Badawi,4,67,2,1,1,34,15,18,15,18,True,True,True
+570,Nehme Elias Mikhail,1,12,1,0,0,12,0,0,12,12,False,False,False
+570,Assad Al-Khoury,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,Tanios Zakhia Elias Basil,1,14,1,0,0,14,0,0,14,14,False,False,False
+570,Bishara Mar'i Mansour,2,42,1,0,1,21,0,21,21,21,False,False,True
+570,Francis Lahoud,1,20,1,0,0,20,0,0,20,20,False,False,False
+570,K. John,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Brother Ibrahim,1,15,1,0,0,15,0,0,15,15,False,False,False
+570,Youssef Fadlallah Salemeh,12,199,10,1,1,168,18,13,12,20,True,True,True
+570,Nehad,2,18,1,0,1,6,0,12,6,12,False,False,True
+570,Lebanese immigrants,2,35,1,1,0,13,22,0,13,22,False,True,False
+570,Dani Al-Sibaqa,1,24,1,0,0,24,0,0,24,24,False,False,False
+570,Abdo Fares,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Jamil Youssef Noah,2,28,1,0,1,9,0,19,9,19,False,False,True
+570,Elias Karbaj,2,32,1,0,1,16,0,16,16,16,False,False,True
+570,Jarhas Hanna Al-Shabtini,1,17,1,0,0,17,0,0,17,17,False,False,False
+570,Bishop Youssef Darian,9,163,7,1,1,127,20,16,14,22,True,True,True
+570,Youssef Hanna El-Sawda,17,339,15,1,1,310,18,11,10,28,True,True,True
+570,Sally Aad,1,23,1,0,0,23,0,0,23,23,False,False,False
+570,Daud Barkaat,1,19,1,0,0,19,0,0,19,19,False,False,False
+570,Talaat,2,30,1,1,0,13,17,0,13,17,False,True,False
+570,Maurice Paul Sarrail,2,37,1,1,0,15,22,0,15,22,False,True,False
+1073,Malvina Choieree,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Your nephew Maroun,4,68,2,1,1,32,16,20,13,20,True,True,True
+1073,Sister Victor N. Khoury,3,57,1,1,1,20,18,19,18,20,True,True,True
+1073,Maroun Al-Khoury Maroun,2,37,1,0,1,18,0,19,18,19,False,False,True
+1073,Father Youssef Nassar,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Shibli Barakat witnesses,1,11,1,0,0,11,0,0,11,11,False,False,False
+1073,Mousssa Farhat Farah,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Nassar Tanios Al Samarani,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Keserwan Finance Officer,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Serhal Ounaissy,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Elias Abdallah,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Your son George,11,135,9,1,1,114,14,7,7,15,True,True,True
+1073,Amin Farhat,3,66,1,1,1,25,20,21,20,25,True,True,True
+1073,Patriarch Elias Hoayek,4,68,2,1,1,34,16,18,12,22,True,True,True
+1073,Bishop Boulos Akl,3,47,1,1,1,18,16,13,13,18,True,True,True
+1073,Ameen Rihani,43,949,13,15,15,288,320,341,11,37,True,True,True
+1073,Shibli N. Damus,13,266,11,1,1,224,20,22,11,48,True,True,True
+1073,Naoum Mokarzel,3,58,1,1,1,18,20,20,18,20,True,True,True
+1073,Eissa alKhouri,6,127,1,2,3,18,47,62,18,25,True,True,True
+1073,Girgi Dimitri Sursock,8,100,6,1,1,75,15,10,7,15,True,True,True
+1073,Felix Faris,27,480,25,1,1,441,18,21,5,27,True,True,True
+1073,Muhammad Hussain Najafi,2,32,1,0,1,14,0,18,14,18,False,False,True
+1073,May Ziadeh,12,202,10,1,1,176,13,13,10,23,True,True,True
+1073,Victor Shemil,1,12,1,0,0,12,0,0,12,12,False,False,False
+1073,Ahmed Shakir alKarmi,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Elia Abu Madi,2,35,1,1,0,17,18,0,17,18,False,True,False
+1073,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,6,7,7,79,101,90,3,27,True,True,True
+1073,Mohammed Amin al-Husseini ,3,49,1,1,1,19,13,17,13,19,True,True,True
+1073,Prof. Ign. Kratchkovsky,6,89,4,1,1,63,13,13,9,21,True,True,True
+1073,Jirjis alKsus,2,26,1,0,1,13,0,13,13,13,False,False,True
+1073,Ibrahim Mejahid Al-Jaza'eri,3,62,1,1,1,25,25,12,12,25,True,True,True
+1073,Daoud Mujaes,4,76,2,1,1,40,18,18,18,21,True,True,True
+1073,Bechara El Khoury,6,107,4,1,1,75,24,8,8,26,True,True,True
+1073,Tawfiq,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Youssef Ibrahim Yazbek,3,72,1,1,1,24,20,28,20,28,True,True,True
+1073,Margaret El Haddad,2,40,1,1,0,14,26,0,14,26,False,True,False
+1073,Elias Abu Shabaki,8,132,2,3,3,33,50,49,13,19,True,True,True
+1073,Habib,1,18,1,0,0,18,0,0,18,18,False,False,False
+1073,Adham Al Jundi,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Abd al-Khaliq Farid,2,53,1,0,1,26,0,27,26,27,False,False,True
+1073,Elie Maroun Khalil,4,69,2,1,1,43,9,17,9,22,True,True,True
+1073,Habib Abi Rached,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Aziz Khoury,3,47,1,1,1,12,14,21,12,21,True,True,True
+1073,Mary Khoury,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Ghnatyos Mbarak,5,95,2,1,2,37,26,32,15,26,True,True,True
+1073,Abdallah Sfeir,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Youssef Nakad,1,22,1,0,0,22,0,0,22,22,False,False,False
+1073,Tanos Youssef Harfouche,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,JerJi Ass'ad Nader,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Habib Abdallah al-Khoury,1,22,1,0,0,22,0,0,22,22,False,False,False
+1073,Serhal Maroun 'Tiyyeh,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Hanna Estphan,2,34,1,1,0,17,17,0,17,17,False,True,False
+1073,Slayman al-Farkh,1,18,1,0,0,18,0,0,18,18,False,False,False
+1073,Habib Boulos Nasr,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Botros Feghaly,3,66,1,1,1,21,21,24,21,24,True,True,True
+1073,Toufiq Wehbeh,8,157,1,4,3,17,75,65,17,22,True,True,True
+1073,Maronite Bishop of Sidon,2,38,1,1,0,18,20,0,18,20,False,True,False
+1073,Halim Khoury Saadeh,2,44,1,0,1,21,0,23,21,23,False,False,True
+1073,Jebrayel Sa'd al 'Alam,1,19,1,0,0,19,0,0,19,19,False,False,False
+1073,Najib Ayoub,2,40,1,1,0,19,21,0,19,21,False,True,False
+1073,Youhanna Sfeir,2,35,1,0,1,16,0,19,16,19,False,False,True
+1073,Bishop Mkhayel Akhrass,5,93,1,2,2,22,35,36,14,22,True,True,True
+1073,George Saad,7,111,5,1,1,81,19,11,10,19,True,True,True
+1073,Bishop Youseef El Khazen,1,22,1,0,0,22,0,0,22,22,False,False,False
+1073,Father Elias Najm,2,53,1,0,1,23,0,30,23,30,False,False,True
+1073,Bishop Aghnathios Mbarak,9,163,7,1,1,126,19,18,15,23,True,True,True
+1073,Dr. Abdo Harb,1,22,1,0,0,22,0,0,22,22,False,False,False
+1073,Fathallah Khoury,4,73,2,1,1,37,22,14,14,22,True,True,True
+1073,Antonios Elias,1,19,1,0,0,19,0,0,19,19,False,False,False
+1073,Francis Hcheme,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Antoine Richa,1,25,1,0,0,25,0,0,25,25,False,False,False
+1073,Botros El Kfouny,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Salim Maalouf,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Father Yaacoub Awad,1,19,1,0,0,19,0,0,19,19,False,False,False
+1073,Wadih Salim Karam,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Father Youhanna El Khoury,2,32,1,0,1,15,0,17,15,17,False,False,True
+1073,Georges Jarjoura,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Father Jerjes El Alam,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Father Botros Dib,1,25,1,0,0,25,0,0,25,25,False,False,False
+1073,Elias Sarkis,18,325,16,1,1,299,20,6,5,25,True,True,True
+1073,Fouad Chehab,21,264,19,1,1,232,11,21,6,21,True,True,True
+1073,Hanna Moussa,41,876,14,14,13,291,298,287,17,27,True,True,True
+1073,Zaghloul ad-Damour,1,19,1,0,0,19,0,0,19,19,False,False,False
+1073,Habib Massoud,5,100,3,1,1,57,26,17,14,26,True,True,True
+1073,Zaghloul,28,505,26,1,1,471,19,15,13,26,True,True,True
+1073,Father Youhanna Habib Baysari,9,198,7,1,1,159,13,26,13,28,True,True,True
+1073,Mkhayel Daher,3,73,1,1,1,25,24,24,24,25,True,True,True
+1073,Father Youssef Hanna,2,46,1,0,1,22,0,24,22,24,False,False,True
+1073,Father Youssef Iskandar,1,23,1,0,0,23,0,0,23,23,False,False,False
+1073,Adib Shiha,1,24,1,0,0,24,0,0,24,24,False,False,False
+1073,Father Youssef Hanna & Father Botros Hasan,3,63,1,1,1,18,22,23,18,23,True,True,True
+1073,Father Botros Hasan,6,128,4,1,1,90,19,19,19,24,True,True,True
+1073,Youssef Ibrahim,2,37,1,0,1,18,0,19,18,19,False,False,True
+1073,Father Youssef Hajj,3,63,1,1,1,20,21,22,20,22,True,True,True
+1073,Abdallah Daher,1,13,1,0,0,13,0,0,13,13,False,False,False
+1073,Mkhayel & Ibrahim Daher,2,36,1,1,0,16,20,0,16,20,False,True,False
+1073,Tannous Semaan,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Father Mkhayel Zreiby,9,200,7,1,1,154,21,25,13,26,True,True,True
+1073,People of Rablah,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Father Boutros Chidiac,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Bishop Antoun Jbeir,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Father Yousef,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Maronite children of Akkar district,1,12,1,0,0,12,0,0,12,12,False,False,False
+1073,Elias Asaf,2,53,1,0,1,26,0,27,26,27,False,False,True
+1073,Muhawwel Harouh,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Father Mikhael Hanna,4,71,2,1,1,38,16,17,16,21,True,True,True
+1073,Warda El Khoury,1,18,1,0,0,18,0,0,18,18,False,False,False
+1073,Jean Philipp Kmeid,24,532,8,9,7,184,181,167,5,30,True,True,True
+1073,Jerji Nicola Khattar al-Chuayri,2,29,1,1,0,11,18,0,11,18,False,True,False
+1073,Abd al-Hajj,2,27,1,0,1,10,0,17,10,17,False,False,True
+1073,Michel Saykali,45,791,43,1,1,747,21,23,5,28,True,True,True
+1073,Hanna Ghayth (Juan Gait),68,934,66,1,1,907,15,12,9,16,True,True,True
+1073,Yousef Hobeiche,23,432,21,1,1,390,25,17,14,25,True,True,True
+1073,Angele Ellis,4,75,1,2,1,23,42,10,10,27,True,True,True
+1073,Yousef Hobeiche & Angele Ellis,1,12,1,0,0,12,0,0,12,12,False,False,False
+1073,Khalil Yossuf Nader Raad,22,453,20,1,1,430,18,5,5,32,True,True,True
+1073,Mansour Eid,12,271,10,1,1,225,23,23,18,29,True,True,True
+1073,Nassif Mansour,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Peter the Patriarch of Antioch,1,24,1,0,0,24,0,0,24,24,False,False,False
+1073,Youssef,1,21,1,0,0,21,0,0,21,21,False,False,False
+1073,Mkhayel Meneem,5,123,2,1,2,51,25,47,23,26,True,True,True
+1073,Constantine Elias,5,84,3,1,1,46,18,20,8,21,True,True,True
+1073,Maurice Gemayel,6,67,4,1,1,43,12,12,6,17,True,True,True
+1073,Murshid Habashi,4,96,2,1,1,48,22,26,22,26,True,True,True
+1073,Father Elias Abi Khair,1,26,1,0,0,26,0,0,26,26,False,False,False
+1073,Hassan Khalil,2,40,1,1,0,9,31,0,9,31,False,True,False
+1073,Michel Kahwaji,25,412,23,1,1,382,14,16,6,22,True,True,True
+1073,Mayor of Kfarshima,13,426,11,1,1,355,38,33,23,40,True,True,True
+1073,Sohayl Tohmeh,28,848,26,1,1,788,35,25,14,37,True,True,True
+1073,Shukri Kanaan,4,134,2,1,1,65,33,36,32,36,True,True,True
+1073,Emily Nasrallah,48,602,46,1,1,579,11,12,8,15,True,True,True
+1073,Thomas & John Oussani,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Brother of Joseph Oussani,1,28,1,0,0,28,0,0,28,28,False,False,False
+1073,Joseph Oussani,16,400,14,1,1,352,23,25,23,29,True,True,True
+1073,Shukri Kordahi,1,32,1,0,0,32,0,0,32,32,False,False,False
+1073,Negib Aboussouan,1,24,1,0,0,24,0,0,24,24,False,False,False
+1073,Toubia Hanna Rizk & Touma Chidiac,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Hanna Younes Abboud,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Youssef Bey Al-Helou,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Father Elias,1,10,1,0,0,10,0,0,10,10,False,False,False
+1073,Magistrate of Batroun,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Jirjis Yuhanna Basil ,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Estephan Adib Salloum,2,53,1,0,1,24,0,29,24,29,False,False,True
+1073,Father Boulos El-Mender,10,171,8,1,1,140,15,16,12,23,True,True,True
+1073,Joseph,2,34,1,1,0,13,21,0,13,21,False,True,False
+1073,Salah Tizani,48,875,46,1,1,837,20,18,15,22,True,True,True
+1073,Father Elias Bassil,3,50,1,1,1,17,21,12,12,21,True,True,True
+1073,Yahia Mansour & Asaad Koury,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Father Tobia al-Issa,3,37,1,1,1,12,12,13,12,13,True,True,True
+1073,Assad Darouich Zacharias,5,94,3,1,1,59,18,17,17,25,True,True,True
+1073,Asaad Koury Tobia Attallah,3,42,1,1,1,20,12,10,10,20,True,True,True
+1073,Krouger Tobia Attallah,14,401,4,5,5,120,136,145,25,32,True,True,True
+1073,Nadim Attallah,1,26,1,0,0,26,0,0,26,26,False,False,False
+1073,Toufic El Bacha,6,118,4,1,1,75,22,21,17,22,True,True,True
+1073,Rahma Raad,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Youssef Abdullah Maroun,2,30,1,1,0,15,15,0,15,15,False,True,False
+1073,Youssef Moussa Sadaqa,1,16,1,0,0,16,0,0,16,16,False,False,False
+1073,Catherine Yazbek Al-Badawi,4,67,2,1,1,32,17,18,15,18,True,True,True
+1073,Nehme Elias Mikhail,1,12,1,0,0,12,0,0,12,12,False,False,False
+1073,Assad Al-Khoury,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,Tanios Zakhia Elias Basil,1,14,1,0,0,14,0,0,14,14,False,False,False
+1073,Bishara Mar'i Mansour,2,42,1,1,0,21,21,0,21,21,False,True,False
+1073,Francis Lahoud,1,20,1,0,0,20,0,0,20,20,False,False,False
+1073,K. John,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Brother Ibrahim,1,15,1,0,0,15,0,0,15,15,False,False,False
+1073,Youssef Fadlallah Salemeh,12,199,3,4,5,51,65,83,12,20,True,True,True
+1073,Nehad,2,18,1,1,0,6,12,0,6,12,False,True,False
+1073,Lebanese immigrants,2,35,1,1,0,13,22,0,13,22,False,True,False
+1073,Dani Al-Sibaqa,1,24,1,0,0,24,0,0,24,24,False,False,False
+1073,Abdo Fares,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Jamil Youssef Noah,2,28,1,0,1,9,0,19,9,19,False,False,True
+1073,Elias Karbaj,2,32,1,0,1,16,0,16,16,16,False,False,True
+1073,Jarhas Hanna Al-Shabtini,1,17,1,0,0,17,0,0,17,17,False,False,False
+1073,Bishop Youssef Darian,9,163,3,3,3,52,57,54,14,22,True,True,True
+1073,Youssef Hanna El-Sawda,17,339,15,1,1,304,19,16,10,28,True,True,True
+1073,Sally Aad,1,23,1,0,0,23,0,0,23,23,False,False,False
+1073,Daud Barkaat,1,19,1,0,0,19,0,0,19,19,False,False,False
+1073,Talaat,2,30,1,0,1,13,0,17,13,17,False,False,True
+1073,Maurice Paul Sarrail,2,37,1,1,0,15,22,0,15,22,False,True,False

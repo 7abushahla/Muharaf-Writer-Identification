@@ -1,0 +1,180 @@
+writer,pages_total,lines_total,eligibility,included,reason,policy
+Malvina Choieree,1,20,train_only,True,single page,allow_train_only
+Your nephew Maroun,4,68,train_val_test,True,has >=3 pages,allow_train_only
+Sister Victor N. Khoury,3,57,train_val_test,True,has >=3 pages,allow_train_only
+Maroun Al-Khoury Maroun,2,37,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Father Youssef Nassar,1,16,train_only,True,single page,allow_train_only
+Shibli Barakat witnesses,1,11,train_only,True,single page,allow_train_only
+Mousssa Farhat Farah,1,14,train_only,True,single page,allow_train_only
+Nassar Tanios Al Samarani,1,17,train_only,True,single page,allow_train_only
+Keserwan Finance Officer,1,14,train_only,True,single page,allow_train_only
+Serhal Ounaissy,1,17,train_only,True,single page,allow_train_only
+Elias Abdallah,1,20,train_only,True,single page,allow_train_only
+Your son George,11,135,train_val_test,True,has >=3 pages,allow_train_only
+Amin Farhat,3,66,train_val_test,True,has >=3 pages,allow_train_only
+Patriarch Elias Hoayek,4,68,train_val_test,True,has >=3 pages,allow_train_only
+Bishop Boulos Akl,3,47,train_val_test,True,has >=3 pages,allow_train_only
+Ameen Rihani,43,949,train_val_test,True,has >=3 pages,allow_train_only
+Shibli N. Damus,13,266,train_val_test,True,has >=3 pages,allow_train_only
+Naoum Mokarzel,3,58,train_val_test,True,has >=3 pages,allow_train_only
+Eissa alKhouri,6,127,train_val_test,True,has >=3 pages,allow_train_only
+Girgi Dimitri Sursock,8,100,train_val_test,True,has >=3 pages,allow_train_only
+Felix Faris,27,480,train_val_test,True,has >=3 pages,allow_train_only
+Muhammad Hussain Najafi,2,32,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+May Ziadeh,12,202,train_val_test,True,has >=3 pages,allow_train_only
+Victor Shemil,1,12,train_only,True,single page,allow_train_only
+Ahmed Shakir alKarmi,1,15,train_only,True,single page,allow_train_only
+Elia Abu Madi,2,35,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,train_val_test,True,has >=3 pages,allow_train_only
+Mohammed Amin al-Husseini ,3,49,train_val_test,True,has >=3 pages,allow_train_only
+Prof. Ign. Kratchkovsky,6,89,train_val_test,True,has >=3 pages,allow_train_only
+Jirjis alKsus,2,26,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Ibrahim Mejahid Al-Jaza'eri,3,62,train_val_test,True,has >=3 pages,allow_train_only
+Daoud Mujaes,4,76,train_val_test,True,has >=3 pages,allow_train_only
+Bechara El Khoury,6,107,train_val_test,True,has >=3 pages,allow_train_only
+Tawfiq,1,17,train_only,True,single page,allow_train_only
+Youssef Ibrahim Yazbek,3,72,train_val_test,True,has >=3 pages,allow_train_only
+Margaret El Haddad,2,40,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Elias Abu Shabaki,8,132,train_val_test,True,has >=3 pages,allow_train_only
+Habib,1,18,train_only,True,single page,allow_train_only
+Adham Al Jundi,1,15,train_only,True,single page,allow_train_only
+Abd al-Khaliq Farid,2,53,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Elie Maroun Khalil,4,69,train_val_test,True,has >=3 pages,allow_train_only
+Habib Abi Rached,1,21,train_only,True,single page,allow_train_only
+Aziz Khoury,3,47,train_val_test,True,has >=3 pages,allow_train_only
+Mary Khoury,1,15,train_only,True,single page,allow_train_only
+Ghnatyos Mbarak,5,95,train_val_test,True,has >=3 pages,allow_train_only
+Abdallah Sfeir,1,20,train_only,True,single page,allow_train_only
+Youssef Nakad,1,22,train_only,True,single page,allow_train_only
+Tanos Youssef Harfouche,1,20,train_only,True,single page,allow_train_only
+JerJi Ass'ad Nader,1,14,train_only,True,single page,allow_train_only
+Habib Abdallah al-Khoury,1,22,train_only,True,single page,allow_train_only
+Serhal Maroun 'Tiyyeh,1,21,train_only,True,single page,allow_train_only
+Hanna Estphan,2,34,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Slayman al-Farkh,1,18,train_only,True,single page,allow_train_only
+Habib Boulos Nasr,1,20,train_only,True,single page,allow_train_only
+Botros Feghaly,3,66,train_val_test,True,has >=3 pages,allow_train_only
+Toufiq Wehbeh,8,157,train_val_test,True,has >=3 pages,allow_train_only
+Maronite Bishop of Sidon,2,38,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Halim Khoury Saadeh,2,44,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Jebrayel Sa'd al 'Alam,1,19,train_only,True,single page,allow_train_only
+Najib Ayoub,2,40,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Youhanna Sfeir,2,35,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Bishop Mkhayel Akhrass,5,93,train_val_test,True,has >=3 pages,allow_train_only
+George Saad,7,111,train_val_test,True,has >=3 pages,allow_train_only
+Bishop Youseef El Khazen,1,22,train_only,True,single page,allow_train_only
+Father Elias Najm,2,53,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Bishop Aghnathios Mbarak,9,163,train_val_test,True,has >=3 pages,allow_train_only
+Dr. Abdo Harb,1,22,train_only,True,single page,allow_train_only
+Fathallah Khoury,4,73,train_val_test,True,has >=3 pages,allow_train_only
+Antonios Elias,1,19,train_only,True,single page,allow_train_only
+Francis Hcheme,1,21,train_only,True,single page,allow_train_only
+Antoine Richa,1,25,train_only,True,single page,allow_train_only
+Botros El Kfouny,1,16,train_only,True,single page,allow_train_only
+Salim Maalouf,1,16,train_only,True,single page,allow_train_only
+Father Yaacoub Awad,1,19,train_only,True,single page,allow_train_only
+Wadih Salim Karam,1,21,train_only,True,single page,allow_train_only
+Father Youhanna El Khoury,2,32,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Georges Jarjoura,1,15,train_only,True,single page,allow_train_only
+Father Jerjes El Alam,1,20,train_only,True,single page,allow_train_only
+Father Botros Dib,1,25,train_only,True,single page,allow_train_only
+Elias Sarkis,18,325,train_val_test,True,has >=3 pages,allow_train_only
+Fouad Chehab,21,264,train_val_test,True,has >=3 pages,allow_train_only
+Hanna Moussa,41,876,train_val_test,True,has >=3 pages,allow_train_only
+Zaghloul ad-Damour,1,19,train_only,True,single page,allow_train_only
+Habib Massoud,5,100,train_val_test,True,has >=3 pages,allow_train_only
+Zaghloul,28,505,train_val_test,True,has >=3 pages,allow_train_only
+Father Youhanna Habib Baysari,9,198,train_val_test,True,has >=3 pages,allow_train_only
+Mkhayel Daher,3,73,train_val_test,True,has >=3 pages,allow_train_only
+Father Youssef Hanna,2,46,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Father Youssef Iskandar,1,23,train_only,True,single page,allow_train_only
+Adib Shiha,1,24,train_only,True,single page,allow_train_only
+Father Youssef Hanna & Father Botros Hasan,3,63,train_val_test,True,has >=3 pages,allow_train_only
+Father Botros Hasan,6,128,train_val_test,True,has >=3 pages,allow_train_only
+Youssef Ibrahim,2,37,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Father Youssef Hajj,3,63,train_val_test,True,has >=3 pages,allow_train_only
+Abdallah Daher,1,13,train_only,True,single page,allow_train_only
+Mkhayel & Ibrahim Daher,2,36,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Tannous Semaan,1,16,train_only,True,single page,allow_train_only
+Father Mkhayel Zreiby,9,200,train_val_test,True,has >=3 pages,allow_train_only
+People of Rablah,1,15,train_only,True,single page,allow_train_only
+Father Boutros Chidiac,1,14,train_only,True,single page,allow_train_only
+Bishop Antoun Jbeir,1,21,train_only,True,single page,allow_train_only
+Father Yousef,1,17,train_only,True,single page,allow_train_only
+Maronite children of Akkar district,1,12,train_only,True,single page,allow_train_only
+Elias Asaf,2,53,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Muhawwel Harouh,1,16,train_only,True,single page,allow_train_only
+Father Mikhael Hanna,4,71,train_val_test,True,has >=3 pages,allow_train_only
+Warda El Khoury,1,18,train_only,True,single page,allow_train_only
+Jean Philipp Kmeid,24,532,train_val_test,True,has >=3 pages,allow_train_only
+Jerji Nicola Khattar al-Chuayri,2,29,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Abd al-Hajj,2,27,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Michel Saykali,45,791,train_val_test,True,has >=3 pages,allow_train_only
+Hanna Ghayth (Juan Gait),68,934,train_val_test,True,has >=3 pages,allow_train_only
+Yousef Hobeiche,23,432,train_val_test,True,has >=3 pages,allow_train_only
+Angele Ellis,4,75,train_val_test,True,has >=3 pages,allow_train_only
+Yousef Hobeiche & Angele Ellis,1,12,train_only,True,single page,allow_train_only
+Khalil Yossuf Nader Raad,22,453,train_val_test,True,has >=3 pages,allow_train_only
+Mansour Eid,12,271,train_val_test,True,has >=3 pages,allow_train_only
+Nassif Mansour,1,14,train_only,True,single page,allow_train_only
+Peter the Patriarch of Antioch,1,24,train_only,True,single page,allow_train_only
+Youssef,1,21,train_only,True,single page,allow_train_only
+Mkhayel Meneem,5,123,train_val_test,True,has >=3 pages,allow_train_only
+Constantine Elias,5,84,train_val_test,True,has >=3 pages,allow_train_only
+Maurice Gemayel,6,67,train_val_test,True,has >=3 pages,allow_train_only
+Murshid Habashi,4,96,train_val_test,True,has >=3 pages,allow_train_only
+Father Elias Abi Khair,1,26,train_only,True,single page,allow_train_only
+Hassan Khalil,2,40,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Michel Kahwaji,25,412,train_val_test,True,has >=3 pages,allow_train_only
+Mayor of Kfarshima,13,426,train_val_test,True,has >=3 pages,allow_train_only
+Sohayl Tohmeh,28,848,train_val_test,True,has >=3 pages,allow_train_only
+Shukri Kanaan,4,134,train_val_test,True,has >=3 pages,allow_train_only
+Emily Nasrallah,48,602,train_val_test,True,has >=3 pages,allow_train_only
+Thomas & John Oussani,1,14,train_only,True,single page,allow_train_only
+Brother of Joseph Oussani,1,28,train_only,True,single page,allow_train_only
+Joseph Oussani,16,400,train_val_test,True,has >=3 pages,allow_train_only
+Shukri Kordahi,1,32,train_only,True,single page,allow_train_only
+Negib Aboussouan,1,24,train_only,True,single page,allow_train_only
+Toubia Hanna Rizk & Touma Chidiac,1,17,train_only,True,single page,allow_train_only
+Hanna Younes Abboud,1,20,train_only,True,single page,allow_train_only
+Youssef Bey Al-Helou,1,15,train_only,True,single page,allow_train_only
+Father Elias,1,10,train_only,True,single page,allow_train_only
+Magistrate of Batroun,1,17,train_only,True,single page,allow_train_only
+Jirjis Yuhanna Basil ,1,17,train_only,True,single page,allow_train_only
+Estephan Adib Salloum,2,53,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Father Boulos El-Mender,10,171,train_val_test,True,has >=3 pages,allow_train_only
+Joseph,2,34,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Salah Tizani,48,875,train_val_test,True,has >=3 pages,allow_train_only
+Father Elias Bassil,3,50,train_val_test,True,has >=3 pages,allow_train_only
+Yahia Mansour & Asaad Koury,1,15,train_only,True,single page,allow_train_only
+Father Tobia al-Issa,3,37,train_val_test,True,has >=3 pages,allow_train_only
+Assad Darouich Zacharias,5,94,train_val_test,True,has >=3 pages,allow_train_only
+Asaad Koury Tobia Attallah,3,42,train_val_test,True,has >=3 pages,allow_train_only
+Krouger Tobia Attallah,14,401,train_val_test,True,has >=3 pages,allow_train_only
+Nadim Attallah,1,26,train_only,True,single page,allow_train_only
+Toufic El Bacha,6,118,train_val_test,True,has >=3 pages,allow_train_only
+Rahma Raad,1,14,train_only,True,single page,allow_train_only
+Youssef Abdullah Maroun,2,30,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Youssef Moussa Sadaqa,1,16,train_only,True,single page,allow_train_only
+Catherine Yazbek Al-Badawi,4,67,train_val_test,True,has >=3 pages,allow_train_only
+Nehme Elias Mikhail,1,12,train_only,True,single page,allow_train_only
+Assad Al-Khoury,1,20,train_only,True,single page,allow_train_only
+Tanios Zakhia Elias Basil,1,14,train_only,True,single page,allow_train_only
+Bishara Mar'i Mansour,2,42,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Francis Lahoud,1,20,train_only,True,single page,allow_train_only
+K. John,1,15,train_only,True,single page,allow_train_only
+Brother Ibrahim,1,15,train_only,True,single page,allow_train_only
+Youssef Fadlallah Salemeh,12,199,train_val_test,True,has >=3 pages,allow_train_only
+Nehad,2,18,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Lebanese immigrants,2,35,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Dani Al-Sibaqa,1,24,train_only,True,single page,allow_train_only
+Abdo Fares,1,17,train_only,True,single page,allow_train_only
+Jamil Youssef Noah,2,28,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Elias Karbaj,2,32,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Jarhas Hanna Al-Shabtini,1,17,train_only,True,single page,allow_train_only
+Bishop Youssef Darian,9,163,train_val_test,True,has >=3 pages,allow_train_only
+Youssef Hanna El-Sawda,17,339,train_val_test,True,has >=3 pages,allow_train_only
+Sally Aad,1,23,train_only,True,single page,allow_train_only
+Daud Barkaat,1,19,train_only,True,single page,allow_train_only
+Talaat,2,30,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
+Maurice Paul Sarrail,2,37,train_plus_val_or_test,True,2 pages; only one of val/test possible,allow_train_only
