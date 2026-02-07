@@ -1,0 +1,1016 @@
+page_id,writer,split,line_count
+QBat19D_086r,Toubia Hanna Rizk & Touma Chidiac,train,17
+EAK1A_180v,Bishop Aghnathios Mbarak,train,23
+EAK1A_171_02v,Bishop Aghnathios Mbarak,val,21
+EAK1A_179r,Bishop Aghnathios Mbarak,test,19
+EAK1A_169v,Bishop Aghnathios Mbarak,train,18
+EAK1A_170r,Bishop Aghnathios Mbarak,train,17
+EAK1A_171_01r,Bishop Aghnathios Mbarak,train,17
+EAK1A_180r,Bishop Aghnathios Mbarak,train,16
+EAK1A_170v,Bishop Aghnathios Mbarak,train,17
+EAK1A_169r,Bishop Aghnathios Mbarak,train,15
+TAttallah2020-095_resize,Nadim Attallah,train,26
+YAL4A_01_02r,Brother Ibrahim,train,15
+EAK1A_099r,Habib Boulos Nasr,train,20
+JoM_Kobayat_0997,Muhawwel Harouh,train,16
+EAC_C_002r,Abd al-Khaliq Farid,test,27
+EAC_C_008r,Abd al-Khaliq Farid,train,26
+BEK1A_27_02r,Bechara El Khoury,train,8
+BEK1A_27_01r-,Bechara El Khoury,val,16
+BEK1A_27_02r-,Bechara El Khoury,test,24
+BEK1A_27_01r,Bechara El Khoury,train,22
+BEK1A_02r,Bechara El Khoury,train,11
+BEK2A_05_02r,Bechara El Khoury,train,26
+EAK1A_326r,Wadih Salim Karam,train,21
+Nasrallah-Al001-010i,Emily Nasrallah,train,11
+Nasrallah-Al001-010h,Emily Nasrallah,val,11
+Nasrallah-Al001-034k,Emily Nasrallah,test,14
+Nasrallah-Al001-010a,Emily Nasrallah,train,11
+Nasrallah-Al001-035a,Emily Nasrallah,train,13
+Nasrallah-Al001-014f,Emily Nasrallah,train,14
+Nasrallah-Al001-010m,Emily Nasrallah,train,11
+Nasrallah-Al001-034e,Emily Nasrallah,train,13
+Nasrallah-Al001-034j,Emily Nasrallah,train,13
+Nasrallah-Al001-034l,Emily Nasrallah,train,14
+Nasrallah-Al001-014h,Emily Nasrallah,train,13
+Nasrallah-Al001-034n,Emily Nasrallah,train,13
+Nasrallah-Al001-014e,Emily Nasrallah,train,14
+Nasrallah-Al001-046b,Emily Nasrallah,train,13
+Nasrallah-Al001-034d,Emily Nasrallah,train,13
+Nasrallah-Al001-014d,Emily Nasrallah,train,13
+Nasrallah-Al001-014c,Emily Nasrallah,train,13
+Nasrallah-Al001-035b,Emily Nasrallah,train,13
+Nasrallah-Al001-013e,Emily Nasrallah,train,14
+Nasrallah-Al001-013c,Emily Nasrallah,train,14
+Nasrallah-Al001-011a,Emily Nasrallah,train,11
+Nasrallah-Al001-010n,Emily Nasrallah,train,8
+Nasrallah-Al001-034f,Emily Nasrallah,train,14
+Nasrallah-Al001-010e,Emily Nasrallah,train,11
+Nasrallah-Al001-035c,Emily Nasrallah,train,13
+Nasrallah-Al001-014g,Emily Nasrallah,train,14
+Nasrallah-Al001-026a,Emily Nasrallah,train,12
+Nasrallah-Al001-013f,Emily Nasrallah,train,14
+Nasrallah-Al001-013b,Emily Nasrallah,train,13
+Nasrallah-Al001-026b,Emily Nasrallah,train,13
+Nasrallah-Al001-013g,Emily Nasrallah,train,14
+Nasrallah-Al001-010c,Emily Nasrallah,train,12
+Nasrallah-Al001-010g,Emily Nasrallah,train,11
+Nasrallah-Al001-010k,Emily Nasrallah,train,11
+Nasrallah-Al001-034i,Emily Nasrallah,train,12
+Nasrallah-Al001-014b,Emily Nasrallah,train,13
+Nasrallah-Al001-010b,Emily Nasrallah,train,11
+Nasrallah-Al001-046a,Emily Nasrallah,train,13
+Nasrallah-Al001-010l,Emily Nasrallah,train,10
+Nasrallah-Al001-034m,Emily Nasrallah,train,13
+Nasrallah-Al001-010j,Emily Nasrallah,train,11
+Nasrallah-Al001-034p,Emily Nasrallah,train,13
+Nasrallah-Al001-010d,Emily Nasrallah,train,11
+Nasrallah-Al001-013d,Emily Nasrallah,train,14
+Nasrallah-Al001-010f,Emily Nasrallah,train,11
+Nasrallah-Al001-034q,Emily Nasrallah,train,15
+Nasrallah-Al001-034b,Emily Nasrallah,train,13
+Nasrallah-Al001-034h,Emily Nasrallah,train,13
+EAC_B_006r,Habib,train,18
+AF_295v,Serhal Ounaissy,train,17
+QBat5H_0534_01r,Estephan Adib Salloum,test,29
+QBat5H_0533_01r,Estephan Adib Salloum,train,24
+EAK1A_095r,Slayman al-Farkh,train,18
+EAK1A_289r,Antoine Richa,train,25
+JoM_Kobayat_0641,Elias Asaf,test,27
+JoM_Kobayat_0642,Elias Asaf,train,26
+EAK1A_049r,Ghnatyos Mbarak,train,16
+EAK1A_137r,Ghnatyos Mbarak,val,17
+EAK1A_137v,Ghnatyos Mbarak,test,15
+EAK1A_051v,Ghnatyos Mbarak,train,26
+EAK1A_049v,Ghnatyos Mbarak,train,21
+YAL2A_13_02,Nehme Elias Mikhail,train,12
+JoM_Kobayat_0134,Tannous Semaan,train,16
+AF_296r,Elias Abdallah,train,20
+EAK1A_333r,Father Jerjes El Alam,train,20
+EAK1A_364r,Father Botros Dib,train,25
+MUKF7I_01_025r,Shukri Kanaan,train,33
+MUKF7I_01_026r,Shukri Kanaan,val,36
+MUKF7I_01_025v,Shukri Kanaan,test,33
+MUKF7I_01_026v,Shukri Kanaan,train,32
+JoM_Kobayat_0075,Father Youssef Iskandar,train,23
+AR56_04_034,Mohammed Amin al-Husseini,train,17
+AR56_03_058,Mohammed Amin al-Husseini,val,19
+AR56_03_059,Mohammed Amin al-Husseini,test,13
+EAK1A_089r,Serhal Maroun 'Tiyyeh,train,21
+Oussani2018-0286_1,Brother of Joseph Oussani,train,28
+AR56_02_006,Muhammad Hussain Najafi,test,18
+AR56_04_033,Muhammad Hussain Najafi,train,14
+YS_1D_070d,Jamil Youssef Noah,test,19
+YS_1D_070e,Jamil Youssef Noah,train,9
+YAL2A_14_03,Tanios Zakhia Elias Basil,train,14
+AR56_03_003,Ahmed Shakir alKarmi,train,15
+QBat19D_094r,Hanna Younes Abboud,train,20
+YFS2A_02_01_1,Youssef Fadlallah Salemeh,train,16
+YFS2A_01v,Youssef Fadlallah Salemeh,val,18
+YFS2A_05_02,Youssef Fadlallah Salemeh,test,13
+YFS2A_05_01,Youssef Fadlallah Salemeh,train,12
+YFS1A_14,Youssef Fadlallah Salemeh,train,17
+YFS2A_05_04,Youssef Fadlallah Salemeh,train,13
+YFS2A_05_03,Youssef Fadlallah Salemeh,train,13
+YFS2A_01r,Youssef Fadlallah Salemeh,train,17
+YFS1A_07,Youssef Fadlallah Salemeh,train,20
+YFS2A_02_02_2,Youssef Fadlallah Salemeh,train,20
+YFS1A_10,Youssef Fadlallah Salemeh,train,20
+YFS2A_04,Youssef Fadlallah Salemeh,train,20
+MeM1C_10_02,Peter the Patriarch of Antioch,train,24
+AR56_04_037,Daoud Mujaes,train,19
+AR56_04_038,Daoud Mujaes,val,18
+AR56_04_036,Daoud Mujaes,test,21
+AR56_04_035,Daoud Mujaes,train,18
+Oussani2018-0292a_1,Joseph Oussani,train,29
+Oussani2018-0292h_1,Joseph Oussani,val,23
+Oussani2018-0292g_2,Joseph Oussani,test,25
+Oussani2018-0292d_2,Joseph Oussani,train,25
+Oussani2018-0292a_2,Joseph Oussani,train,27
+Oussani2018-0292h_2,Joseph Oussani,train,25
+Oussani2018-0292d_1,Joseph Oussani,train,24
+Oussani2018-0292f_2,Joseph Oussani,train,23
+Oussani2018-0292c_1,Joseph Oussani,train,25
+Oussani2018-0292e_2,Joseph Oussani,train,23
+Oussani2018-0292b_2,Joseph Oussani,train,26
+Oussani2018-0292e_1,Joseph Oussani,train,26
+Oussani2018-0292c_2,Joseph Oussani,train,26
+Oussani2018-0292g_1,Joseph Oussani,train,23
+Oussani2018-0292b_1,Joseph Oussani,train,25
+Oussani2018-0292f_1,Joseph Oussani,train,25
+YS_4D_050,Talaat,test,17
+YS_4D_050b,Talaat,train,13
+JoM_Kobayat_0320,Father Boutros Chidiac,train,14
+JoM_Kobayat_0123,Abdallah Daher,train,13
+EAK1A_325r,Father Yaacoub Awad,train,19
+TB1A_16_02,Toufic El Bacha,train,20
+TB1A_18,Toufic El Bacha,val,17
+TB1A_17,Toufic El Bacha,test,18
+TB1A_16_01,Toufic El Bacha,train,21
+TB1A_25_01,Toufic El Bacha,train,22
+TB1A_19,Toufic El Bacha,train,20
+JoM_Kobayat_0073,Mkhayel Daher,train,24
+JoM_Kobayat_0211,Mkhayel Daher,val,24
+JoM_Kobayat_0131,Mkhayel Daher,test,25
+EAK1A_327r,Father Youhanna El Khoury,test,17
+EAK1A_327v,Father Youhanna El Khoury,train,15
+BEK2A_11_01r,Youssef Ibrahim Yazbek,train,20
+BEK2A_11_02r,Youssef Ibrahim Yazbek,val,24
+BEK2A_11_03r,Youssef Ibrahim Yazbek,test,28
+EAC_C_001r,Adham Al Jundi,train,15
+QBat3D_1471_02r,Magistrate of Batroun,train,17
+MG1_045_02r,Constantine Elias,train,20
+MG1_045_01,Constantine Elias,val,17
+MG1_050_02r,Constantine Elias,test,21
+MG1_045_02v,Constantine Elias,train,8
+MG1_050_01r,Constantine Elias,train,18
+QBat1L_053r,Youssef Bey Al-Helou,train,15
+MG1_061,Maurice Gemayel,train,11
+MG1_048,Maurice Gemayel,val,6
+MG1_046,Maurice Gemayel,test,12
+MG1_057,Maurice Gemayel,train,9
+MG1_064,Maurice Gemayel,train,12
+MG1_047,Maurice Gemayel,train,17
+AnF_006,Patriarch Elias Hoayek,train,16
+AnF_010,Patriarch Elias Hoayek,val,12
+AnF_009,Patriarch Elias Hoayek,test,22
+AnF_008,Patriarch Elias Hoayek,train,18
+EAK1A_328r,Georges Jarjoura,train,15
+BEK2A_17_02r,Margaret El Haddad,test,26
+BEK2A_17_01r,Margaret El Haddad,train,14
+EAK1A_087r,JerJi Ass'ad Nader,train,14
+TAttallah2020-039,Assad Darouich Zacharias,train,17
+TAttallah2020-034,Assad Darouich Zacharias,val,25
+TAttallah2020-027a,Assad Darouich Zacharias,test,17
+TAttallah2020-027b,Assad Darouich Zacharias,train,18
+TAttallah2020-035,Assad Darouich Zacharias,train,17
+EAK1A_157r,Bishop Youseef El Khazen,train,22
+YS_1D_070c,Abdo Fares,train,17
+YS_1D_068,Dani Al-Sibaqa,train,24
+EAK1A_138_01r,Botros Feghaly,train,21
+EAK1A_138_01v,Botros Feghaly,val,24
+EAK1A_138_02r,Botros Feghaly,test,21
+KEllis2018-169a_1,Yousef Hobeiche,train,17
+KEllis2018-175b,Yousef Hobeiche,val,17
+KEllis2018-166b,Yousef Hobeiche,test,25
+KEllis2018-169d_1,Yousef Hobeiche,train,16
+KEllis2018-166c,Yousef Hobeiche,train,17
+KEllis2018-193a,Yousef Hobeiche,train,20
+KEllis2018-193c,Yousef Hobeiche,train,16
+KEllis2018-175a,Yousef Hobeiche,train,18
+KEllis2018-169c_1,Yousef Hobeiche,train,14
+KEllis2018-169d_2,Yousef Hobeiche,train,17
+KEllis2018-139b,Yousef Hobeiche,train,22
+KEllis2018-193b,Yousef Hobeiche,train,21
+KEllis2018-169c_2,Yousef Hobeiche,train,14
+KEllis2018-147f,Yousef Hobeiche,train,16
+KEllis2018-139c,Yousef Hobeiche,train,21
+KEllis2018-166a,Yousef Hobeiche,train,24
+KEllis2018-169b_2,Yousef Hobeiche,train,17
+KEllis2018-147e,Yousef Hobeiche,train,18
+KEllis2018-169a_2,Yousef Hobeiche,train,15
+KEllis2018-139e,Yousef Hobeiche,train,24
+KEllis2018-139a,Yousef Hobeiche,train,22
+KEllis2018-169b_1,Yousef Hobeiche,train,17
+KEllis2018-139d,Yousef Hobeiche,train,24
+EAK1A_038r,Aziz Khoury,train,21
+EAK1A_038v,Aziz Khoury,val,12
+EAK1A_035r,Aziz Khoury,test,14
+AR56_03_002,Victor Shemil,train,12
+ES4A_03_03,Elias Sarkis,train,9
+ES1D_18_04,Elias Sarkis,val,23
+ES1D_19_07,Elias Sarkis,test,5
+ES4A_03_02,Elias Sarkis,train,16
+ES1D_18_02,Elias Sarkis,train,24
+ES1D_18_03,Elias Sarkis,train,25
+ES1D_19_05,Elias Sarkis,train,20
+ES1D_19_04,Elias Sarkis,train,20
+ES4A_04v,Elias Sarkis,train,6
+ES1D_19_03,Elias Sarkis,train,18
+ES1D_19_01,Elias Sarkis,train,22
+ES4A_04r,Elias Sarkis,train,21
+ES1D_18_01,Elias Sarkis,train,18
+ES4A_03_04,Elias Sarkis,train,19
+ES4A_03_05,Elias Sarkis,train,22
+ES1D_19_02,Elias Sarkis,train,20
+ES1D_19_06,Elias Sarkis,train,20
+ES4A_03_01,Elias Sarkis,train,17
+EAK1A_144_02r,Halim Khoury Saadeh,test,23
+EAK1A_144_02v,Halim Khoury Saadeh,train,21
+AR56_01_066,Felix Faris,train,18
+AR56_01_060,Felix Faris,val,17
+AR56_01_058,Felix Faris,test,21
+AR56_04_071,Felix Faris,train,14
+AR56_02_016,Felix Faris,train,18
+AR56_04_082,Felix Faris,train,21
+AR56_01_059,Felix Faris,train,12
+AR56_01_064,Felix Faris,train,14
+AR56_02_002_1,Felix Faris,train,14
+AR56_01_062,Felix Faris,train,5
+AR56_03_006,Felix Faris,train,19
+AR56_01_061,Felix Faris,train,26
+AR56_04_083,Felix Faris,train,27
+AR56_03_005,Felix Faris,train,20
+AR56_02_003_1,Felix Faris,train,20
+AR56_02_017,Felix Faris,train,24
+AR56_01_078_2,Felix Faris,train,18
+AR56_01_077_1,Felix Faris,train,18
+AR56_03_004,Felix Faris,train,18
+AR56_02_018,Felix Faris,train,12
+AR56_01_065,Felix Faris,train,18
+AR56_02_003_2,Felix Faris,train,20
+AR56_01_067,Felix Faris,train,18
+AR56_01_077_2,Felix Faris,train,14
+AR56_01_078_1,Felix Faris,train,10
+AR56_02_002_2,Felix Faris,train,20
+AR56_04_084,Felix Faris,train,24
+JoM_Kobayat_1009,Warda El Khoury,train,18
+YS_5H_023,Maurice Paul Sarrail,test,22
+YS_5H_023a,Maurice Paul Sarrail,train,15
+YAL2A_24,Francis Lahoud,train,20
+YS_2F_022e,Youssef Hanna El-Sawda,train,17
+YS_2F_022d,Youssef Hanna El-Sawda,val,18
+YS_2F_022f,Youssef Hanna El-Sawda,test,11
+YS_5H_011d,Youssef Hanna El-Sawda,train,10
+YS_5H_017,Youssef Hanna El-Sawda,train,21
+YS_5H_011g,Youssef Hanna El-Sawda,train,20
+YS_2F_022a,Youssef Hanna El-Sawda,train,16
+YS_2F_022c,Youssef Hanna El-Sawda,train,20
+YS_5H_003,Youssef Hanna El-Sawda,train,24
+YS_5H_004,Youssef Hanna El-Sawda,train,25
+YS_5H_011c,Youssef Hanna El-Sawda,train,28
+YS_5H_011f,Youssef Hanna El-Sawda,train,24
+YS_5H_008,Youssef Hanna El-Sawda,train,21
+YS_5H_007,Youssef Hanna El-Sawda,train,24
+YS_2F_022b,Youssef Hanna El-Sawda,train,19
+YS_5H_017d,Youssef Hanna El-Sawda,train,21
+YS_5H_017b,Youssef Hanna El-Sawda,train,20
+YS_4A_004,Daud Barkaat,train,19
+EAK1A_081r,Tanos Youssef Harfouche,train,20
+AR56_01_016,Shibli N. Damus,train,48
+AR56_01_024,Shibli N. Damus,val,20
+AR56_01_003_2,Shibli N. Damus,test,11
+AR56_01_006,Shibli N. Damus,train,20
+AR56_01_005,Shibli N. Damus,train,18
+AR56_01_009,Shibli N. Damus,train,21
+AR56_01_017,Shibli N. Damus,train,22
+AR56_01_010,Shibli N. Damus,train,19
+AR56_01_011,Shibli N. Damus,train,20
+AR56_01_012,Shibli N. Damus,train,15
+AR56_01_008,Shibli N. Damus,train,19
+AR56_01_003_1,Shibli N. Damus,train,14
+AR56_01_007,Shibli N. Damus,train,19
+TAttallah2020-029,Father Elias Bassil,train,12
+TAttallah2020-019,Father Elias Bassil,val,17
+TAttallah2020-024,Father Elias Bassil,test,21
+QAJE3G_28_02r,Shukri Kordahi,train,32
+AnF_013,Bishop Boulos Akl,train,18
+AnF_015,Bishop Boulos Akl,val,13
+AnF_014,Bishop Boulos Akl,test,16
+MeM1C_04_01,Nassif Mansour,train,14
+EAK1A_066r,Abdallah Sfeir,train,20
+YAL2A_01_01r,Rahma Raad,train,14
+AF_304_06v,Your son George,train,7
+AF_322_01r,Your son George,val,11
+AF_304_03r,Your son George,test,13
+AF_322_02r,Your son George,train,11
+AF_303r,Your son George,train,12
+AF_304_04r,Your son George,train,14
+AF_304_02r,Your son George,train,13
+AF_304_01r,Your son George,train,13
+AF_304_06r,Your son George,train,15
+AF_304_05r,Your son George,train,14
+AF_321r,Your son George,train,12
+JoM_Kobayat_0311,People of Rablah,train,15
+AR53_02_265,Ameen Rihani,train,25
+AR69_004,Ameen Rihani,val,33
+AR53_01_033,Ameen Rihani,test,20
+AR53_01_026,Ameen Rihani,train,22
+AR69_006,Ameen Rihani,train,37
+AR53_01_009,Ameen Rihani,train,24
+AR51_062,Ameen Rihani,train,14
+AR53_02_211,Ameen Rihani,train,24
+AR53_01_010,Ameen Rihani,train,22
+AR53_01_031,Ameen Rihani,train,14
+AR53_02_210,Ameen Rihani,train,24
+AR53_02_205,Ameen Rihani,train,26
+AR53_01_011,Ameen Rihani,train,21
+AR51_008,Ameen Rihani,train,17
+AR53_01_040,Ameen Rihani,train,25
+AR53_01_038,Ameen Rihani,train,22
+AR69_003,Ameen Rihani,train,12
+AR53_01_029,Ameen Rihani,train,23
+AR53_01_039,Ameen Rihani,train,25
+AR53_01_008,Ameen Rihani,train,21
+AR55_05_006,Ameen Rihani,train,19
+AR53_01_037,Ameen Rihani,train,21
+AR53_02_230,Ameen Rihani,train,26
+AR55_05_007,Ameen Rihani,train,17
+AR53_02_246,Ameen Rihani,train,26
+AR53_01_035,Ameen Rihani,train,22
+AR53_02_262,Ameen Rihani,train,26
+AR53_01_036,Ameen Rihani,train,22
+AR67_003,Ameen Rihani,train,11
+AR53_01_006,Ameen Rihani,train,19
+AR53_02_209,Ameen Rihani,train,25
+AR69_005,Ameen Rihani,train,20
+AR67_002,Ameen Rihani,train,20
+AR69_007,Ameen Rihani,train,30
+AR53_02_254,Ameen Rihani,train,24
+AR53_01_034,Ameen Rihani,train,21
+AR53_01_025,Ameen Rihani,train,21
+AR53_02_212,Ameen Rihani,train,24
+AR53_02_213,Ameen Rihani,train,23
+AR67_004,Ameen Rihani,train,15
+AR53_01_027,Ameen Rihani,train,22
+AR53_02_207,Ameen Rihani,train,26
+AR51_013,Ameen Rihani,train,18
+KJoseph18910818-001,Khalil Yossuf Nader Raad,train,32
+KJoseph18990827-002_2,Khalil Yossuf Nader Raad,val,22
+KJoseph18990827-001_1,Khalil Yossuf Nader Raad,test,18
+KJoseph19040819-003,Khalil Yossuf Nader Raad,train,21
+KJoseph19050928-002,Khalil Yossuf Nader Raad,train,27
+KJoseph19020905-002,Khalil Yossuf Nader Raad,train,30
+KJoseph19040607-002,Khalil Yossuf Nader Raad,train,24
+KJoseph19040607-001,Khalil Yossuf Nader Raad,train,21
+KJoseph19030207-001,Khalil Yossuf Nader Raad,train,20
+KJoseph18990827-001_2,Khalil Yossuf Nader Raad,train,19
+KJoseph18970910-001,Khalil Yossuf Nader Raad,train,22
+KJoseph19080319-001,Khalil Yossuf Nader Raad,train,21
+KJoseph19040819-004,Khalil Yossuf Nader Raad,train,27
+KJoseph19040209-001,Khalil Yossuf Nader Raad,train,21
+KJoseph18970910-002,Khalil Yossuf Nader Raad,train,10
+KJoseph19020905-001,Khalil Yossuf Nader Raad,train,24
+KJoseph18990827-002_1,Khalil Yossuf Nader Raad,train,5
+KJoseph19040819-002,Khalil Yossuf Nader Raad,train,26
+KJoseph18990913-001_1,Khalil Yossuf Nader Raad,train,12
+KJoseph19040819-001,Khalil Yossuf Nader Raad,train,20
+KJoseph18990913-001_2,Khalil Yossuf Nader Raad,train,19
+KJoseph18910818-002,Khalil Yossuf Nader Raad,train,12
+YFS5A_09r,Nehad,test,12
+YFS5A_09v,Nehad,train,6
+YS_1D_073,Jarhas Hanna Al-Shabtini,train,17
+KEllis2019-106a,Angele Ellis,train,10
+KEllis2020-138b,Angele Ellis,val,15
+KEllis2020-140d,Angele Ellis,test,23
+KEllis2020-173a,Angele Ellis,train,27
+AR56_02_013_2,May Ziadeh,train,17
+AR56_04_092,May Ziadeh,val,23
+AR56_04_089,May Ziadeh,test,22
+AR56_03_040,May Ziadeh,train,17
+AR56_03_041,May Ziadeh,train,12
+AR56_02_014_2,May Ziadeh,train,13
+AR56_04_091,May Ziadeh,train,22
+AR56_02_014_1,May Ziadeh,train,13
+AR56_04_088,May Ziadeh,train,20
+AR56_02_013_1,May Ziadeh,train,10
+AR56_04_090,May Ziadeh,train,22
+AR56_03_039,May Ziadeh,train,11
+EAK1A_292r,Botros El Kfouny,train,16
+ME_21_12,Mansour Eid,train,18
+ME_21_02,Mansour Eid,val,20
+ME_21_09,Mansour Eid,test,23
+ME_21_07,Mansour Eid,train,23
+ME_21_03,Mansour Eid,train,23
+ME_21_11,Mansour Eid,train,29
+ME_21_06,Mansour Eid,train,23
+ME_21_01,Mansour Eid,train,21
+ME_21_08,Mansour Eid,train,25
+ME_21_05,Mansour Eid,train,22
+ME_21_04,Mansour Eid,train,23
+ME_21_10,Mansour Eid,train,21
+EAK1A_154_01v,George Saad,train,19
+EAK1A_150_02r,George Saad,val,19
+EAK1A_154_01r,George Saad,test,10
+EAK1A_150_01r,George Saad,train,11
+EAK1A_154_02v,George Saad,train,14
+EAK1A_154_02r,George Saad,train,19
+EAK1A_150_01v,George Saad,train,19
+YS_1D_070h,Elias Karbaj,test,16
+YS_1D_070f,Elias Karbaj,train,16
+YAL2A_74r,Catherine Yazbek Al-Badawi,train,17
+YAL2A_11_02,Catherine Yazbek Al-Badawi,val,15
+YAL2A_23_02r,Catherine Yazbek Al-Badawi,test,18
+YAL2A_65_02,Catherine Yazbek Al-Badawi,train,17
+YS_1D_065b,Lebanese immigrants,test,22
+YS_1D_065a,Lebanese immigrants,train,13
+YAL2A_40,Bishara Mar'i Mansour,test,21
+YAL2A_16r,Bishara Mar'i Mansour,train,21
+JoM_Kobayat_0445,Maronite children of Akkar district,train,12
+EAK1A_193_02v,Fathallah Khoury,train,22
+EAK1A_192v,Fathallah Khoury,val,14
+EAK1A_193_01r,Fathallah Khoury,test,20
+EAK1A_192r,Fathallah Khoury,train,17
+YAL2A_54,K. John,train,15
+AR56_03_035,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,9
+AR56_03_032,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,val,17
+AR56_03_013,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,test,13
+AR56_03_023,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,27
+AR56_03_036,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,17
+AR56_03_066,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,5
+AR56_03_024,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,9
+AR56_03_033,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,11
+AR56_03_012,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,13
+AR56_03_018,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,13
+AR56_03_019,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,5
+AR56_03_034,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,17
+AR56_03_057,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,14
+AR56_03_017,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,16
+AR56_03_065,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,3
+AR56_03_030,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,16
+AR56_03_076,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,5
+AR56_03_025,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,26
+AR56_03_037,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,11
+AR56_03_031,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,train,23
+JoM_Kobayat_0154,Father Botros Hasan,train,24
+JoM_Kobayat_0125,Father Botros Hasan,val,20
+JoM_Kobayat_0111,Father Botros Hasan,test,19
+JoM_Kobayat_0086,Father Botros Hasan,train,24
+JoM_Kobayat_0121,Father Botros Hasan,train,22
+JoM_Kobayat_0087,Father Botros Hasan,train,19
+QBat4L_012r,Jirjis Yuhanna Basil,train,17
+EAK1A_140_08r,Toufiq Wehbeh,train,20
+EAK1A_140_01r,Toufiq Wehbeh,val,17
+EAK1A_140_04r,Toufiq Wehbeh,test,21
+EAK1A_140_06r,Toufiq Wehbeh,train,17
+EAK1A_140_07r,Toufiq Wehbeh,train,17
+EAK1A_140_02r,Toufiq Wehbeh,train,21
+EAK1A_140_05r,Toufiq Wehbeh,train,22
+EAK1A_140_03r,Toufiq Wehbeh,train,22
+MUKF7I_01_021r,Mayor of Kfarshima,train,32
+MUKF7I_01_027v,Mayor of Kfarshima,val,36
+MUKF1B_01r,Mayor of Kfarshima,test,23
+MUKF7I_01_023r,Mayor of Kfarshima,train,38
+MUKF7I_01_027r,Mayor of Kfarshima,train,32
+MUKF7I_01_024r,Mayor of Kfarshima,train,40
+MUKF7I_01_021v,Mayor of Kfarshima,train,37
+MUKF7I_01_024v,Mayor of Kfarshima,train,33
+MUKF7I_01_022v,Mayor of Kfarshima,train,34
+MUKF1B_01v,Mayor of Kfarshima,train,23
+MUKF7I_01_023v,Mayor of Kfarshima,train,32
+MUKF7I_01_019r,Mayor of Kfarshima,train,32
+MUKF7I_01_022r,Mayor of Kfarshima,train,34
+EAC_A_039_064r,Elias Abu Shabaki,train,17
+EAC_A_039_049r,Elias Abu Shabaki,val,19
+EAC_A_039_065r,Elias Abu Shabaki,test,18
+EAC_A_039_060r,Elias Abu Shabaki,train,16
+EAC_A_039_050r,Elias Abu Shabaki,train,13
+EAC_A_039_062r,Elias Abu Shabaki,train,16
+EAC_A_039_063r,Elias Abu Shabaki,train,17
+EAC_A_039_059r,Elias Abu Shabaki,train,16
+MK2A_07_12r,Michel Kahwaji,train,6
+MK2A_08_04r,Michel Kahwaji,val,12
+MK2A_07_11r,Michel Kahwaji,test,14
+MK2A_07_09r,Michel Kahwaji,train,17
+MK2A_07_02r,Michel Kahwaji,train,20
+MK2A_07_21r,Michel Kahwaji,train,15
+MK2A_07_13r,Michel Kahwaji,train,18
+MK2A_07_03r,Michel Kahwaji,train,19
+MK2A_08_02r,Michel Kahwaji,train,13
+MK2A_07_04r,Michel Kahwaji,train,15
+MK2A_07_05r,Michel Kahwaji,train,14
+MK2A_07_14r,Michel Kahwaji,train,20
+MK2A_07_01r,Michel Kahwaji,train,19
+MK2A_07_08r,Michel Kahwaji,train,15
+MK2A_07_19r,Michel Kahwaji,train,18
+MK2A_07_06r,Michel Kahwaji,train,16
+MK2A_08_03r,Michel Kahwaji,train,14
+MK2A_07_17r,Michel Kahwaji,train,21
+MK2A_07_10r,Michel Kahwaji,train,18
+MK2A_07_18r,Michel Kahwaji,train,21
+MK2A_08_01r,Michel Kahwaji,train,14
+MK2A_07_16r,Michel Kahwaji,train,17
+MK2A_07_07r,Michel Kahwaji,train,21
+MK2A_07_20r,Michel Kahwaji,train,13
+MK2A_07_15r,Michel Kahwaji,train,22
+JoM_Kobayat_0085,Father Youssef Hanna & Father Botros Hasan,train,23
+JoM_Kobayat_0143,Father Youssef Hanna & Father Botros Hasan,val,22
+JoM_Kobayat_0084,Father Youssef Hanna & Father Botros Hasan,test,18
+JPK2B_56_02,Jean Philipp Kmeid,train,12
+JPK2B_40,Jean Philipp Kmeid,val,27
+JPK2B_78_03,Jean Philipp Kmeid,test,26
+JPK2B_53_01,Jean Philipp Kmeid,train,30
+JPK2B_78_02,Jean Philipp Kmeid,train,25
+JPK2B_57_02,Jean Philipp Kmeid,train,14
+JPK2B_096_05,Jean Philipp Kmeid,train,14
+JPK2B_78_04,Jean Philipp Kmeid,train,26
+JPK2B_42_03,Jean Philipp Kmeid,train,26
+JPK2B_56_01,Jean Philipp Kmeid,train,30
+JPK2B_69_01,Jean Philipp Kmeid,train,23
+JPK2B_42_01,Jean Philipp Kmeid,train,27
+JPK2B_41,Jean Philipp Kmeid,train,13
+JPK2B_096_03,Jean Philipp Kmeid,train,25
+JPK2B_45_02,Jean Philipp Kmeid,train,10
+JPK2B_42_04,Jean Philipp Kmeid,train,23
+JPK2B_57_01,Jean Philipp Kmeid,train,27
+JPK2B_53_02,Jean Philipp Kmeid,train,5
+JPK2B_45_01,Jean Philipp Kmeid,train,24
+JPK2B_65,Jean Philipp Kmeid,train,24
+JPK2B_69_02,Jean Philipp Kmeid,train,26
+JPK2B_78_01,Jean Philipp Kmeid,train,23
+JPK2B_42_02,Jean Philipp Kmeid,train,28
+JPK2B_096_04,Jean Philipp Kmeid,train,24
+AF_282r,Mousssa Farhat Farah,train,14
+AF_280r,Shibli Barakat witnesses,train,11
+TAttallah2020-038,Father Tobia al-Issa,train,12
+TAttallah2020-023,Father Tobia al-Issa,val,13
+TAttallah2020-026,Father Tobia al-Issa,test,12
+kc0061_01_01_19121203_001a,Jerji Nicola Khattar al-Chuayri,test,18
+kc0061_01_01_19121203_001b,Jerji Nicola Khattar al-Chuayri,train,11
+EAK1A_067r,Youssef Nakad,train,22
+YAL2A_47r,Youssef Abdullah Maroun,test,15
+YAL2A_03r,Youssef Abdullah Maroun,train,15
+Oussani2018-0285,Thomas & John Oussani,train,14
+YAL2A_08_02,Youssef Moussa Sadaqa,train,16
+AR56_03_070,Prof. Ign. Kratchkovsky,train,21
+AR56_04_047,Prof. Ign. Kratchkovsky,val,13
+AR56_04_039,Prof. Ign. Kratchkovsky,test,13
+AR56_03_071,Prof. Ign. Kratchkovsky,train,21
+AR56_03_080,Prof. Ign. Kratchkovsky,train,9
+AR56_04_012,Prof. Ign. Kratchkovsky,train,12
+MG31_101_02,Hassan Khalil,test,31
+MG31_101_03,Hassan Khalil,train,9
+JEH2A1_01r,Zaghloul ad-Damour,train,19
+AR56_04_031,Ibrahim Mejahid Al-Jaza'eri,train,12
+AR56_04_030,Ibrahim Mejahid Al-Jaza'eri,val,25
+AR56_04_029,Ibrahim Mejahid Al-Jaza'eri,test,25
+EAC_D_051G,Elie Maroun Khalil,train,22
+EAC_D_051I,Elie Maroun Khalil,val,9
+EAC_D_051F,Elie Maroun Khalil,test,21
+EAC_D_051H,Elie Maroun Khalil,train,17
+MeM1C_22_01,Youssef,train,21
+JoM_Kobayat_1013,Father Mikhael Hanna,train,17
+JoM_Kobayat_1014,Father Mikhael Hanna,val,21
+JoM_Kobayat_0998,Father Mikhael Hanna,test,16
+JoM_Kobayat_1015,Father Mikhael Hanna,train,17
+MG1_150_03,Murshid Habashi,train,26
+MG1_150_02,Murshid Habashi,val,26
+MG1_150_04,Murshid Habashi,test,22
+MG1_150_01,Murshid Habashi,train,22
+BEK1A_14_01r,Tawfiq,train,17
+SB2A_01r,Joseph,test,21
+SB2A_01v,Joseph,train,13
+EAK1A_322r,Salim Maalouf,train,16
+AR56_04_018,Jirjis alKsus,test,13
+AR56_04_017,Jirjis alKsus,train,13
+EAK1A_165r,Bishop Mkhayel Akhrass,train,22
+EAK1A_149r,Bishop Mkhayel Akhrass,val,19
+EAK1A_151r,Bishop Mkhayel Akhrass,test,21
+EAK1A_160_01r,Bishop Mkhayel Akhrass,train,17
+EAK1A_161r,Bishop Mkhayel Akhrass,train,14
+SB_06,Father Boulos El-Mender,train,15
+SB1A_06r,Father Boulos El-Mender,val,17
+SB1A_05v,Father Boulos El-Mender,test,17
+SB1A_04r,Father Boulos El-Mender,train,20
+SB1A_05r,Father Boulos El-Mender,train,16
+SB_07,Father Boulos El-Mender,train,23
+SB1A_01r,Father Boulos El-Mender,train,12
+SB1A_02r,Father Boulos El-Mender,train,18
+SB1A_09r,Father Boulos El-Mender,train,21
+SB_12,Father Boulos El-Mender,train,12
+MeM1D_02_004v,Mkhayel Meneem,train,26
+MeM1D_01_06r,Mkhayel Meneem,val,23
+MeM1D_02_004r,Mkhayel Meneem,test,24
+MeM1D_02_003r,Mkhayel Meneem,train,25
+MeM1D_02_005r,Mkhayel Meneem,train,25
+YS_4C_068,Bishop Youssef Darian,train,14
+YS_4C_038,Bishop Youssef Darian,val,20
+YS_4C_067,Bishop Youssef Darian,test,16
+YS_4D_060,Bishop Youssef Darian,train,20
+YS_4D_047,Bishop Youssef Darian,train,22
+YS_4C_066,Bishop Youssef Darian,train,21
+YS_4C_069,Bishop Youssef Darian,train,17
+YS_4D_095,Bishop Youssef Darian,train,18
+YS_1E_005a,Bishop Youssef Darian,train,15
+AR56_03_007,Elia Abu Madi,test,18
+AR56_03_008,Elia Abu Madi,train,17
+FC2C_11_16,Fouad Chehab,train,11
+FC2C_11_21,Fouad Chehab,val,11
+FC2C_11_14,Fouad Chehab,test,11
+FC2C_11_07,Fouad Chehab,train,21
+FC2C_11_20,Fouad Chehab,train,11
+FC2C_11_05,Fouad Chehab,train,21
+FC2C_11_18,Fouad Chehab,train,11
+FC2C_11_08,Fouad Chehab,train,6
+FC2C_11_12,Fouad Chehab,train,11
+FC2C_11_13,Fouad Chehab,train,11
+FC2C_11_19,Fouad Chehab,train,11
+FC2C_11_22,Fouad Chehab,train,11
+FC2C_11_10,Fouad Chehab,train,11
+FC2C_11_15,Fouad Chehab,train,11
+FC2C_11_04,Fouad Chehab,train,21
+FC2C_11_17,Fouad Chehab,train,11
+FC2C_11_24,Fouad Chehab,train,11
+FC2C_11_23,Fouad Chehab,train,11
+FC2C_11_25,Fouad Chehab,train,9
+FC2C_11_06,Fouad Chehab,train,21
+FC2C_11_11,Fouad Chehab,train,11
+AF_293r,Keserwan Finance Officer,train,14
+AR56_01_015,Naoum Mokarzel,train,18
+AR56_01_014,Naoum Mokarzel,val,20
+AR56_01_013,Naoum Mokarzel,test,20
+JoM_Kobayat_0082,Adib Shiha,train,24
+TAttallah2020-020,Yahia Mansour & Asaad Koury,train,15
+AF_291r,Nassar Tanios Al Samarani,train,17
+MG1_256v,Father Elias Abi Khair,train,26
+JoM_Kobayat_0350,Father Mkhayel Zreiby,train,26
+JoM_Kobayat_0590,Father Mkhayel Zreiby,val,21
+JoM_Kobayat_0593,Father Mkhayel Zreiby,test,26
+JoM_Kobayat_0351,Father Mkhayel Zreiby,train,24
+JoM_Kobayat_0349,Father Mkhayel Zreiby,train,26
+JoM_Kobayat_0594,Father Mkhayel Zreiby,train,25
+JoM_Kobayat_0589,Father Mkhayel Zreiby,train,18
+JoM_Kobayat_0592,Father Mkhayel Zreiby,train,21
+JoM_Kobayat_0303,Father Mkhayel Zreiby,train,13
+EAK1A_145r,Jebrayel Sa'd al 'Alam,train,19
+YS_4A_002,Sally Aad,train,23
+EAK1A_003r,Habib Abi Rached,train,21
+JoM_Kobayat_0325,Bishop Antoun Jbeir,train,21
+EAK1A_158v,Father Elias Najm,test,30
+EAK1A_158r,Father Elias Najm,train,23
+kc0066_01_01_1873diary_017,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_022,Hanna Ghayth (Juan Gait),val,13
+kc0066_01_01_1873diary_049,Hanna Ghayth (Juan Gait),test,15
+kc0066_01_01_1873diary_039,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_007,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_032,Hanna Ghayth (Juan Gait),train,9
+kc0066_01_01_1873diary_168,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_012,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_166,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_042,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_025,Hanna Ghayth (Juan Gait),train,10
+kc0066_01_01_1873diary_011,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_063,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_054,Hanna Ghayth (Juan Gait),train,12
+kc0066_01_01_1873diary_033,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_015,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_059,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_040,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_020,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_009,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_062,Hanna Ghayth (Juan Gait),train,16
+kc0066_01_01_1873diary_057,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_031,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_055,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_034,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_043,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_046,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_028,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_171,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_029,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_014,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_019,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_030,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_027,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_078,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_008,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_077,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_058,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_018,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_170,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_053,Hanna Ghayth (Juan Gait),train,11
+kc0066_01_01_1873diary_065,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_169,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_026,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_016,Hanna Ghayth (Juan Gait),train,9
+kc0066_01_01_1873diary_005,Hanna Ghayth (Juan Gait),train,12
+kc0066_01_01_1873diary_041,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_047,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_036,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_035,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_037,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_050,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_064,Hanna Ghayth (Juan Gait),train,16
+kc0066_01_01_1873diary_044,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_021,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_038,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_061,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_045,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_167,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_165,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_010,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_051,Hanna Ghayth (Juan Gait),train,11
+kc0066_01_01_1873diary_052,Hanna Ghayth (Juan Gait),train,13
+kc0066_01_01_1873diary_164,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_048,Hanna Ghayth (Juan Gait),train,15
+kc0066_01_01_1873diary_056,Hanna Ghayth (Juan Gait),train,9
+kc0066_01_01_1873diary_006,Hanna Ghayth (Juan Gait),train,14
+kc0066_01_01_1873diary_013,Hanna Ghayth (Juan Gait),train,14
+HM1B_04_14v,Hanna Moussa,train,21
+HM1B_04_11r,Hanna Moussa,val,21
+HM1B_10_04r,Hanna Moussa,test,20
+HM1B_04_15r,Hanna Moussa,train,21
+HM1B_04_12r,Hanna Moussa,train,18
+HM1B_04_10v,Hanna Moussa,train,22
+HM1B_04_07v,Hanna Moussa,train,20
+HM1B_04_06r,Hanna Moussa,train,21
+HM1B_04_06v,Hanna Moussa,train,20
+HM1B_04_09r,Hanna Moussa,train,21
+HM1B_04_08v,Hanna Moussa,train,19
+HM1B_10_22r,Hanna Moussa,train,24
+HM1B_04_09v,Hanna Moussa,train,17
+HM1B_04_10r,Hanna Moussa,train,20
+HM1B_04_07r,Hanna Moussa,train,19
+HM1B_10_20v,Hanna Moussa,train,24
+HM1B_10_20r,Hanna Moussa,train,27
+HM1B_04_12v,Hanna Moussa,train,17
+HM1B_10_24v,Hanna Moussa,train,25
+HM1B_04_14r,Hanna Moussa,train,20
+HM1B_10_25r,Hanna Moussa,train,21
+HM1B_04_13v,Hanna Moussa,train,20
+HM1B_10_06v,Hanna Moussa,train,22
+HM1B_04_11v,Hanna Moussa,train,22
+HM1B_04_08r,Hanna Moussa,train,18
+HM1B_10_05v,Hanna Moussa,train,24
+HM1B_10_03v,Hanna Moussa,train,24
+HM1B_10_05r,Hanna Moussa,train,25
+HM1B_10_04v,Hanna Moussa,train,25
+HM1B_04_04r,Hanna Moussa,train,20
+HM1B_10_07r,Hanna Moussa,train,17
+HM1B_10_06r,Hanna Moussa,train,25
+HM1B_10_02v,Hanna Moussa,train,25
+HM1B_10_26r,Hanna Moussa,train,19
+HM1B_10_19v,Hanna Moussa,train,24
+HM1B_10_23v,Hanna Moussa,train,22
+HM1B_10_03r,Hanna Moussa,train,23
+HM1B_10_07v,Hanna Moussa,val,21
+HM1B_10_23r,Hanna Moussa,train,19
+HM1B_10_29v,Hanna Moussa,val,21
+HM1B_04_13r,Hanna Moussa,train,22
+EAK1A_039r,Mary Khoury,train,15
+EAK1A_147v,Youhanna Sfeir,test,19
+EAK1A_147r,Youhanna Sfeir,train,16
+JoM_Kobayat_0141,Father Youssef Hajj,train,21
+JoM_Kobayat_0109,Father Youssef Hajj,val,22
+JoM_Kobayat_0345,Father Youssef Hajj,test,20
+kc0061_01_03_19201127_001,Michel Saykali,train,21
+kc0061_01_03_19201111_002,Michel Saykali,val,22
+kc0061_01_03_19201109_003,Michel Saykali,test,23
+kc0061_01_04_19210402_001a,Michel Saykali,val,19
+kc0061_01_04_19210223_001,Michel Saykali,val,15
+kc0061_01_03_19201200_001a,Michel Saykali,val,28
+kc0061_01_04_19210316_003,Michel Saykali,train,18
+kc0061_01_04_19210316_001,Michel Saykali,train,15
+kc0061_01_03_19201111_003,Michel Saykali,val,19
+kc0061_01_04_19210316_004,Michel Saykali,train,18
+kc0061_01_03_19201111_001,Michel Saykali,val,20
+kc0061_01_04_19210223_004,Michel Saykali,train,13
+kc0061_01_04_19210106_004,Michel Saykali,val,13
+kc0061_01_04_19210504_001b,Michel Saykali,train,20
+kc0061_01_03_19201113_001,Michel Saykali,val,20
+kc0061_01_04_19210316_002,Michel Saykali,train,18
+kc0061_01_03_19201107_001_2,Michel Saykali,val,22
+kc0061_01_04_19210419_001a,Michel Saykali,train,19
+kc0061_01_04_19210209_001a,Michel Saykali,val,13
+kc0061_01_04_19210209_001b,Michel Saykali,train,17
+kc0061_01_04_19210419_001b,Michel Saykali,val,19
+kc0061_01_03_19201119_003,Michel Saykali,train,5
+kc0061_01_04_19210412_001a,Michel Saykali,train,17
+kc0061_01_04_19210106_003,Michel Saykali,val,14
+kc0061_01_04_19210223_002,Michel Saykali,train,17
+kc0061_01_03_19201109_002,Michel Saykali,val,23
+kc0061_01_04_19210406_001,Michel Saykali,train,18
+kc0061_01_03_19201113_003,Michel Saykali,val,24
+kc0061_01_03_19201109_004,Michel Saykali,train,12
+kc0061_01_03_19201107_001_1,Michel Saykali,train,19
+kc0061_01_04_19210106_001,Michel Saykali,val,9
+kc0061_01_04_19210512_001,Michel Saykali,val,22
+kc0061_01_04_19210106_002,Michel Saykali,train,16
+kc0061_01_04_19210128_001,Michel Saykali,train,13
+kc0061_01_03_19201119_002,Michel Saykali,val,23
+kc0061_01_04_19210526_001,Michel Saykali,train,17
+kc0061_01_03_19201119_001,Michel Saykali,val,21
+kc0061_01_04_19210417_001,Michel Saykali,train,17
+kc0061_01_04_19210223_003,Michel Saykali,val,17
+kc0061_01_04_19210402_001b,Michel Saykali,train,15
+kc0061_01_03_19201113_002,Michel Saykali,val,23
+kc0061_01_03_19201109_001,Michel Saykali,train,21
+kc0061_01_04_19210412_001b,Michel Saykali,train,7
+kc0061_01_04_19210512_002,Michel Saykali,val,14
+kc0061_01_04_19210513_001,Michel Saykali,train,15
+ST1A_197_09,Salah Tizani,train,17
+ST1A_409_11,Salah Tizani,val,20
+ST1A_197_05,Salah Tizani,test,19
+ST1A_197_15,Salah Tizani,val,16
+ST1A_409_16,Salah Tizani,train,20
+ST1A_409_22,Salah Tizani,val,20
+ST1A_409_10,Salah Tizani,test,20
+ST1A_197_13,Salah Tizani,train,17
+ST1A_409_20,Salah Tizani,val,20
+ST1A_197_10,Salah Tizani,train,15
+ST1A_197_16,Salah Tizani,test,16
+ST1A_409_04,Salah Tizani,train,20
+ST1A_409_13,Salah Tizani,val,20
+ST1A_197_11,Salah Tizani,test,17
+ST1A_197_18,Salah Tizani,train,16
+ST1A_197_21,Salah Tizani,val,16
+ST1A_197_01,Salah Tizani,test,22
+ST1A_409_14,Salah Tizani,train,20
+ST1A_409_24,Salah Tizani,val,20
+ST1A_409_07,Salah Tizani,test,20
+ST1A_197_14,Salah Tizani,train,16
+ST1A_409_18,Salah Tizani,val,20
+ST1A_409_17,Salah Tizani,test,19
+ST1A_409_01,Salah Tizani,train,20
+ST1A_197_02,Salah Tizani,val,19
+ST1A_409_02,Salah Tizani,test,20
+ST1A_409_05,Salah Tizani,train,19
+ST1A_197_06,Salah Tizani,val,17
+ST1A_197_03,Salah Tizani,test,19
+ST1A_409_19,Salah Tizani,train,20
+ST1A_197_24,Salah Tizani,val,18
+ST1A_409_12,Salah Tizani,test,20
+ST1A_409_09,Salah Tizani,val,19
+ST1A_197_19,Salah Tizani,train,16
+ST1A_197_20,Salah Tizani,test,15
+ST1A_197_08,Salah Tizani,train,15
+ST1A_197_23,Salah Tizani,val,16
+ST1A_409_23,Salah Tizani,test,20
+ST1A_197_17,Salah Tizani,train,15
+ST1A_409_08,Salah Tizani,val,20
+ST1A_197_07,Salah Tizani,test,15
+ST1A_197_04,Salah Tizani,train,17
+ST1A_409_03,Salah Tizani,val,20
+ST1A_197_22,Salah Tizani,test,15
+ST1A_409_06,Salah Tizani,train,20
+ST1A_197_12,Salah Tizani,val,16
+ST1A_409_21,Salah Tizani,test,18
+ST1A_409_15,Salah Tizani,train,20
+YAL2A_14_01,Assad Al-Khoury,train,20
+EAK1A_287_03v,Antonios Elias,train,19
+EAK1A_088r,Habib Abdallah al-Khoury,train,22
+MUKF4A_01_016r,Sohayl Tohmeh,train,19
+MUKF4A_02_003v,Sohayl Tohmeh,val,33
+MUKF4A_02_082v,Sohayl Tohmeh,test,36
+MUKF4A_02_085r,Sohayl Tohmeh,val,35
+MUKF4A_02_084v,Sohayl Tohmeh,test,35
+MUKF4A_02_084r,Sohayl Tohmeh,val,32
+MUKF4A_02_003r,Sohayl Tohmeh,test,34
+MUKF4A_02_002v,Sohayl Tohmeh,train,33
+MUKF4A_02_082r,Sohayl Tohmeh,val,35
+MUKF4A_02_009v,Sohayl Tohmeh,test,33
+MUKF4A_02_005v,Sohayl Tohmeh,train,30
+MUKF4A_02_083r,Sohayl Tohmeh,val,35
+MUKF4A_02_005r,Sohayl Tohmeh,test,37
+MUKF4A_01_025r,Sohayl Tohmeh,train,19
+MUKF4A_02_083v,Sohayl Tohmeh,val,36
+MUKF4A_02_004r,Sohayl Tohmeh,train,33
+MUKF4A_02_009r,Sohayl Tohmeh,test,31
+MUKF4A_01_002r,Sohayl Tohmeh,val,36
+MUKF4A_02_002r,Sohayl Tohmeh,train,32
+MUKF4A_02_086r,Sohayl Tohmeh,test,36
+MUKF4A_01_003v,Sohayl Tohmeh,train,18
+MUKF4A_02_086v,Sohayl Tohmeh,val,14
+MUKF4A_01_003r,Sohayl Tohmeh,test,27
+MUKF4A_02_085v,Sohayl Tohmeh,val,35
+MUKF4A_01_002v,Sohayl Tohmeh,train,25
+MUKF4A_02_004v,Sohayl Tohmeh,test,33
+MUKF4A_01_004r,Sohayl Tohmeh,train,25
+MUKF4A_01_013r,Sohayl Tohmeh,val,21
+TAttallah2020-037,Asaad Koury Tobia Attallah,train,12
+TAttallah2020-031a,Asaad Koury Tobia Attallah,val,10
+TAttallah2020-033a,Asaad Koury Tobia Attallah,test,20
+kc0061_01_02_19151008_001a,Abd al-Hajj,test,17
+kc0061_01_02_19151008_001b,Abd al-Hajj,train,10
+2015 5-03 El-Khouri_Letter to Jennie Jabaley from Lebanon Oct18 1960_1,Malvina Choieree,train,20
+QAJE3G_49_16r,Negib Aboussouan,train,24
+JoM_Kobayat_0074,Father Youssef Hanna,test,24
+JoM_Kobayat_0117,Father Youssef Hanna,train,22
+KEllis2020-147b,Yousef Hobeiche & Angele Ellis,train,12
+2015 5-08c El-Khouri_Letter to Joseph from Lebanon Dec19 1957_3,Sister Victor N. Khoury,train,18
+2015 5-08b El-Khouri_Letter to Joseph from Lebanon Dec19 1957_2_2,Sister Victor N. Khoury,val,20
+2015 5-08b El-Khouri_Letter to Joseph from Lebanon Dec19 1957_2_1,Sister Victor N. Khoury,test,19
+EAK1A_288r,Francis Hcheme,train,21
+JEH2A2_20_02,Habib Massoud,train,14
+JEH2A2_19,Habib Massoud,val,20
+JEH2A2_18,Habib Massoud,test,26
+JEH2A2_17,Habib Massoud,val,17
+JEH2A2_20_01,Habib Massoud,val,23
+AR56_01_023,Eissa alKhouri,train,19
+AR56_01_018,Eissa alKhouri,val,18
+AR56_01_021,Eissa alKhouri,test,18
+AR56_01_020,Eissa alKhouri,val,25
+AR56_01_019,Eissa alKhouri,test,22
+AR56_01_022,Eissa alKhouri,val,25
+JoM_Kobayat_0442,Father Yousef,train,17
+AF_279r,Father Youssef Nassar,train,16
+JoM_Kobayat_0108,Youssef Ibrahim,test,19
+JoM_Kobayat_0107,Youssef Ibrahim,train,18
+JoM_Kobayat_0127,Mkhayel & Ibrahim Daher,test,20
+JoM_Kobayat_0128,Mkhayel & Ibrahim Daher,train,16
+EAK1A_142v,Maronite Bishop of Sidon,test,20
+EAK1A_142r,Maronite Bishop of Sidon,train,18
+EAK1A_146v,Najib Ayoub,test,21
+EAK1A_146r,Najib Ayoub,train,19
+TAttallah2020-132b,Krouger Tobia Attallah,train,32
+TAttallah2020-125a,Krouger Tobia Attallah,val,29
+TAttallah2020-107_resize,Krouger Tobia Attallah,test,27
+TAttallah2020-122a,Krouger Tobia Attallah,val,31
+TAttallah2020-099a_resize,Krouger Tobia Attallah,val,29
+TAttallah2020-094a_resize,Krouger Tobia Attallah,test,32
+TAttallah2020-130,Krouger Tobia Attallah,val,25
+TAttallah2020-128c,Krouger Tobia Attallah,val,32
+TAttallah2020-105_resize,Krouger Tobia Attallah,test,28
+TAttallah2020-132a,Krouger Tobia Attallah,train,28
+TAttallah2020-077,Krouger Tobia Attallah,val,26
+TAttallah2020-103,Krouger Tobia Attallah,test,28
+TAttallah2020-134,Krouger Tobia Attallah,val,28
+TAttallah2020-107,Krouger Tobia Attallah,train,26
+QBat3D_0005r,Father Elias,train,10
+JoM_Kobayat_0546,Father Youhanna Habib Baysari,train,28
+JoM_Kobayat_0694,Father Youhanna Habib Baysari,val,24
+JoM_Kobayat_0565,Father Youhanna Habib Baysari,test,23
+JoM_Kobayat_0020,Father Youhanna Habib Baysari,test,24
+JoM_Kobayat_0567,Father Youhanna Habib Baysari,test,17
+JoM_Kobayat_0548,Father Youhanna Habib Baysari,val,17
+JoM_Kobayat_0566,Father Youhanna Habib Baysari,train,26
+JoM_Kobayat_0547,Father Youhanna Habib Baysari,test,26
+JoM_Kobayat_0021,Father Youhanna Habib Baysari,val,13
+EAK1A_188r,Dr. Abdo Harb,train,22
+2015 5-09b El-Khouri_Letter to Joseph from Lebanon Dec21 1960_2,Your nephew Maroun,train,20
+2015 5-07 El-Khouri_Letter to Joseph from Lebanon Dec17 1959_1,Your nephew Maroun,val,19
+2015 5-07b El-Khouri_Letter to Joseph from Lebanon Dec17 1959_2_2,Your nephew Maroun,test,13
+2015 5-07b El-Khouri_Letter to Joseph from Lebanon Dec17 1959_2_1,Your nephew Maroun,val,16
+AF_357r,Amin Farhat,train,21
+AF_305r,Amin Farhat,val,25
+AF_356r,Amin Farhat,test,20
+JEH2E1_30_08r,Zaghloul,train,19
+JEH2E1_21_01r,Zaghloul,val,15
+JEH2F1_30_01r,Zaghloul,test,26
+JEH2E1_30_15r,Zaghloul,test,20
+JEH2E1_41_01r,Zaghloul,val,16
+JEH2E1_24r,Zaghloul,test,15
+JEH2F1_30_03r,Zaghloul,val,23
+JEH2F1_30_05,Zaghloul,train,17
+JEH2E1_26r,Zaghloul,test,15
+JEH2E1_30_10r,Zaghloul,train,13
+JEH2F1_30_04r,Zaghloul,val,26
+JEH2E1_59_06r,Zaghloul,test,13
+JEH2E1_21_02r,Zaghloul,train,14
+JEH2F1_30_04v,Zaghloul,test,25
+JEH2F1_30_02r,Zaghloul,train,26
+JEH2F1_30_03v,Zaghloul,val,23
+JEH2F1_30_01v,Zaghloul,test,19
+JEH2E1_23r,Zaghloul,train,15
+JEH2E1_30_13r,Zaghloul,val,19
+JEH2E1_59_28r,Zaghloul,train,14
+JEH2E1_61_08r,Zaghloul,test,13
+JEH2E1_19r,Zaghloul,val,17
+JEH2E1_27r,Zaghloul,test,16
+JEH2E1_22r,Zaghloul,train,15
+JEH2F1_30_02v,Zaghloul,val,25
+JEH2E1_20_04r,Zaghloul,train,17
+JEH2E1_59_07r,Zaghloul,test,13
+JEH2E1_90_03r,Zaghloul,test,16
+2015 5-13b El-Khouri_Letter to Joseph from Lebanon Feb29 1960_2_1,Maroun Al-Khoury Maroun,test,19
+2015 5-13 El-Khouri_Letter to Joseph from Lebanon Feb29 1960 1,Maroun Al-Khoury Maroun,train,18
+EAK1A_090_02r,Hanna Estphan,test,17
+EAK1A_090_01r,Hanna Estphan,train,17
+AR56_01_049,Girgi Dimitri Sursock,train,14
+AR56_01_055,Girgi Dimitri Sursock,test,10
+AR56_01_046,Girgi Dimitri Sursock,val,14
+AR56_01_054,Girgi Dimitri Sursock,val,15
+AR56_01_047,Girgi Dimitri Sursock,val,13
+AR56_01_048,Girgi Dimitri Sursock,val,12
+AR56_01_052,Girgi Dimitri Sursock,train,15
+AR56_01_053,Girgi Dimitri Sursock,val,7

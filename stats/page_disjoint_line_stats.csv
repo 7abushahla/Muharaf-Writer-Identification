@@ -1,0 +1,9 @@
+metric,value
+total_writers,179
+total_lines,18987
+mean_lines_per_writer,106.0726
+std_lines_per_writer,183.2944
+min_lines_per_writer,10
+max_lines_per_writer,949
+min_writer,Father Elias
+max_writer,Ameen Rihani

@@ -379,6 +379,27 @@ Each script includes the full training pipeline with:
 
 This modular layout makes it easy to locate and reproduce any experiment.
 
+### 📄 Page-Disjoint Experiments (Reviewer Control)
+
+To address potential page-level leakage (e.g., page texture or ink color), we provide a **page-disjoint** split option. All lines from the same page are forced into a single split (train/val/test), while preserving a closed-set setup.
+
+**Generate page-disjoint splits + stats**
+```bash
+python scripts/page_disjoint_splits.py --csv manual_labeling/merged_writer.csv --lines-dir Lines
+```
+
+This produces:
+- `splits/page_disjoint_seed_<seed>.csv`
+- `stats/page_disjoint_writer_stats.csv`
+- `stats/page_disjoint_summary.md`
+
+**Run any training script with page-disjoint splits**
+```bash
+SPLIT_MODE=page_disjoint SPLIT_DIR=./splits python <your_script.py>
+```
+
+By default, outputs are prefixed with `PD_` when using page-disjoint splits to avoid mixing with line-level results.
+
 ### 🔁 Batch Training Utility
 
 To streamline experimentation and avoid manual starting/stopping, we also provide a script `run_files.py` that allows running multiple training scripts one after another while logging their output and releasing GPU memory.

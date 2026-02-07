@@ -1,0 +1,13 @@
+# Line Summary Statistics
+- Policy: require_3way
+- XML filter enabled: False
+- Total writers: 71
+- Total lines: 16456
+- Mean lines/writer: 231.7746
+- Std lines/writer: 242.3049
+- Min lines/writer: 37 (Father Tobia al-Issa)
+- Max lines/writer: 949 (Ameen Rihani)
+- Mean pages/writer: 12.3521
+- Std pages/writer: 13.4101
+- Min pages/writer: 3 (Sister Victor N. Khoury)
+- Max pages/writer: 68 (Hanna Ghayth (Juan Gait))

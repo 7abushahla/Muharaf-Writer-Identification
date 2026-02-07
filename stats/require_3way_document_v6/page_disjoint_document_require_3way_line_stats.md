@@ -1,0 +1,17 @@
+# Line Summary Statistics
+- Policy: require_3way
+- XML filter enabled: False
+- Total writers: 42
+- Total lines: 10654
+- Mean lines/writer: 253.6667
+- Std lines/writer: 237.2824
+- Min lines/writer: 37 (Father Tobia al-Issa)
+- Max lines/writer: 949 (Ameen Rihani)
+- Mean pages/writer: 14.3810
+- Std pages/writer: 14.3984
+- Min pages/writer: 3 (Amin Farhat)
+- Max pages/writer: 68 (Hanna Ghayth (Juan Gait))
+- Mean documents/writer: 6.3571
+- Std documents/writer: 4.7566
+- Min documents/writer: 3 (Amin Farhat)
+- Max documents/writer: 22 (Michel Saykali)
