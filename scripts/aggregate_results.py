@@ -80,7 +80,7 @@ def load_classification_reports(seed_dirs):
 
 
 def aggregate_classification_reports(all_reports):
-    """Average classification reports across seeds"""
+    """Average classification reports across seeds with mean ± std formatting"""
     if not all_reports:
         return None
     
@@ -94,8 +94,12 @@ def aggregate_classification_reports(all_reports):
     for col in numeric_cols:
         if col in base_df.columns:
             values = np.array([df[col].values for df in all_reports])
-            base_df[col] = np.mean(values, axis=0)
-            base_df[f'{col}_std'] = np.std(values, axis=0, ddof=0)  # Population std
+            means = np.mean(values, axis=0)
+            stds = np.std(values, axis=0, ddof=0)  # Population std
+            
+            # Format as "mean ± std"
+            formatted = [f"{m:.4f} ± {s:.4f}" for m, s in zip(means, stds)]
+            base_df[col] = formatted
     
     # Support should be the same across seeds (just take from first)
     if 'support' in base_df.columns:
