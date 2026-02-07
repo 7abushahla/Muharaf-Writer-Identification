@@ -417,8 +417,7 @@ def main():
         batch_size=args.batch_size,
         shuffle=True,
         augment=True,  # Apply data augmentation for training
-        seed=args.seed,
-        repeat=True  # Repeat indefinitely for training
+        seed=args.seed
     )
     
     val_dataset = create_lazy_dataset(
@@ -427,8 +426,7 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=False,
-        augment=False,  # No augmentation for validation
-        repeat=True  # Repeat for validation (Keras expects this)
+        augment=False  # No augmentation for validation
     )
     
     test_dataset = create_lazy_dataset(
@@ -437,13 +435,8 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=False,
-        augment=False,  # No augmentation for test
-        repeat=True  # Repeat for test evaluation with steps parameter
+        augment=False  # No augmentation for test
     )
-    
-    # Calculate steps
-    steps_per_epoch = math.ceil(len(train_paths) / args.batch_size)
-    validation_steps = math.ceil(len(val_paths) / args.batch_size)
     
     # Setup callbacks
     print("\nSetting up callbacks...")
@@ -503,9 +496,7 @@ def main():
     
     history = model.fit(
         train_dataset,
-        steps_per_epoch=steps_per_epoch,
         validation_data=val_dataset,
-        validation_steps=validation_steps,
         epochs=args.epochs,
         callbacks=callbacks,
         verbose=1 if args.verbose else 2
@@ -523,7 +514,6 @@ def main():
     
     test_results = model.evaluate(
         test_dataset,
-        steps=math.ceil(len(test_paths) / args.batch_size),
         verbose=1
     )
     
@@ -544,7 +534,6 @@ def main():
     print("\nGenerating predictions...")
     test_preds = model.predict(
         test_dataset,
-        steps=math.ceil(len(test_paths) / args.batch_size),
         verbose=0
     )
     
