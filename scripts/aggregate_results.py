@@ -80,7 +80,7 @@ def load_classification_reports(seed_dirs):
 
 
 def aggregate_classification_reports(all_reports):
-    """Average classification reports across seeds with mean ± std formatting"""
+    """Average classification reports across seeds with mean (std) formatting"""
     if not all_reports:
         return None
     
@@ -97,8 +97,8 @@ def aggregate_classification_reports(all_reports):
             means = np.mean(values, axis=0)
             stds = np.std(values, axis=0, ddof=0)  # Population std
             
-            # Format as "mean ± std"
-            formatted = [f"{m:.4f} ± {s:.4f}" for m, s in zip(means, stds)]
+            # Format as "mean (std)"
+            formatted = [f"{m:.4f} ({s:.4f})" for m, s in zip(means, stds)]
             base_df[col] = formatted
     
     # Support should be the same across seeds (just take from first)
@@ -122,11 +122,11 @@ def save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds):
         'metrics_formatted': {}
     }
     
-    # Format as "mean ± std"
+    # Format as "mean (std)"
     for key in aggregated_mean.keys():
         mean_val = aggregated_mean[key]
         std_val = aggregated_std[key]
-        combined['metrics_formatted'][key] = f"{mean_val:.4f} ± {std_val:.4f}"
+        combined['metrics_formatted'][key] = f"{mean_val:.4f} ({std_val:.4f})"
     
     # Save to JSON
     output_path = os.path.join(output_dir, 'aggregated_metrics.json')
@@ -158,7 +158,7 @@ def print_summary(aggregated_mean, aggregated_std, seeds):
     print(f"AGGREGATED RESULTS ACROSS {len(seeds)} SEEDS: {', '.join(seeds)}")
     print("="*80)
     
-    print("\nTest Metrics (Mean ± Std):")
+    print("\nTest Metrics (Mean (Std)):")
     print("-" * 50)
     
     # Order metrics nicely
@@ -169,14 +169,14 @@ def print_summary(aggregated_mean, aggregated_std, seeds):
         if key in aggregated_mean:
             mean_val = aggregated_mean[key]
             std_val = aggregated_std[key]
-            print(f"{key:20s}: {mean_val:.4f} ± {std_val:.4f}")
+            print(f"{key:20s}: {mean_val:.4f} ({std_val:.4f})")
     
     # Print any remaining metrics
     for key in sorted(aggregated_mean.keys()):
         if key not in metric_order:
             mean_val = aggregated_mean[key]
             std_val = aggregated_std[key]
-            print(f"{key:20s}: {mean_val:.4f} ± {std_val:.4f}")
+            print(f"{key:20s}: {mean_val:.4f} ({std_val:.4f})")
     
     print("="*80 + "\n")
 
