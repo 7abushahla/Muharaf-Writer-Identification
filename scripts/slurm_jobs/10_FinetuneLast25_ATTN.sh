@@ -121,8 +121,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for resnet50..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for resnet50 - FinetuneLast25_ATTN..."
+"$ENV_PY" -u aggregate_results.py Results/resnet50/PgDisj_resnet50_Finetune25Layers_ATTN
 
 echo ""
 echo "----------------------------------------"
@@ -169,8 +169,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for densenet201..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for densenet201 - FinetuneLast25_ATTN..."
+"$ENV_PY" -u aggregate_results.py Results/densenet201/PgDisj_densenet201_Finetune25Layers_ATTN
 
 echo ""
 echo "----------------------------------------"
@@ -217,8 +217,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for xception..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for xception - FinetuneLast25_ATTN..."
+"$ENV_PY" -u aggregate_results.py Results/xception/PgDisj_xception_Finetune25Layers_ATTN
 
 echo ""
 echo "----------------------------------------"
@@ -265,8 +265,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for mobilenetv3..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for mobilenetv3 - FinetuneLast25_ATTN..."
+"$ENV_PY" -u aggregate_results.py Results/mobilenetv3/PgDisj_mobilenetv3_Finetune25Layers_ATTN
 
 echo ""
 echo "=========================================="

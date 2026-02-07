@@ -121,8 +121,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for resnet50..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for resnet50 - Scratch_NoATTN..."
+"$ENV_PY" -u aggregate_results.py Results/resnet50/PgDisj_resnet50_Scratch_NoATTN
 
 echo ""
 echo "----------------------------------------"
@@ -169,8 +169,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for densenet201..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for densenet201 - Scratch_NoATTN..."
+"$ENV_PY" -u aggregate_results.py Results/densenet201/PgDisj_densenet201_Scratch_NoATTN
 
 echo ""
 echo "----------------------------------------"
@@ -217,8 +217,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for xception..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for xception - Scratch_NoATTN..."
+"$ENV_PY" -u aggregate_results.py Results/xception/PgDisj_xception_Scratch_NoATTN
 
 echo ""
 echo "----------------------------------------"
@@ -265,8 +265,8 @@ fi
 cleanup_gpu
 
 echo ""
-echo "  Aggregating results for mobilenetv3..."
-"$ENV_PY" -u aggregate_results.py --all
+echo "  Aggregating results for mobilenetv3 - Scratch_NoATTN..."
+"$ENV_PY" -u aggregate_results.py Results/mobilenetv3/PgDisj_mobilenetv3_Scratch_NoATTN
 
 echo ""
 echo "=========================================="
