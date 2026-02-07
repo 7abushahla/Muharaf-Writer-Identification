@@ -66,8 +66,19 @@ def parse_args():
                         help='CSV file with writer labels')
     parser.add_argument('--image-size', type=int, default=224,
                         help='Image size (square)')
-    parser.add_argument('--num-classes', type=int, default=179,
-                        help='Number of writer classes')
+    parser.add_argument('--num-classes', type=int, default=None,
+                        help='Number of writer classes (auto-detected if not specified)')
+    parser.add_argument('--split-mode', type=str, default='line',
+                        choices=['line', 'page_disjoint'],
+                        help='Data splitting mode: line-level or page-disjoint')
+    parser.add_argument('--split-dir', type=str, default='./splits',
+                        help='Directory containing page-disjoint split files')
+    parser.add_argument('--disjoint-mode', type=str, default='page',
+                        choices=['page', 'document'],
+                        help='Disjoint mode: page or document (only used with --split-mode page_disjoint)')
+    parser.add_argument('--writer-policy', type=str, default=None,
+                        choices=[None, 'require_3way', 'drop_if_lt2', 'drop_if_lt3', 'allow_train_test_only'],
+                        help='Writer policy suffix for split files (e.g., require_3way)')
     
     # Training configuration
     parser.add_argument('--seed', type=int, default=42,
@@ -153,6 +164,17 @@ def generate_experiment_name(args):
         return args.experiment_name
     
     # Build name from configuration
+    split_prefix = ""
+    if args.split_mode == 'page_disjoint':
+        if args.disjoint_mode == 'document':
+            split_prefix = "DocDisj_"
+        else:
+            split_prefix = "PgDisj_"
+        
+        # Add writer policy if specified
+        if args.writer_policy:
+            split_prefix += f"{args.writer_policy}_"
+    
     attention_str = "ATTN" if args.use_attention else "NoATTN"
     
     if args.training_mode == 'finetune_last_n':
@@ -160,7 +182,7 @@ def generate_experiment_name(args):
     else:
         mode_str = args.training_mode.capitalize()
     
-    name = f"{args.backbone}_{mode_str}_{attention_str}_seed{args.seed}"
+    name = f"{split_prefix}{args.backbone}_{mode_str}_{attention_str}_seed{args.seed}"
     return name
 
 
@@ -286,6 +308,32 @@ def main():
     setup_gpu(args)
     set_seed(args.seed)
     
+    # Load data first to determine num_classes
+    print("\nLoading dataset...")
+    
+    # We need to build model first to get preprocess_fn, but use dummy num_classes
+    # Then rebuild after knowing actual num_classes
+    from model_builder import get_backbone_model
+    _, preprocess_fn = get_backbone_model(args.backbone, (args.image_size, args.image_size, 3))
+    
+    images, labels, page_ids, writer_to_label, label_to_writer = load_dataset(
+        main_dir=args.data_dir,
+        csv_file=args.csv_file,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        verbose=args.verbose
+    )
+    
+    # Determine num_classes from the data
+    actual_num_classes = len(writer_to_label)
+    if args.num_classes is None:
+        args.num_classes = actual_num_classes
+        print(f"Auto-detected {args.num_classes} writer classes")
+    elif args.num_classes != actual_num_classes:
+        print(f"Warning: Specified num_classes ({args.num_classes}) differs from actual ({actual_num_classes})")
+        print(f"Using actual: {actual_num_classes}")
+        args.num_classes = actual_num_classes
+    
     # Generate experiment name
     experiment_name = generate_experiment_name(args)
     print(f"\n{'='*80}")
@@ -325,23 +373,21 @@ def main():
         ]
     )
     
-    # Load data
-    print("\nLoading dataset...")
-    images, labels, writer_to_label, label_to_writer = load_dataset(
-        main_dir=args.data_dir,
-        csv_file=args.csv_file,
-        image_size=(args.image_size, args.image_size),
-        preprocess_fn=preprocess_fn,
-        verbose=args.verbose
-    )
-    
     # One-hot encode labels
     labels_categorical = to_categorical(labels, num_classes=args.num_classes)
     
     # Split data
-    print("\nSplitting dataset...")
+    print(f"\nSplitting dataset (mode: {args.split_mode})...")
     train_images, val_images, test_images, train_labels, val_labels, test_labels = prepare_data_splits(
-        images, labels_categorical, seed=args.seed
+        images, 
+        labels_categorical,
+        page_ids=page_ids,
+        split_mode=args.split_mode,
+        split_dir=args.split_dir,
+        disjoint_mode=args.disjoint_mode,
+        writer_policy=args.writer_policy,
+        seed=args.seed,
+        verbose=args.verbose
     )
     
     print(f"Training samples: {len(train_images)}")

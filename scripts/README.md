@@ -83,7 +83,36 @@ python train.py --backbone resnet50 \
   - Default: `224`
 
 - `--num-classes`: Number of writer classes
-  - Default: `179`
+  - Default: Auto-detected from data
+  - Usually `179`, but may vary with page-disjoint splits
+
+- `--split-mode`: Data splitting strategy
+  - Options:
+    - `line`: Line-level splits (70/15/15 random split)
+    - `page_disjoint`: Page-disjoint or document-disjoint splits
+  - Default: `line`
+  - See [PAGE_DISJOINT_GUIDE.md](PAGE_DISJOINT_GUIDE.md) for details
+
+- `--split-dir`: Directory containing disjoint split files
+  - Default: `./splits`
+  - Required when using `--split-mode page_disjoint`
+
+- `--disjoint-mode`: Disjoint splitting granularity
+  - Options:
+    - `page`: Page-disjoint (all lines from same page stay together)
+    - `document`: Document-disjoint (all pages from same document stay together)
+  - Default: `page`
+  - Only used when `--split-mode page_disjoint`
+
+- `--writer-policy`: Writer filtering policy for splits
+  - Options:
+    - `None`: No filtering (default)
+    - `require_3way`: Only writers with >=3 pages/documents
+    - `drop_if_lt2`: Drop writers with <2 pages/documents
+    - `drop_if_lt3`: Drop writers with <3 pages/documents
+    - `allow_train_test_only`: Allow writers with 2 pages/documents
+  - Default: `None`
+  - Only used when `--split-mode page_disjoint`
 
 #### Training Configuration
 - `--seed`: Random seed for reproducibility
@@ -166,6 +195,33 @@ python train.py --backbone mobilenetv3 \
                 --batch-size 128 \
                 --learning-rate 0.0005
 ```
+
+### Example 5: Page-Disjoint Splits (Realistic Evaluation)
+
+**Important:** First generate the splits using `page_disjoint_splits.py` in the project root:
+
+```bash
+# From project root
+cd ..
+python page_disjoint_splits.py --seed 42
+cd scripts/
+```
+
+Then train with page-disjoint mode:
+
+```bash
+python train.py --backbone resnet50 \
+                --training-mode frozen \
+                --use-attention \
+                --seed 42 \
+                --split-mode page_disjoint \
+                --split-dir ../splits
+```
+
+The experiment name will be prefixed with `PD_` to indicate page-disjoint mode:
+- Output: `PD_resnet50_Frozen_ATTN_seed42_best_model.keras`
+
+See [PAGE_DISJOINT_GUIDE.md](PAGE_DISJOINT_GUIDE.md) for complete documentation.
 
 ### Example 5: Quick Test Run
 

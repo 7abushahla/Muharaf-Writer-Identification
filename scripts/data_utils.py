@@ -2,6 +2,7 @@
 Data loading and preprocessing utilities for Writer Identification
 """
 import os
+import sys
 import cv2
 import numpy as np
 import pandas as pd
@@ -9,6 +10,13 @@ from PIL import Image
 from sklearn.model_selection import train_test_split
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
+
+# Add repo root to sys.path for shared utilities
+REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if REPO_ROOT not in sys.path:
+    sys.path.insert(0, REPO_ROOT)
+
+from utils.page_disjoint import load_split_map, validate_split_map
 
 
 def block_processor_opencv(img_path, target_size=(224, 224)):
@@ -84,6 +92,7 @@ def load_dataset(
     Returns:
         images: Array of preprocessed images
         labels: Array of integer labels
+        page_ids: Array of page IDs (for page-disjoint splits)
         writer_to_label: Dictionary mapping writer names to labels
         label_to_writer: Dictionary mapping labels to writer names
     """
@@ -94,9 +103,10 @@ def load_dataset(
     writer_to_label = {}
     current_label = 0
     
-    # Initialize lists to store image data and labels
+    # Initialize lists to store image data, labels, and page IDs
     images = []
     labels = []
+    page_ids = []
     
     # Loop through each row in the CSV file
     for index, row in writer_data.iterrows():
@@ -134,9 +144,10 @@ def load_dataset(
                         else:
                             processed_img_array = img_array
                         
-                        # Append the image and the corresponding label
+                        # Append the image, label, and page ID
                         images.append(processed_img_array)
                         labels.append(writer_to_label[writer_name])
+                        page_ids.append(image_filename)  # Store page ID for page-disjoint splits
                         
                         del img_array, processed_img_array
                     except Exception as e:
@@ -153,6 +164,7 @@ def load_dataset(
     # Convert lists to numpy arrays
     images = np.array(images).reshape(-1, image_size[0], image_size[1], 3)
     labels = np.array(labels)
+    page_ids = np.array(page_ids)
     
     # Create a reverse mapping from label indices to writer names
     label_to_writer = {label: writer for writer, label in writer_to_label.items()}
@@ -160,32 +172,83 @@ def load_dataset(
     if verbose:
         print(f"Loaded {len(images)} images from {len(writer_to_label)} writers")
     
-    return images, labels, writer_to_label, label_to_writer
+    return images, labels, page_ids, writer_to_label, label_to_writer
 
 
-def prepare_data_splits(images, labels, test_size=0.3, val_size=0.5, seed=42):
+def prepare_data_splits(
+    images, 
+    labels, 
+    page_ids=None,
+    split_mode='line',
+    split_dir='./splits',
+    disjoint_mode='page',
+    writer_policy=None,
+    test_size=0.3, 
+    val_size=0.5, 
+    seed=42,
+    verbose=True
+):
     """
     Split data into train, validation, and test sets.
     
     Args:
         images: Array of images
         labels: Array of one-hot encoded labels
-        test_size: Proportion of data for validation + test
-        val_size: Proportion of temp data for validation (0.5 means equal val and test)
+        page_ids: Array of page IDs (required for page_disjoint mode)
+        split_mode: 'line' for line-level splits, 'page_disjoint' for page-disjoint splits
+        split_dir: Directory containing page-disjoint split files
+        disjoint_mode: 'page' or 'document' (only used when split_mode='page_disjoint')
+        writer_policy: Writer policy used to generate splits (e.g., 'require_3way', 'drop_if_lt3')
+        test_size: Proportion of data for validation + test (line mode only)
+        val_size: Proportion of temp data for validation (line mode only)
         seed: Random seed
+        verbose: Whether to print split information
         
     Returns:
         train_images, val_images, test_images, train_labels, val_labels, test_labels
     """
-    # First split: 70% training and 30% (validation + test)
-    train_images, temp_images, train_labels, temp_labels = train_test_split(
-        images, labels, test_size=test_size, random_state=seed, stratify=labels
-    )
+    if split_mode == 'page_disjoint':
+        if page_ids is None:
+            raise ValueError("page_ids must be provided for page_disjoint split mode")
+        
+        # Load the page-disjoint/document-disjoint split map
+        split_map = load_split_map(split_dir, seed, disjoint_mode=disjoint_mode, writer_policy=writer_policy)
+        validate_split_map(split_map, page_ids)
+        
+        # Create split labels for each sample
+        split_labels = np.array([split_map[pid] for pid in page_ids])
+        
+        # Create masks for each split
+        train_mask = split_labels == "train"
+        val_mask = split_labels == "val"
+        test_mask = split_labels == "test"
+        
+        # Split data using masks
+        train_images, train_labels = images[train_mask], labels[train_mask]
+        val_images, val_labels = images[val_mask], labels[val_mask]
+        test_images, test_labels = images[test_mask], labels[test_mask]
+        
+        if verbose:
+            # Count unique pages in each split
+            train_pages = len(set(page_ids[train_mask]))
+            val_pages = len(set(page_ids[val_mask]))
+            test_pages = len(set(page_ids[test_mask]))
+            print(f"Page-disjoint split pages: train={train_pages}, val={val_pages}, test={test_pages}")
+            print(f"Page-disjoint split lines: train={len(train_images)}, val={len(val_images)}, test={len(test_images)}")
     
-    # Second split: Split the temporary set into validation and test
-    val_images, test_images, val_labels, test_labels = train_test_split(
-        temp_images, temp_labels, test_size=val_size, random_state=seed, stratify=temp_labels
-    )
+    else:  # line-level split
+        # First split: 70% training and 30% (validation + test)
+        train_images, temp_images, train_labels, temp_labels = train_test_split(
+            images, labels, test_size=test_size, random_state=seed, stratify=labels
+        )
+        
+        # Second split: Split the temporary set into validation and test
+        val_images, test_images, val_labels, test_labels = train_test_split(
+            temp_images, temp_labels, test_size=val_size, random_state=seed, stratify=temp_labels
+        )
+        
+        if verbose:
+            print(f"Line-level split: train={len(train_images)}, val={len(val_images)}, test={len(test_images)}")
     
     return train_images, val_images, test_images, train_labels, val_labels, test_labels
 
