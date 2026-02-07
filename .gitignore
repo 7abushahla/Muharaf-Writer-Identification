@@ -21,3 +21,6 @@
 *.code-workspace
 *.sublime-project
 *.sublime-workspace
+/Documents
+/Lines
+/Lines_XML
