@@ -1,0 +1,294 @@
+# Writer Identification Training Scripts
+
+This directory contains refactored, modular training scripts for the Writer Identification project. All the functionality from the individual model files in the `models/` folder has been consolidated into these reusable scripts with command-line argument support.
+
+## Structure
+
+```
+scripts/
+├── train.py                  # Main training script
+├── batch_train.py            # Batch training for multiple experiments
+├── model_builder.py          # Model architecture builder
+├── data_utils.py             # Data loading and preprocessing
+├── custom_layers.py          # Custom Keras layers (SPP, NetVLAD, etc.)
+├── custom_metrics.py         # Custom metrics (Macro F1, Precision, Recall)
+├── custom_callbacks.py       # Custom training callbacks
+├── requirements.txt          # Python dependencies
+└── README.md                # This file
+```
+
+## Installation
+
+Install dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+Or if using conda:
+
+```bash
+conda env create -f ../PROJtfgpu310.yml
+conda activate your_env_name
+```
+
+## Usage
+
+### Single Training Run
+
+The main training script supports comprehensive command-line arguments:
+
+```bash
+python train.py --backbone resnet50 \
+                --training-mode frozen \
+                --seed 42 \
+                --epochs 450 \
+                --batch-size 256
+```
+
+### Command-Line Arguments
+
+#### Model Configuration
+- `--backbone`: Choose backbone architecture
+  - Options: `resnet50`, `densenet201`, `xception`, `mobilenetv3`
+  - Default: `resnet50`
+
+- `--training-mode`: Training strategy
+  - Options:
+    - `frozen`: Freeze all backbone layers (transfer learning)
+    - `scratch`: Train from scratch (no pretrained weights)
+    - `finetune_last_n`: Finetune last N layers
+    - `finetune_all`: Finetune all layers
+  - Default: `frozen`
+
+- `--num-trainable-layers`: Number of layers to finetune
+  - Required when using `finetune_last_n` mode
+  - Example: `--num-trainable-layers 10`
+
+- `--use-attention`: Enable attention mechanism
+  - Flag (no value needed)
+  - Default: False
+
+- `--num-clusters`: Number of clusters for NetVLAD
+  - Default: `64`
+
+#### Data Configuration
+- `--data-dir`: Directory containing image data
+  - Default: `./Lines`
+
+- `--csv-file`: CSV file with writer labels
+  - Default: `merged_writer.csv`
+
+- `--image-size`: Image size (square)
+  - Default: `224`
+
+- `--num-classes`: Number of writer classes
+  - Default: `179`
+
+#### Training Configuration
+- `--seed`: Random seed for reproducibility
+  - Default: `42`
+
+- `--epochs`: Number of training epochs
+  - Default: `450`
+
+- `--batch-size`: Batch size
+  - Default: `256`
+
+- `--learning-rate`: Initial learning rate
+  - Default: `0.001`
+
+- `--early-stop-patience`: Early stopping patience (epochs)
+  - Default: `50`
+
+- `--lr-patience`: Learning rate reduction patience (epochs)
+  - Default: `10`
+
+#### GPU Configuration
+- `--gpu`: GPU device ID to use
+  - Default: `0`
+
+- `--disable-gpu`: Disable GPU and use CPU
+  - Flag
+
+#### Output Configuration
+- `--output-dir`: Directory to save results
+  - Default: `./Results`
+
+- `--save-freq`: Save model every N epochs
+  - Default: `50`
+
+- `--experiment-name`: Custom experiment name
+  - Auto-generated if not specified
+
+#### Other Options
+- `--verbose`: Enable verbose output
+  - Flag
+
+- `--no-plots`: Skip generating plots
+  - Flag
+
+## Examples
+
+### Example 1: Frozen ResNet50 without Attention
+
+```bash
+python train.py --backbone resnet50 \
+                --training-mode frozen \
+                --seed 42
+```
+
+### Example 2: From Scratch Xception with Attention
+
+```bash
+python train.py --backbone xception \
+                --training-mode scratch \
+                --use-attention \
+                --seed 570
+```
+
+### Example 3: Finetune Last 10 Layers of DenseNet201
+
+```bash
+python train.py --backbone densenet201 \
+                --training-mode finetune_last_n \
+                --num-trainable-layers 10 \
+                --use-attention \
+                --seed 1073
+```
+
+### Example 4: MobileNetV3 with All Layers Finetuned
+
+```bash
+python train.py --backbone mobilenetv3 \
+                --training-mode finetune_all \
+                --epochs 300 \
+                --batch-size 128 \
+                --learning-rate 0.0005
+```
+
+### Example 5: Quick Test Run
+
+```bash
+python train.py --backbone resnet50 \
+                --training-mode frozen \
+                --epochs 10 \
+                --batch-size 64 \
+                --verbose
+```
+
+## Batch Training
+
+To replicate all experiments from the original `models/` folder:
+
+```bash
+python batch_train.py
+```
+
+This will run all combinations of:
+- 4 backbones (ResNet50, DenseNet201, Xception, MobileNetV3)
+- 3 seeds (42, 570, 1073)
+- Multiple training configurations (frozen, scratch, finetune variations)
+- With and without attention
+
+**Note:** This will take a very long time! You can edit `batch_train.py` to run a subset of experiments.
+
+## Output Files
+
+Each training run creates the following files in the output directory:
+
+```
+Results/{backbone}/
+├── {experiment_name}_best_model.keras          # Best model checkpoint
+├── {experiment_name}_last_saved.keras          # Last saved checkpoint
+├── {experiment_name}_history.pkl               # Training history
+├── {experiment_name}_test_metrics.json         # Test set metrics
+├── {experiment_name}_elapsed_time.txt          # Training time
+├── {experiment_name}_config.json               # Experiment configuration
+├── {experiment_name}_classification_report.csv # Per-class metrics
+├── {experiment_name}_confusion_matrix.png      # Confusion matrix plot
+├── {experiment_name}_accuracy.png              # Accuracy plot
+├── {experiment_name}_top_5_accuracy.png        # Top-5 accuracy plot
+├── {experiment_name}_loss.png                  # Loss plot
+├── {experiment_name}_f1_score.png              # F1 score plot
+├── {experiment_name}_precision.png             # Precision plot
+└── {experiment_name}_recall.png                # Recall plot
+```
+
+## Experiment Naming
+
+Experiments are automatically named based on configuration:
+
+```
+{backbone}_{training_mode}_{attention}_{seed}
+```
+
+Examples:
+- `resnet50_Frozen_NoATTN_seed42`
+- `xception_Scratch_ATTN_seed570`
+- `densenet201_Finetune10Layers_ATTN_seed1073`
+
+You can override this with `--experiment-name`:
+
+```bash
+python train.py --experiment-name my_custom_experiment ...
+```
+
+## Advantages Over Original Scripts
+
+1. **Single codebase**: All functionality in reusable modules
+2. **Command-line interface**: No need to edit Python files
+3. **Consistent structure**: All experiments follow the same pattern
+4. **Easy experimentation**: Try new configurations instantly
+5. **Batch processing**: Run multiple experiments automatically
+6. **Better organization**: Structured output files
+7. **Reproducibility**: Configuration saved with each experiment
+8. **Maintainability**: Fix bugs or add features in one place
+
+## Comparison with Original Structure
+
+### Original (`models/` folder):
+- 149 separate Python files
+- Each file = one configuration (backbone + training mode + seed)
+- Hard to modify or maintain
+- Lots of code duplication
+
+### Refactored (`scripts/` folder):
+- 8 modular Python files
+- All configurations via command-line arguments
+- Easy to extend and maintain
+- DRY principle (Don't Repeat Yourself)
+
+## Troubleshooting
+
+### Out of Memory Error
+Reduce batch size:
+```bash
+python train.py --batch-size 128  # or even smaller
+```
+
+### GPU Not Found
+Use CPU:
+```bash
+python train.py --disable-gpu
+```
+
+Or specify different GPU:
+```bash
+python train.py --gpu 1
+```
+
+### Data Not Found
+Specify correct paths:
+```bash
+python train.py --data-dir /path/to/Lines \
+                --csv-file /path/to/merged_writer.csv
+```
+
+## Citation
+
+If you use this code, please cite the original paper (add citation here).
+
+## License
+
+(Add license information here)
