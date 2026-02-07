@@ -165,6 +165,22 @@ for seed in 42 570 1073; do
 done
 ```
 
+### Batch Training (All Backbones/Seeds)
+
+If you want to run **all experiments** in disjoint mode via `batch_train.py`, edit
+the `split_config` block in `batch_train.py`:
+
+```python
+split_config = {
+    'split-mode': 'page_disjoint',
+    'disjoint-mode': 'document',  # or 'page'
+    'writer-policy': 'require_3way',
+    'split-dir': '../splits',
+}
+```
+
+This applies the split mode to every experiment in the batch.
+
 ## Important Notes
 
 1. **Split Files Must Exist First**: Always generate split files using `page_disjoint_splits.py` before training.

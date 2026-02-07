@@ -249,6 +249,22 @@ This will run all combinations of:
 
 **Note:** This will take a very long time! You can edit `batch_train.py` to run a subset of experiments.
 
+### Batch Training with Page/Document-Disjoint Splits
+
+If you want **all batch experiments** to use page- or document-disjoint splits, edit
+the `split_config` block in `batch_train.py`:
+
+```python
+split_config = {
+    'split-mode': 'page_disjoint',
+    'disjoint-mode': 'document',  # or 'page'
+    'writer-policy': 'require_3way',
+    'split-dir': '../splits',
+}
+```
+
+This appends the split options to every experiment (across all backbones/seeds).
+
 ## Output Files
 
 Each training run creates the following files in the output directory:
