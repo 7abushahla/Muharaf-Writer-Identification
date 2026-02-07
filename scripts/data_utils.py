@@ -240,7 +240,8 @@ def create_lazy_dataset(
     batch_size=256,
     shuffle=False,
     augmentation_fn=None,
-    seed=None
+    seed=None,
+    repeat=True
 ):
     """
     Create a tf.data.Dataset that loads images lazily on-demand.
@@ -254,6 +255,7 @@ def create_lazy_dataset(
         shuffle: Whether to shuffle the dataset
         augmentation_fn: Optional data augmentation function (ImageDataGenerator flow)
         seed: Random seed for shuffling
+        repeat: Whether to repeat the dataset indefinitely (for training)
         
     Returns:
         tf.data.Dataset
@@ -261,10 +263,14 @@ def create_lazy_dataset(
     # Create dataset from paths and labels
     dataset = tf.data.Dataset.from_tensor_slices((image_paths, labels))
     
-    # Shuffle if requested
+    # Repeat dataset if requested (for training - allows multiple epochs)
+    if repeat:
+        dataset = dataset.repeat()
+    
+    # Shuffle if requested (should be after repeat for proper shuffling each epoch)
     if shuffle:
         buffer_size = min(10000, len(image_paths))
-        dataset = dataset.shuffle(buffer_size=buffer_size, seed=seed)
+        dataset = dataset.shuffle(buffer_size=buffer_size, seed=seed, reshuffle_each_iteration=True)
     
     # Load and preprocess images lazily
     dataset = dataset.map(

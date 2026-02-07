@@ -416,7 +416,8 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=True,
-        seed=args.seed
+        seed=args.seed,
+        repeat=True  # Repeat indefinitely for training
     )
     
     val_dataset = create_lazy_dataset(
@@ -424,7 +425,8 @@ def main():
         image_size=(args.image_size, args.image_size),
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
-        shuffle=False
+        shuffle=False,
+        repeat=True  # Repeat for validation (Keras expects this)
     )
     
     test_dataset = create_lazy_dataset(
@@ -432,7 +434,8 @@ def main():
         image_size=(args.image_size, args.image_size),
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
-        shuffle=False
+        shuffle=False,
+        repeat=True  # Repeat for test evaluation with steps parameter
     )
     
     # Calculate steps
@@ -515,7 +518,6 @@ def main():
     print("Evaluating on test set...")
     print("="*80 + "\n")
     
-    test_generator.reset()
     test_results = model.evaluate(
         test_dataset,
         steps=math.ceil(len(test_paths) / args.batch_size),
@@ -537,7 +539,6 @@ def main():
     
     # Generate predictions
     print("\nGenerating predictions...")
-    test_generator.reset()
     test_preds = model.predict(
         test_dataset,
         steps=math.ceil(len(test_paths) / args.batch_size),
