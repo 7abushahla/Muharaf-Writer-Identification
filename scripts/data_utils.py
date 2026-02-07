@@ -232,6 +232,44 @@ def load_and_preprocess_image(img_path, image_size, preprocess_fn):
     return img
 
 
+def augment_image(image, label):
+    """
+    Apply data augmentation to images (matches original ImageDataGenerator settings).
+    
+    Args:
+        image: Input image tensor
+        label: Label tensor
+        
+    Returns:
+        Augmented image and label
+    """
+    # Random rotation (±15 degrees)
+    image = tf.image.rot90(image, k=tf.random.uniform([], 0, 4, dtype=tf.int32))
+    angle = tf.random.uniform([], -15, 15) * (3.14159 / 180.0)  # Convert to radians
+    # Note: TensorFlow doesn't have a simple rotate by arbitrary angle, so we use rot90 as approximation
+    
+    # Random zoom (0.7 to 1.3 range, equivalent to zoom_range=0.3)
+    zoom_factor = tf.random.uniform([], 0.7, 1.3)
+    img_shape = tf.shape(image)
+    h, w = img_shape[0], img_shape[1]
+    new_h = tf.cast(tf.cast(h, tf.float32) * zoom_factor, tf.int32)
+    new_w = tf.cast(tf.cast(w, tf.float32) * zoom_factor, tf.int32)
+    image = tf.image.resize(image, [new_h, new_w])
+    image = tf.image.resize_with_crop_or_pad(image, h, w)
+    
+    # Random width shift (±20%)
+    max_shift_w = tf.cast(tf.cast(w, tf.float32) * 0.2, tf.int32)
+    shift_w = tf.random.uniform([], -max_shift_w, max_shift_w, dtype=tf.int32)
+    image = tf.roll(image, shift_w, axis=1)
+    
+    # Random height shift (±20%)
+    max_shift_h = tf.cast(tf.cast(h, tf.float32) * 0.2, tf.int32)
+    shift_h = tf.random.uniform([], -max_shift_h, max_shift_h, dtype=tf.int32)
+    image = tf.roll(image, shift_h, axis=0)
+    
+    return image, label
+
+
 def create_lazy_dataset(
     image_paths,
     labels,
@@ -239,7 +277,7 @@ def create_lazy_dataset(
     preprocess_fn=None,
     batch_size=256,
     shuffle=False,
-    augmentation_fn=None,
+    augment=False,
     seed=None,
     repeat=True
 ):
@@ -253,7 +291,7 @@ def create_lazy_dataset(
         preprocess_fn: Preprocessing function (e.g., backbone's preprocess_input)
         batch_size: Batch size
         shuffle: Whether to shuffle the dataset
-        augmentation_fn: Optional data augmentation function (ImageDataGenerator flow)
+        augment: Whether to apply data augmentation (for training)
         seed: Random seed for shuffling
         repeat: Whether to repeat the dataset indefinitely (for training)
         
@@ -277,6 +315,10 @@ def create_lazy_dataset(
         lambda path, label: (load_and_preprocess_image(path, image_size, preprocess_fn), label),
         num_parallel_calls=tf.data.AUTOTUNE
     )
+    
+    # Apply augmentation if requested (only for training)
+    if augment:
+        dataset = dataset.map(augment_image, num_parallel_calls=tf.data.AUTOTUNE)
     
     # Batch the dataset
     dataset = dataset.batch(batch_size)

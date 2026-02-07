@@ -416,6 +416,7 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=True,
+        augment=True,  # Apply data augmentation for training
         seed=args.seed,
         repeat=True  # Repeat indefinitely for training
     )
@@ -426,6 +427,7 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=False,
+        augment=False,  # No augmentation for validation
         repeat=True  # Repeat for validation (Keras expects this)
     )
     
@@ -435,6 +437,7 @@ def main():
         preprocess_fn=preprocess_fn,
         batch_size=args.batch_size,
         shuffle=False,
+        augment=False,  # No augmentation for test
         repeat=True  # Repeat for test evaluation with steps parameter
     )
     
