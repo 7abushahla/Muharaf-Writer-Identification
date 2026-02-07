@@ -77,7 +77,8 @@ def load_dataset(
     csv_file='merged_writer.csv',
     image_size=(224, 224),
     preprocess_fn=None,
-    verbose=True
+    verbose=True,
+    allowed_page_ids=None,
 ):
     """
     Load the writer identification dataset.
@@ -88,6 +89,7 @@ def load_dataset(
         image_size: Target image size
         preprocess_fn: Preprocessing function for images
         verbose: Whether to print progress
+        allowed_page_ids: Optional set of page IDs to include (filters CSV rows)
         
     Returns:
         images: Array of preprocessed images
@@ -112,6 +114,9 @@ def load_dataset(
     for index, row in writer_data.iterrows():
         image_filename = row['Image Filename']
         writer_name = row['Writer Name (English)']
+
+        if allowed_page_ids is not None and image_filename not in allowed_page_ids:
+            continue
         
         # Assign a unique label to each writer if not already assigned
         if writer_name not in writer_to_label:

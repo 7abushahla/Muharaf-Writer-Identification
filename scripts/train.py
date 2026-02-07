@@ -36,6 +36,7 @@ from data_utils import (
 )
 from custom_metrics import MacroPrecision, MacroRecall, MacroF1Score
 from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint
+from utils.page_disjoint import load_split_map
 
 
 def parse_args():
@@ -316,12 +317,24 @@ def main():
     from model_builder import get_backbone_model
     _, preprocess_fn = get_backbone_model(args.backbone, (args.image_size, args.image_size, 3))
     
+    allowed_page_ids = None
+    if args.split_mode == 'page_disjoint':
+        split_map = load_split_map(
+            args.split_dir,
+            args.seed,
+            disjoint_mode=args.disjoint_mode,
+            writer_policy=args.writer_policy
+        )
+        allowed_page_ids = set(split_map.keys())
+        print(f"Filtering dataset to {len(allowed_page_ids)} pages from split file")
+
     images, labels, page_ids, writer_to_label, label_to_writer = load_dataset(
         main_dir=args.data_dir,
         csv_file=args.csv_file,
         image_size=(args.image_size, args.image_size),
         preprocess_fn=preprocess_fn,
-        verbose=args.verbose
+        verbose=args.verbose,
+        allowed_page_ids=allowed_page_ids
     )
     
     # Determine num_classes from the data
