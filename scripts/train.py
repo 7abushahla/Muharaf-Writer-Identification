@@ -29,13 +29,13 @@ from sklearn.metrics import classification_report, confusion_matrix
 # Import custom modules
 from model_builder import build_writer_identification_model
 from data_utils import (
-    load_dataset, 
+    load_dataset_metadata, 
     prepare_data_splits, 
-    create_data_generators,
-    infinite_generator
+    create_lazy_dataset
 )
 from custom_metrics import MacroPrecision, MacroRecall, MacroF1Score
-from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint
+from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint, TqdmCallback
+from utils.page_disjoint import load_split_map
 
 
 def parse_args():
@@ -66,8 +66,19 @@ def parse_args():
                         help='CSV file with writer labels')
     parser.add_argument('--image-size', type=int, default=224,
                         help='Image size (square)')
-    parser.add_argument('--num-classes', type=int, default=179,
-                        help='Number of writer classes')
+    parser.add_argument('--num-classes', type=int, default=None,
+                        help='Number of writer classes (auto-detected if not specified)')
+    parser.add_argument('--split-mode', type=str, default='line',
+                        choices=['line', 'page_disjoint'],
+                        help='Data splitting mode: line-level or page-disjoint')
+    parser.add_argument('--split-dir', type=str, default='./splits',
+                        help='Directory containing page-disjoint split files')
+    parser.add_argument('--disjoint-mode', type=str, default='page',
+                        choices=['page', 'document'],
+                        help='Disjoint mode: page or document (only used with --split-mode page_disjoint)')
+    parser.add_argument('--writer-policy', type=str, default='require_3way',
+                        choices=['require_3way', 'drop_if_lt2', 'drop_if_lt3', 'allow_train_test_only', 'allow_train_only'],
+                        help='Writer policy for page-disjoint splits (default: require_3way, not shown in experiment name)')
     
     # Training configuration
     parser.add_argument('--seed', type=int, default=42,
@@ -153,6 +164,17 @@ def generate_experiment_name(args):
         return args.experiment_name
     
     # Build name from configuration
+    split_prefix = ""
+    if args.split_mode == 'page_disjoint':
+        if args.disjoint_mode == 'document':
+            split_prefix = "DocDisj_"
+        else:
+            split_prefix = "PgDisj_"
+        
+        # Add writer policy only if it's NOT the default (require_3way)
+        if args.writer_policy and args.writer_policy != 'require_3way':
+            split_prefix += f"{args.writer_policy}_"
+    
     attention_str = "ATTN" if args.use_attention else "NoATTN"
     
     if args.training_mode == 'finetune_last_n':
@@ -160,26 +182,26 @@ def generate_experiment_name(args):
     else:
         mode_str = args.training_mode.capitalize()
     
-    name = f"{args.backbone}_{mode_str}_{attention_str}_seed{args.seed}"
+    name = f"{split_prefix}{args.backbone}_{mode_str}_{attention_str}_seed{args.seed}"
     return name
 
 
 def save_results(args, history, test_metrics, elapsed_time, experiment_name, output_dir):
     """Save training results to files"""
     # Save history
-    history_path = os.path.join(output_dir, f'{experiment_name}_history.pkl')
+    history_path = os.path.join(output_dir, 'history.pkl')
     with open(history_path, 'wb') as f:
         pickle.dump(history.history, f)
     print(f"Saved training history to {history_path}")
     
     # Save test metrics
-    metrics_path = os.path.join(output_dir, f'{experiment_name}_test_metrics.json')
+    metrics_path = os.path.join(output_dir, 'test_metrics.json')
     with open(metrics_path, 'w') as f:
         json.dump(test_metrics, f, indent=4)
     print(f"Saved test metrics to {metrics_path}")
     
     # Save elapsed time
-    time_path = os.path.join(output_dir, f'{experiment_name}_elapsed_time.txt')
+    time_path = os.path.join(output_dir, 'elapsed_time.txt')
     with open(time_path, 'w') as f:
         f.write(f"Total training time: {elapsed_time:.2f} seconds\n")
         f.write(f"Hours: {elapsed_time / 3600:.4f}\n")
@@ -187,7 +209,7 @@ def save_results(args, history, test_metrics, elapsed_time, experiment_name, out
     print(f"Saved elapsed time to {time_path}")
     
     # Save configuration
-    config_path = os.path.join(output_dir, f'{experiment_name}_config.json')
+    config_path = os.path.join(output_dir, 'config.json')
     with open(config_path, 'w') as f:
         json.dump(vars(args), f, indent=4)
     print(f"Saved configuration to {config_path}")
@@ -226,7 +248,7 @@ def plot_metrics(history, test_metrics, experiment_name, output_dir):
             plt.ylabel(metric_name)
             plt.legend()
             
-            plot_path = os.path.join(output_dir, f'{experiment_name}_{metric_key}.png')
+            plot_path = os.path.join(output_dir, f'{metric_key}.png')
             plt.savefig(plot_path, dpi=150, bbox_inches='tight')
             plt.close()
             
@@ -246,7 +268,7 @@ def save_classification_report(y_true, y_pred, label_to_writer, num_classes, exp
     report_dict = classification_report(y_true, y_pred, target_names=target_names, output_dict=True)
     report_df = pd.DataFrame(report_dict).transpose()
     
-    report_path = os.path.join(output_dir, f'{experiment_name}_classification_report.csv')
+    report_path = os.path.join(output_dir, 'classification_report.csv')
     report_df.to_csv(report_path, index=True)
     print(f"Saved classification report to {report_path}")
 
@@ -270,7 +292,7 @@ def save_confusion_matrix(y_true, y_pred, label_to_writer, num_classes, experime
     plt.ylabel('True Label')
     plt.title('Confusion Matrix on Test Set')
     
-    cm_path = os.path.join(output_dir, f'{experiment_name}_confusion_matrix.png')
+    cm_path = os.path.join(output_dir, 'confusion_matrix.png')
     plt.savefig(cm_path, dpi=150, bbox_inches='tight')
     plt.close()
     
@@ -286,14 +308,53 @@ def main():
     setup_gpu(args)
     set_seed(args.seed)
     
-    # Generate experiment name
+    # Load data first to determine num_classes
+    print("\nLoading dataset metadata...")
+    
+    # We need to build model first to get preprocess_fn, but use dummy num_classes
+    # Then rebuild after knowing actual num_classes
+    from model_builder import get_backbone_model
+    _, preprocess_fn = get_backbone_model(args.backbone, (args.image_size, args.image_size, 3))
+    
+    allowed_page_ids = None
+    if args.split_mode == 'page_disjoint':
+        split_map = load_split_map(
+            args.split_dir,
+            args.seed,
+            disjoint_mode=args.disjoint_mode,
+            writer_policy=args.writer_policy
+        )
+        allowed_page_ids = set(split_map.keys())
+        print(f"Filtering dataset to {len(allowed_page_ids)} pages from split file")
+
+    image_paths, labels, page_ids, writer_to_label, label_to_writer = load_dataset_metadata(
+        main_dir=args.data_dir,
+        csv_file=args.csv_file,
+        verbose=args.verbose,
+        allowed_page_ids=allowed_page_ids
+    )
+    
+    # Determine num_classes from the data
+    actual_num_classes = len(writer_to_label)
+    if args.num_classes is None:
+        args.num_classes = actual_num_classes
+        print(f"Auto-detected {args.num_classes} writer classes")
+    elif args.num_classes != actual_num_classes:
+        print(f"Warning: Specified num_classes ({args.num_classes}) differs from actual ({actual_num_classes})")
+        print(f"Using actual: {actual_num_classes}")
+        args.num_classes = actual_num_classes
+    
+    # Generate experiment name (without seed - this is the config name)
     experiment_name = generate_experiment_name(args)
+    config_name = experiment_name.replace(f"_seed{args.seed}", "")  # Remove seed suffix
+    
     print(f"\n{'='*80}")
-    print(f"Experiment: {experiment_name}")
+    print(f"Configuration: {config_name}")
+    print(f"Experiment: {experiment_name} (Seed: {args.seed})")
     print(f"{'='*80}\n")
     
-    # Create output directory
-    output_dir = os.path.join(args.output_dir, args.backbone)
+    # Create output directory: Results/{backbone}/{config}/seed_{seed}/
+    output_dir = os.path.join(args.output_dir, args.backbone, config_name, f"seed_{args.seed}")
     os.makedirs(output_dir, exist_ok=True)
     
     # Build model
@@ -325,50 +386,67 @@ def main():
         ]
     )
     
-    # Load data
-    print("\nLoading dataset...")
-    images, labels, writer_to_label, label_to_writer = load_dataset(
-        main_dir=args.data_dir,
-        csv_file=args.csv_file,
-        image_size=(args.image_size, args.image_size),
-        preprocess_fn=preprocess_fn,
-        verbose=args.verbose
-    )
-    
     # One-hot encode labels
     labels_categorical = to_categorical(labels, num_classes=args.num_classes)
     
     # Split data
-    print("\nSplitting dataset...")
-    train_images, val_images, test_images, train_labels, val_labels, test_labels = prepare_data_splits(
-        images, labels_categorical, seed=args.seed
+    print(f"\nSplitting dataset (mode: {args.split_mode})...")
+    train_paths, val_paths, test_paths, train_labels, val_labels, test_labels = prepare_data_splits(
+        image_paths, 
+        labels_categorical,
+        page_ids=page_ids,
+        split_mode=args.split_mode,
+        split_dir=args.split_dir,
+        disjoint_mode=args.disjoint_mode,
+        writer_policy=args.writer_policy,
+        seed=args.seed,
+        verbose=args.verbose
     )
     
-    print(f"Training samples: {len(train_images)}")
-    print(f"Validation samples: {len(val_images)}")
-    print(f"Test samples: {len(test_images)}")
+    print(f"Training samples: {len(train_paths)}")
+    print(f"Validation samples: {len(val_paths)}")
+    print(f"Test samples: {len(test_paths)}")
     
     # Clean up memory
-    del images, labels_categorical
+    del image_paths, labels_categorical
     gc.collect()
     
-    # Create data generators
-    print("\nCreating data generators...")
-    train_generator, validation_generator, test_generator = create_data_generators(
-        train_images, train_labels, val_images, val_labels, test_images, test_labels,
-        batch_size=args.batch_size
+    # Create lazy data loaders (images loaded on-demand)
+    print("\nCreating lazy data loaders...")
+    train_dataset = create_lazy_dataset(
+        train_paths, train_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=True,
+        augment=True,  # Apply data augmentation for training
+        seed=args.seed
     )
     
-    # Calculate steps
-    steps_per_epoch = math.ceil(len(train_images) / args.batch_size)
-    validation_steps = math.ceil(len(val_images) / args.batch_size)
+    val_dataset = create_lazy_dataset(
+        val_paths, val_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=False,
+        augment=False  # No augmentation for validation
+    )
+    
+    test_dataset = create_lazy_dataset(
+        test_paths, test_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=False,
+        augment=False  # No augmentation for test
+    )
     
     # Setup callbacks
     print("\nSetting up callbacks...")
     callbacks = []
     
     # Model checkpoint
-    checkpoint_path = os.path.join(output_dir, f'{experiment_name}_best_model.keras')
+    checkpoint_path = os.path.join(output_dir, 'best_model.keras')
     checkpoint_callback = ModelCheckpoint(
         checkpoint_path,
         monitor='val_f1_score',
@@ -379,7 +457,7 @@ def main():
     callbacks.append(checkpoint_callback)
     
     # Periodic checkpoint
-    periodic_checkpoint_path = os.path.join(output_dir, f'{experiment_name}_last_saved.keras')
+    periodic_checkpoint_path = os.path.join(output_dir, 'last_saved.keras')
     periodic_checkpoint_callback = PeriodicModelCheckpoint(
         filepath=periodic_checkpoint_path,
         save_freq_epochs=args.save_freq,
@@ -409,6 +487,10 @@ def main():
     )
     callbacks.append(early_stop)
     
+    # TQDM progress bar
+    tqdm_callback = TqdmCallback(verbose=1)
+    callbacks.append(tqdm_callback)
+    
     # Optional: Clear output callback (for notebooks)
     # callbacks.append(ClearOutputEveryNEpochs(n=10))
     
@@ -420,13 +502,11 @@ def main():
     start_time = time.time()
     
     history = model.fit(
-        infinite_generator(train_generator),
-        steps_per_epoch=steps_per_epoch,
-        validation_data=infinite_generator(validation_generator),
-        validation_steps=validation_steps,
+        train_dataset,
+        validation_data=val_dataset,
         epochs=args.epochs,
         callbacks=callbacks,
-        verbose=1 if args.verbose else 2
+        verbose=0  # tqdm callback handles progress display
     )
     
     end_time = time.time()
@@ -439,10 +519,8 @@ def main():
     print("Evaluating on test set...")
     print("="*80 + "\n")
     
-    test_generator.reset()
     test_results = model.evaluate(
-        test_generator,
-        steps=math.ceil(len(test_images) / args.batch_size),
+        test_dataset,
         verbose=1
     )
     
@@ -461,10 +539,8 @@ def main():
     
     # Generate predictions
     print("\nGenerating predictions...")
-    test_generator.reset()
     test_preds = model.predict(
-        test_generator,
-        steps=math.ceil(len(test_images) / args.batch_size),
+        test_dataset,
         verbose=0
     )
     

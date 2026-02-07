@@ -7,6 +7,8 @@ This directory contains refactored, modular training scripts for the Writer Iden
 ```
 scripts/
 ├── train.py                  # Main training script
+├── aggregate_results.py      # Aggregate results across multiple seeds
+├── run_three_seeds.sh        # Helper script to run all 3 seeds + aggregate
 ├── batch_train.py            # Batch training for multiple experiments
 ├── model_builder.py          # Model architecture builder
 ├── data_utils.py             # Data loading and preprocessing
@@ -83,7 +85,36 @@ python train.py --backbone resnet50 \
   - Default: `224`
 
 - `--num-classes`: Number of writer classes
-  - Default: `179`
+  - Default: Auto-detected from data
+  - Usually `179`, but may vary with page-disjoint splits
+
+- `--split-mode`: Data splitting strategy
+  - Options:
+    - `line`: Line-level splits (70/15/15 random split)
+    - `page_disjoint`: Page-disjoint or document-disjoint splits
+  - Default: `line`
+  - See [PAGE_DISJOINT_GUIDE.md](PAGE_DISJOINT_GUIDE.md) for details
+
+- `--split-dir`: Directory containing disjoint split files
+  - Default: `./splits`
+  - Required when using `--split-mode page_disjoint`
+
+- `--disjoint-mode`: Disjoint splitting granularity
+  - Options:
+    - `page`: Page-disjoint (all lines from same page stay together)
+    - `document`: Document-disjoint (all pages from same document stay together)
+  - Default: `page`
+  - Only used when `--split-mode page_disjoint`
+
+- `--writer-policy`: Writer filtering policy for splits
+  - Options:
+    - `None`: No filtering (default)
+    - `require_3way`: Only writers with >=3 pages/documents
+    - `drop_if_lt2`: Drop writers with <2 pages/documents
+    - `drop_if_lt3`: Drop writers with <3 pages/documents
+    - `allow_train_test_only`: Allow writers with 2 pages/documents
+  - Default: `None`
+  - Only used when `--split-mode page_disjoint`
 
 #### Training Configuration
 - `--seed`: Random seed for reproducibility
@@ -128,6 +159,118 @@ python train.py --backbone resnet50 \
 - `--no-plots`: Skip generating plots
   - Flag
 
+## Multi-Seed Training and Aggregation
+
+For robust evaluation, it's recommended to run each experiment configuration with **3 random seeds** (42, 570, 1073) and report aggregated results.
+
+### Quick Start: Run All 3 Seeds
+
+Use the helper script to automatically run all 3 seeds and aggregate results:
+
+```bash
+./run_three_seeds.sh \
+  --backbone densenet201 \
+  --training-mode frozen \
+  --split-mode page_disjoint \
+  --disjoint-mode page
+```
+
+This will:
+1. Train with seeds 42, 570, and 1073
+2. Automatically aggregate results
+3. Compute mean ± std (population std with N denominator)
+
+### Manual Seed Runs
+
+If you prefer to run seeds individually:
+
+```bash
+# Train with each seed
+python train.py --backbone densenet201 --training-mode frozen --seed 42
+python train.py --backbone densenet201 --training-mode frozen --seed 570
+python train.py --backbone densenet201 --training-mode frozen --seed 1073
+
+# Then aggregate results
+python aggregate_results.py --all
+```
+
+### Aggregation Script Usage
+
+**Aggregate all configurations:**
+```bash
+python aggregate_results.py --all
+```
+
+**Aggregate specific backbone:**
+```bash
+python aggregate_results.py --backbone densenet201
+```
+
+**Aggregate specific configuration:**
+```bash
+python aggregate_results.py Results/densenet201/PgDisj_densenet201_Frozen_NoATTN
+```
+
+### Output Structure
+
+Results are organized by configuration, with each seed in its own subdirectory:
+
+```
+Results/
+  densenet201/
+    PgDisj_densenet201_Frozen_NoATTN/
+      ├── seed_42/
+      │   ├── best_model.keras
+      │   ├── test_metrics.json
+      │   ├── classification_report.csv
+      │   └── ... (plots, history, etc.)
+      ├── seed_570/
+      │   └── ...
+      ├── seed_1073/
+      │   └── ...
+      └── aggregated/
+          ├── aggregated_metrics.json          # Mean ± Std for all metrics
+          └── classification_report_aggregated.csv
+```
+
+### Aggregated Metrics Format
+
+**`aggregated_metrics.json`** contains:
+- `metrics_mean`: Mean values across seeds
+- `metrics_std`: Population standard deviation (N denominator)
+- `metrics_formatted`: Human-readable "mean ± std" format
+
+Example:
+```json
+{
+  "seeds": ["42", "570", "1073"],
+  "num_seeds": 3,
+  "metrics_formatted": {
+    "test_accuracy": "0.2446 ± 0.0123",
+    "test_f1_score": "0.1387 ± 0.0098",
+    "test_precision": "0.0985 ± 0.0067",
+    "test_recall": "0.2342 ± 0.0145"
+  }
+}
+```
+
+**Terminal Output:**
+```
+================================================================================
+AGGREGATED RESULTS ACROSS 3 SEEDS: 42, 570, 1073
+================================================================================
+
+Test Metrics (Mean ± Std):
+--------------------------------------------------
+test_accuracy       : 0.2446 ± 0.0123
+test_top_5_accuracy : 0.4419 ± 0.0201
+test_precision      : 0.0985 ± 0.0067
+test_recall         : 0.2342 ± 0.0145
+test_f1_score       : 0.1387 ± 0.0098
+test_loss           : 3.3812 ± 0.1523
+================================================================================
+```
+
 ## Examples
 
 ### Example 1: Frozen ResNet50 without Attention
@@ -167,6 +310,33 @@ python train.py --backbone mobilenetv3 \
                 --learning-rate 0.0005
 ```
 
+### Example 5: Page-Disjoint Splits (Realistic Evaluation)
+
+**Important:** First generate the splits using `page_disjoint_splits.py` in the project root:
+
+```bash
+# From project root
+cd ..
+python page_disjoint_splits.py --seed 42
+cd scripts/
+```
+
+Then train with page-disjoint mode:
+
+```bash
+python train.py --backbone resnet50 \
+                --training-mode frozen \
+                --use-attention \
+                --seed 42 \
+                --split-mode page_disjoint \
+                --split-dir ../splits
+```
+
+The experiment name will be prefixed with `PD_` to indicate page-disjoint mode:
+- Output: `PD_resnet50_Frozen_ATTN_seed42_best_model.keras`
+
+See [PAGE_DISJOINT_GUIDE.md](PAGE_DISJOINT_GUIDE.md) for complete documentation.
+
 ### Example 5: Quick Test Run
 
 ```bash
@@ -193,42 +363,83 @@ This will run all combinations of:
 
 **Note:** This will take a very long time! You can edit `batch_train.py` to run a subset of experiments.
 
+### Batch Training with Page/Document-Disjoint Splits
+
+If you want **all batch experiments** to use page- or document-disjoint splits, edit
+the `split_config` block in `batch_train.py`:
+
+```python
+split_config = {
+    'split-mode': 'page_disjoint',
+    'disjoint-mode': 'document',  # or 'page'
+    'writer-policy': 'require_3way',
+    'split-dir': '../splits',
+}
+```
+
+This appends the split options to every experiment (across all backbones/seeds).
+
 ## Output Files
 
-Each training run creates the following files in the output directory:
+Each training run creates files organized by configuration and seed:
 
 ```
-Results/{backbone}/
-├── {experiment_name}_best_model.keras          # Best model checkpoint
-├── {experiment_name}_last_saved.keras          # Last saved checkpoint
-├── {experiment_name}_history.pkl               # Training history
-├── {experiment_name}_test_metrics.json         # Test set metrics
-├── {experiment_name}_elapsed_time.txt          # Training time
-├── {experiment_name}_config.json               # Experiment configuration
-├── {experiment_name}_classification_report.csv # Per-class metrics
-├── {experiment_name}_confusion_matrix.png      # Confusion matrix plot
-├── {experiment_name}_accuracy.png              # Accuracy plot
-├── {experiment_name}_top_5_accuracy.png        # Top-5 accuracy plot
-├── {experiment_name}_loss.png                  # Loss plot
-├── {experiment_name}_f1_score.png              # F1 score plot
-├── {experiment_name}_precision.png             # Precision plot
-└── {experiment_name}_recall.png                # Recall plot
+Results/{backbone}/{config_name}/
+├── seed_{seed}/
+│   ├── best_model.keras               # Best model checkpoint
+│   ├── last_saved.keras               # Last saved checkpoint
+│   ├── history.pkl                    # Training history
+│   ├── test_metrics.json              # Test set metrics
+│   ├── elapsed_time.txt               # Training time
+│   ├── config.json                    # Experiment configuration
+│   ├── classification_report.csv      # Per-class metrics
+│   ├── confusion_matrix.png           # Confusion matrix plot
+│   ├── accuracy.png                   # Accuracy plot
+│   ├── top_5_accuracy.png             # Top-5 accuracy plot
+│   ├── loss.png                       # Loss plot
+│   ├── f1_score.png                   # F1 score plot
+│   ├── precision.png                  # Precision plot
+│   └── recall.png                     # Recall plot
+└── aggregated/                        # Created by aggregate_results.py
+    ├── aggregated_metrics.json        # Mean ± Std across seeds
+    └── classification_report_aggregated.csv
+
+Example:
+Results/densenet201/PgDisj_densenet201_Frozen_NoATTN/
+├── seed_42/
+├── seed_570/
+├── seed_1073/
+└── aggregated/
 ```
 
 ## Experiment Naming
 
 Experiments are automatically named based on configuration:
 
+**Configuration name (folder):**
 ```
-{backbone}_{training_mode}_{attention}_{seed}
+[{split_prefix}]{backbone}_{training_mode}_{attention}
 ```
+
+**Full experiment name (for logs):**
+```
+[{split_prefix}]{backbone}_{training_mode}_{attention}_seed{seed}
+```
+
+Where `split_prefix` is:
+- `PgDisj_` for page-disjoint splits (default policy: require_3way, not shown)
+- `DocDisj_` for document-disjoint splits
+- `PgDisj_{policy}_` for non-default writer policies (e.g., `PgDisj_drop_if_lt3_`)
+- Empty for line-level splits
 
 Examples:
-- `resnet50_Frozen_NoATTN_seed42`
-- `xception_Scratch_ATTN_seed570`
-- `densenet201_Finetune10Layers_ATTN_seed1073`
+- `PgDisj_densenet201_Frozen_NoATTN` (config folder)
+  - `seed_42/`, `seed_570/`, `seed_1073/` (subdirectories)
+- `DocDisj_resnet50_Scratch_ATTN` (document-disjoint)
+- `PgDisj_drop_if_lt3_xception_Finetune10Layers_ATTN` (non-default policy)
+- `mobilenetv3_Frozen_NoATTN` (line-level split)
 
-You can override this with `--experiment-name`:
+You can override the full name with `--experiment-name`:
 
 ```bash
 python train.py --experiment-name my_custom_experiment ...
