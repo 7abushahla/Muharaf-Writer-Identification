@@ -4,6 +4,7 @@ import csv
 import os
 import random
 import re
+import statistics
 from collections import defaultdict
 
 import pandas as pd
@@ -13,8 +14,15 @@ import xml.etree.ElementTree as ET
 IMAGE_EXTS = (".png", ".jpg", ".jpeg")
 WRITER_POLICY_CHOICES = (
     "allow_train_only",
+    "drop_if_lt2",
     "drop_if_lt3",
+    "require_3way",
     "allow_train_test_only",
+)
+
+DISJOINT_MODE_CHOICES = (
+    "page",
+    "document",
 )
 
 
@@ -37,6 +45,69 @@ def extract_page_id_from_line_filename(filename):
     base, _ext = os.path.splitext(filename)
     m = re.match(r"^(.*)-\d+$", base)
     return m.group(1) if m else base
+
+
+def extract_document_id(page_id, doc_id_re):
+    m = doc_id_re.match(page_id)
+    return m.group(1) if m else page_id
+
+
+def build_doc_map_from_dir(documents_dir):
+    """
+    Build a mapping of page_id -> document_id from a documents directory
+    where each subfolder corresponds to one multi-page document and contains page images.
+    Any image files directly under the documents directory are treated as
+    single-page documents (document_id == page_id).
+    """
+    if not documents_dir or not os.path.isdir(documents_dir):
+        raise FileNotFoundError(f"Documents directory not found: {documents_dir}")
+
+    page_to_doc = {}
+    # first, handle single-page documents in the root
+    for fn in os.listdir(documents_dir):
+        if fn.startswith("."):
+            continue
+        path = os.path.join(documents_dir, fn)
+        if not os.path.isfile(path):
+            continue
+        base, ext = os.path.splitext(fn)
+        if ext.lower() not in IMAGE_EXTS:
+            continue
+        page_id = base
+        doc_id = base
+        if page_id in page_to_doc and page_to_doc[page_id] != doc_id:
+            raise ValueError(
+                f"Page '{page_id}' appears in multiple document folders: "
+                f"{page_to_doc[page_id]} and {doc_id}"
+            )
+        page_to_doc[page_id] = doc_id
+
+    # then, handle multi-page documents in subfolders
+    for doc_name in os.listdir(documents_dir):
+        doc_path = os.path.join(documents_dir, doc_name)
+        if not os.path.isdir(doc_path):
+            continue
+        for fn in os.listdir(doc_path):
+            if fn.startswith("."):
+                continue
+            path = os.path.join(doc_path, fn)
+            if not os.path.isfile(path):
+                continue
+            base, ext = os.path.splitext(fn)
+            if ext.lower() not in IMAGE_EXTS:
+                continue
+            page_id = base
+            if page_id in page_to_doc and page_to_doc[page_id] != doc_name:
+                raise ValueError(
+                    f"Page '{page_id}' appears in multiple document folders: "
+                    f"{page_to_doc[page_id]} and {doc_name}"
+                )
+            page_to_doc[page_id] = doc_name
+
+    if not page_to_doc:
+        raise ValueError(f"No page images found in documents directory: {documents_dir}")
+
+    return page_to_doc
 
 
 def detect_lines_dir_mode(lines_dir):
@@ -260,10 +331,130 @@ def choose_split_by_deficit(deficits, allowed_splits):
     return ordered[0]
 
 
-def split_writer_pages(writer_pages, seed, ratios, writer_policy="allow_train_only"):
+def split_writer_pages(
+    writer_pages,
+    seed,
+    ratios,
+    writer_policy="allow_train_only",
+    disjoint_mode="page",
+    doc_id_re=None,
+    doc_map=None,
+):
     rng = random.Random(seed)
 
-    total_lines = sum(sum(lc for _, lc in pages) for pages in writer_pages.values())
+    if disjoint_mode == "document":
+        if doc_map is None and doc_id_re is None:
+            raise ValueError(
+                "doc_id_re or doc_map must be provided for document-disjoint mode."
+            )
+        doc_pages = defaultdict(list)
+        doc_lines = defaultdict(int)
+        writer_docs = defaultdict(set)
+        for writer, pages in writer_pages.items():
+            for page_id, lc in pages:
+                if doc_map is not None:
+                    if page_id not in doc_map:
+                        raise ValueError(
+                            f"Page '{page_id}' missing from documents mapping."
+                        )
+                    doc_id = doc_map[page_id]
+                else:
+                    doc_id = extract_document_id(page_id, doc_id_re)
+                doc_pages[doc_id].append(page_id)
+                doc_lines[doc_id] += lc
+                writer_docs[writer].add(doc_id)
+
+        total_lines = sum(doc_lines.values())
+        targets = {
+            "train": total_lines * ratios["train"],
+            "val": total_lines * ratios["val"],
+            "test": total_lines * ratios["test"],
+        }
+        current = {"train": 0, "val": 0, "test": 0}
+        doc_split = {}
+
+        def assign_doc(doc_id, split):
+            if doc_id in doc_split:
+                return
+            doc_split[doc_id] = split
+            current[split] += doc_lines[doc_id]
+
+        writers = list(writer_docs.keys())
+        rng.shuffle(writers)
+
+        for writer in writers:
+            docs = list(writer_docs[writer])
+            rng.shuffle(docs)
+            assigned_splits = {doc_split[d] for d in docs if d in doc_split}
+            unassigned = [d for d in docs if d not in doc_split]
+            if not unassigned:
+                continue
+
+            n_docs = len(docs)
+
+            if n_docs == 1:
+                assign_doc(unassigned[0], "train")
+                continue
+
+            if n_docs == 2:
+                deficits = {k: targets[k] - current[k] for k in current}
+                if writer_policy == "allow_train_test_only":
+                    preferred = choose_split_by_deficit(deficits, ["test"])
+                else:
+                    preferred = choose_split_by_deficit(deficits, ["val", "test"])
+
+                best_doc = min(
+                    unassigned, key=lambda d: abs(deficits[preferred] - doc_lines[d])
+                )
+                assign_doc(best_doc, preferred)
+                unassigned = [d for d in unassigned if d != best_doc]
+
+                if unassigned:
+                    deficits = {k: targets[k] - current[k] for k in current}
+                    best_doc = min(
+                        unassigned, key=lambda d: abs(deficits["train"] - doc_lines[d])
+                    )
+                    assign_doc(best_doc, "train")
+                continue
+
+            # n_docs >= 3
+            missing = [s for s in ["train", "val", "test"] if s not in assigned_splits]
+            for split in missing:
+                if not unassigned:
+                    break
+                deficits = {k: targets[k] - current[k] for k in current}
+                best_doc = min(
+                    unassigned, key=lambda d: abs(deficits[split] - doc_lines[d])
+                )
+                assign_doc(best_doc, split)
+                unassigned = [d for d in unassigned if d != best_doc]
+
+            for doc_id in list(unassigned):
+                deficits = {k: targets[k] - current[k] for k in current}
+                chosen = choose_split_by_deficit(deficits, ["train", "val", "test"])
+                assign_doc(doc_id, chosen)
+
+        # assign any remaining docs (e.g., writers filtered out but docs still present)
+        for doc_id in doc_pages:
+            if doc_id not in doc_split:
+                deficits = {k: targets[k] - current[k] for k in current}
+                chosen = choose_split_by_deficit(deficits, ["train", "val", "test"])
+                assign_doc(doc_id, chosen)
+
+        split_map = {}
+        for doc_id, split in doc_split.items():
+            for pid in doc_pages[doc_id]:
+                split_map[pid] = split
+
+        return split_map, current, targets
+
+    # page-disjoint (default)
+    writer_units = {
+        writer: [(page_id, lc, [page_id]) for page_id, lc in pages]
+        for writer, pages in writer_pages.items()
+    }
+
+    total_lines = sum(sum(lc for _, lc, _ in units) for units in writer_units.values())
     targets = {
         "train": total_lines * ratios["train"],
         "val": total_lines * ratios["val"],
@@ -273,61 +464,69 @@ def split_writer_pages(writer_pages, seed, ratios, writer_policy="allow_train_on
 
     split_map = {}
 
-    writers = list(writer_pages.keys())
+    writers = list(writer_units.keys())
     rng.shuffle(writers)
 
     for writer in writers:
-        pages = list(writer_pages[writer])
-        rng.shuffle(pages)
-        n_pages = len(pages)
+        units = list(writer_units[writer])
+        rng.shuffle(units)
+        n_units = len(units)
 
-        if n_pages == 1:
-            page_id, lc = pages[0]
-            split_map[page_id] = "train"
+        if n_units == 1:
+            _unit_id, lc, page_ids = units[0]
+            for pid in page_ids:
+                split_map[pid] = "train"
             current["train"] += lc
             continue
 
-        if n_pages == 2:
+        if n_units == 2:
             deficits = {k: targets[k] - current[k] for k in current}
             if writer_policy == "allow_train_test_only":
                 preferred = choose_split_by_deficit(deficits, ["test"])
             else:
                 preferred = choose_split_by_deficit(deficits, ["val", "test"])
             # pick the page that best fits the preferred split
-            page_a, page_b = pages
+            unit_a, unit_b = units
             best_page = min(
-                [page_a, page_b],
+                [unit_a, unit_b],
                 key=lambda p: abs(deficits[preferred] - p[1]),
             )
-            other_page = page_b if best_page == page_a else page_a
+            other_page = unit_b if best_page == unit_a else unit_a
 
-            split_map[best_page[0]] = preferred
+            for pid in best_page[2]:
+                split_map[pid] = preferred
             current[preferred] += best_page[1]
-            split_map[other_page[0]] = "train"
+            for pid in other_page[2]:
+                split_map[pid] = "train"
             current["train"] += other_page[1]
             continue
 
-        # n_pages >= 3
+        # n_units >= 3
         deficits = {k: targets[k] - current[k] for k in current}
-        seed_pages = pages[:3]
-        assigned = best_permutation_assign(seed_pages, deficits)
+        seed_pages = units[:3]
+        assigned = best_permutation_assign(
+            [(pid, lc) for pid, lc, _ in seed_pages], deficits
+        )
         used_pages = set()
-        for (page_id, lc), split in assigned:
-            split_map[page_id] = split
+        for (unit_id, lc), split in assigned:
+            unit = next(u for u in seed_pages if u[0] == unit_id)
+            for pid in unit[2]:
+                split_map[pid] = split
             current[split] += lc
-            used_pages.add(page_id)
+            used_pages.add(unit_id)
 
-        remaining = [p for p in pages if p[0] not in used_pages]
-        for page_id, lc in remaining:
+        remaining = [u for u in units if u[0] not in used_pages]
+        for _unit_id, lc, page_ids in remaining:
             deficits = {k: targets[k] - current[k] for k in current}
             chosen = choose_split_by_deficit(deficits, ["train", "val", "test"])
-            split_map[page_id] = chosen
+            for pid in page_ids:
+                split_map[pid] = chosen
             current[chosen] += lc
 
     return split_map, current, targets
 
 
-def validate_splits(split_map, page_to_writer):
+def validate_splits(split_map, page_to_writer, writer_policy=None):
     # no duplicate pages by construction; check writer presence
     writer_to_splits = defaultdict(set)
     for page_id, split in split_map.items():
@@ -341,6 +540,16 @@ def validate_splits(split_map, page_to_writer):
         raise ValueError(
             f"Writers present in val/test but missing from train (showing up to 10): {missing_train[:10]}"
         )
+
+    if writer_policy == "require_3way":
+        missing_val = [w for w, splits in writer_to_splits.items() if "val" not in splits]
+        missing_test = [w for w, splits in writer_to_splits.items() if "test" not in splits]
+        if missing_val or missing_test:
+            raise ValueError(
+                "Writers missing required splits for 3-way policy. "
+                f"Missing val (up to 10): {missing_val[:10]} "
+                f"Missing test (up to 10): {missing_test[:10]}"
+            )
 
 
 def write_split_csv(path, split_map, page_to_writer, page_line_counts):
@@ -441,21 +650,27 @@ def summarize_seed(seed, split_map, page_to_writer, page_line_counts, ratios):
     return summary
 
 
-def apply_writer_policy(writer_pages, policy):
+def apply_writer_policy(writer_pages, policy, unit_counts=None, unit_label="pages"):
     filtered = {}
     rows = []
     for writer, pages in writer_pages.items():
         pages_total = len(pages)
         lines_total = sum(lc for _, lc in pages)
-        if pages_total >= 3:
+        units_total = (
+            unit_counts[writer]
+            if unit_counts is not None and writer in unit_counts
+            else pages_total
+        )
+        effective_policy = "drop_if_lt3" if policy == "require_3way" else policy
+        if units_total >= 3:
             include = True
             eligibility = "train_val_test"
             reason = "has >=3 pages"
-        elif pages_total == 2:
-            if policy == "drop_if_lt3":
+        elif units_total == 2:
+            if effective_policy in {"drop_if_lt2", "drop_if_lt3"}:
                 include = False
                 eligibility = "insufficient_2_pages"
-                reason = "needs >=3 pages for train/val/test"
+                reason = "requires >=3 pages for 3-way split"
             elif policy == "allow_train_test_only":
                 include = True
                 eligibility = "train_test_only"
@@ -465,10 +680,10 @@ def apply_writer_policy(writer_pages, policy):
                 eligibility = "train_plus_val_or_test"
                 reason = "2 pages; only one of val/test possible"
         else:
-            if policy == "drop_if_lt3":
+            if effective_policy in {"drop_if_lt2", "drop_if_lt3"}:
                 include = False
                 eligibility = "insufficient_1_page"
-                reason = "needs >=3 pages for train/val/test"
+                reason = "requires >=3 pages for 3-way split"
             else:
                 include = True
                 eligibility = "train_only"
@@ -480,6 +695,8 @@ def apply_writer_policy(writer_pages, policy):
             {
                 "writer": writer,
                 "pages_total": pages_total,
+                "units_total": units_total,
+                "units_label": unit_label,
                 "lines_total": lines_total,
                 "eligibility": eligibility,
                 "included": include,
@@ -494,6 +711,8 @@ def write_writer_policy_csv(path, rows):
     fieldnames = [
         "writer",
         "pages_total",
+        "units_total",
+        "units_label",
         "lines_total",
         "eligibility",
         "included",
@@ -649,24 +868,99 @@ def report_xml_mismatches(xml_dir, lines_dir, page_ids, lines_dir_mode, out_csv,
             f.write(f"- {reason}: {counts[reason]}\n")
 
 
-def write_line_stats(path_csv, path_md, writer_pages, page_line_counts, policy_tag, xml_filter_enabled):
+def write_line_stats(
+    path_csv,
+    path_md,
+    writer_pages,
+    page_line_counts,
+    policy_tag,
+    xml_filter_enabled,
+    doc_id_re=None,
+    doc_map=None,
+):
     writer_lines = {}
+    writer_page_counts = {}
     for writer, pages in writer_pages.items():
         writer_lines[writer] = sum(lc for _, lc in pages)
+        writer_page_counts[writer] = len(pages)
 
-    lines_series = pd.Series(list(writer_lines.values()))
-    total_lines = sum(writer_lines.values())
+    line_values = list(writer_lines.values())
+    page_values = list(writer_page_counts.values())
+    total_lines = sum(line_values)
     total_writers = len(writer_lines)
-    mean_lines = lines_series.mean() if total_writers else 0.0
-    std_lines = lines_series.std() if total_writers else 0.0
-    min_lines = lines_series.min() if total_writers else 0
-    max_lines = lines_series.max() if total_writers else 0
+
+    if total_writers:
+        mean_lines = statistics.mean(line_values)
+        std_lines = statistics.stdev(line_values) if total_writers > 1 else 0.0
+        min_lines = min(line_values)
+        max_lines = max(line_values)
+        mean_pages = statistics.mean(page_values)
+        std_pages = statistics.stdev(page_values) if total_writers > 1 else 0.0
+        min_pages = min(page_values)
+        max_pages = max(page_values)
+    else:
+        mean_lines = 0.0
+        std_lines = 0.0
+        min_lines = 0
+        max_lines = 0
+        mean_pages = 0.0
+        std_pages = 0.0
+        min_pages = 0
+        max_pages = 0
 
     min_writer = None
     max_writer = None
     if total_writers:
         min_writer = min(writer_lines, key=writer_lines.get)
         max_writer = max(writer_lines, key=writer_lines.get)
+
+    min_pages_writer = None
+    max_pages_writer = None
+    if total_writers:
+        min_pages_writer = min(writer_page_counts, key=writer_page_counts.get)
+        max_pages_writer = max(writer_page_counts, key=writer_page_counts.get)
+
+    writer_doc_counts = None
+    doc_stats = None
+    if doc_map is not None or doc_id_re is not None:
+        writer_doc_counts = {}
+        for writer, pages in writer_pages.items():
+            doc_ids = set()
+            for page_id, _lc in pages:
+                if doc_map is not None:
+                    if page_id not in doc_map:
+                        raise ValueError(
+                            f"Page '{page_id}' missing from documents mapping."
+                        )
+                    doc_ids.add(doc_map[page_id])
+                else:
+                    doc_ids.add(extract_document_id(page_id, doc_id_re))
+            writer_doc_counts[writer] = len(doc_ids)
+
+        doc_values = list(writer_doc_counts.values())
+        if total_writers:
+            mean_docs = statistics.mean(doc_values)
+            std_docs = statistics.stdev(doc_values) if total_writers > 1 else 0.0
+            min_docs = min(doc_values)
+            max_docs = max(doc_values)
+            min_docs_writer = min(writer_doc_counts, key=writer_doc_counts.get)
+            max_docs_writer = max(writer_doc_counts, key=writer_doc_counts.get)
+        else:
+            mean_docs = 0.0
+            std_docs = 0.0
+            min_docs = 0
+            max_docs = 0
+            min_docs_writer = None
+            max_docs_writer = None
+
+        doc_stats = {
+            "mean_docs": mean_docs,
+            "std_docs": std_docs,
+            "min_docs": min_docs,
+            "max_docs": max_docs,
+            "min_docs_writer": min_docs_writer,
+            "max_docs_writer": max_docs_writer,
+        }
 
     with open(path_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.writer(f)
@@ -681,6 +975,23 @@ def write_line_stats(path_csv, path_md, writer_pages, page_line_counts, policy_t
             writer.writerow(["min_writer", min_writer])
         if max_writer is not None:
             writer.writerow(["max_writer", max_writer])
+        writer.writerow(["mean_pages_per_writer", f"{mean_pages:.4f}"])
+        writer.writerow(["std_pages_per_writer", f"{std_pages:.4f}"])
+        writer.writerow(["min_pages_per_writer", int(min_pages)])
+        writer.writerow(["max_pages_per_writer", int(max_pages)])
+        if min_pages_writer is not None:
+            writer.writerow(["min_pages_writer", min_pages_writer])
+        if max_pages_writer is not None:
+            writer.writerow(["max_pages_writer", max_pages_writer])
+        if doc_stats is not None:
+            writer.writerow(["mean_documents_per_writer", f"{doc_stats['mean_docs']:.4f}"])
+            writer.writerow(["std_documents_per_writer", f"{doc_stats['std_docs']:.4f}"])
+            writer.writerow(["min_documents_per_writer", int(doc_stats["min_docs"])])
+            writer.writerow(["max_documents_per_writer", int(doc_stats["max_docs"])])
+            if doc_stats["min_docs_writer"] is not None:
+                writer.writerow(["min_documents_writer", doc_stats["min_docs_writer"]])
+            if doc_stats["max_docs_writer"] is not None:
+                writer.writerow(["max_documents_writer", doc_stats["max_docs_writer"]])
 
     with open(path_md, "w", encoding="utf-8") as f:
         f.write("# Line Summary Statistics\n")
@@ -692,6 +1003,19 @@ def write_line_stats(path_csv, path_md, writer_pages, page_line_counts, policy_t
         f.write(f"- Std lines/writer: {std_lines:.4f}\n")
         f.write(f"- Min lines/writer: {int(min_lines)} ({min_writer})\n")
         f.write(f"- Max lines/writer: {int(max_lines)} ({max_writer})\n")
+        f.write(f"- Mean pages/writer: {mean_pages:.4f}\n")
+        f.write(f"- Std pages/writer: {std_pages:.4f}\n")
+        f.write(f"- Min pages/writer: {int(min_pages)} ({min_pages_writer})\n")
+        f.write(f"- Max pages/writer: {int(max_pages)} ({max_pages_writer})\n")
+        if doc_stats is not None:
+            f.write(f"- Mean documents/writer: {doc_stats['mean_docs']:.4f}\n")
+            f.write(f"- Std documents/writer: {doc_stats['std_docs']:.4f}\n")
+            f.write(
+                f"- Min documents/writer: {int(doc_stats['min_docs'])} ({doc_stats['min_docs_writer']})\n"
+            )
+            f.write(
+                f"- Max documents/writer: {int(doc_stats['max_docs'])} ({doc_stats['max_docs_writer']})\n"
+            )
 
 
 def write_public_vs_csv_csv(path, missing_in_public, extra_in_public):
@@ -725,6 +1049,8 @@ def write_summary_md(
     writer_policy_rows,
     dropped_pages_count,
     dropped_lines_count,
+    disjoint_mode,
+    units_label,
 ):
     lines = []
     lines.append("# Page-Disjoint Split Summary\n")
@@ -746,25 +1072,32 @@ def write_summary_md(
     if verify_only:
         lines.append("**Verify-only mode:** splits were not generated.\n\n")
 
-    lines.append("## Writer Eligibility (by page count)\n")
+    lines.append(f"## Writer Eligibility (by {units_label} count)\n")
     total_writers = len(writer_policy_rows)
-    w_one_page = sum(1 for r in writer_policy_rows if r["pages_total"] == 1)
-    w_two_pages = sum(1 for r in writer_policy_rows if r["pages_total"] == 2)
-    w_three_plus = sum(1 for r in writer_policy_rows if r["pages_total"] >= 3)
-    w_insufficient_1 = w_one_page
-    w_insufficient_2 = w_two_pages
+    included_writers = sum(1 for r in writer_policy_rows if r["included"])
+    excluded_writers = total_writers - included_writers
+    w_one_unit = sum(1 for r in writer_policy_rows if r.get("units_total", 0) == 1)
+    w_two_units = sum(1 for r in writer_policy_rows if r.get("units_total", 0) == 2)
+    w_three_plus = sum(1 for r in writer_policy_rows if r.get("units_total", 0) >= 3)
+    w_insufficient_1 = w_one_unit
+    w_insufficient_2 = w_two_units
     lines.append(f"- Writer policy: {writer_policy}\n")
+    lines.append(f"- Disjoint mode: {disjoint_mode}\n")
     lines.append(f"- Total writers: {total_writers}\n")
-    lines.append(f"- Writers with 1 page: {w_one_page}\n")
-    lines.append(f"- Writers with 2 pages: {w_two_pages}\n")
-    lines.append(f"- Writers with >=3 pages (train/val/test eligible): {w_three_plus}\n")
+    lines.append(f"- Included writers (policy): {included_writers}\n")
+    lines.append(f"- Excluded writers (policy): {excluded_writers}\n")
+    lines.append(f"- Writers with 1 {units_label}: {w_one_unit}\n")
+    lines.append(f"- Writers with 2 {units_label}: {w_two_units}\n")
     lines.append(
-        f"- Writers insufficient for 3-way split (1 page): {w_insufficient_1}\n"
+        f"- Writers with >=3 {units_label} (train/val/test eligible): {w_three_plus}\n"
     )
     lines.append(
-        f"- Writers insufficient for 3-way split (2 pages): {w_insufficient_2}\n"
+        f"- Writers insufficient for 3-way split (1 {units_label}): {w_insufficient_1}\n"
     )
-    if writer_policy == "drop_if_lt3":
+    lines.append(
+        f"- Writers insufficient for 3-way split (2 {units_label}): {w_insufficient_2}\n"
+    )
+    if writer_policy in {"drop_if_lt2", "drop_if_lt3", "require_3way"}:
         lines.append(f"- Dropped pages (policy): {dropped_pages_count}\n")
         lines.append(f"- Dropped lines (policy): {dropped_lines_count}\n")
     lines.append("\n")
@@ -876,7 +1209,31 @@ def main():
         default="allow_train_only",
         help=(
             "Policy for writers with insufficient pages: "
-            "allow_train_only (default), drop_if_lt3, allow_train_test_only"
+            "allow_train_only (default), drop_if_lt2, drop_if_lt3, require_3way, "
+            "allow_train_test_only"
+        ),
+    )
+    parser.add_argument(
+        "--disjoint-mode",
+        choices=DISJOINT_MODE_CHOICES,
+        default="page",
+        help="Disjoint mode: page (default) or document.",
+    )
+    parser.add_argument(
+        "--documents-dir",
+        default=None,
+        help=(
+            "Directory containing document subfolders with page images. "
+            "If provided with --disjoint-mode document, this mapping is used "
+            "instead of the regex heuristic."
+        ),
+    )
+    parser.add_argument(
+        "--doc-id-regex",
+        default=r"^(.*?)(?:[_\-\s]+\d+)$",
+        help=(
+            "Regex to derive document id from page id in document mode. "
+            "The first capture group is used as the document id."
         ),
     )
     parser.add_argument(
@@ -966,8 +1323,37 @@ def main():
         lines_dir_mode=lines_dir_mode if lines_dir_mode != "missing" else None,
     )
 
+    doc_id_re = None
+    doc_map = None
+    unit_label = "pages"
+    unit_counts = None
+    if args.disjoint_mode == "document":
+        unit_label = "documents"
+        if args.documents_dir:
+            doc_map = build_doc_map_from_dir(args.documents_dir)
+        else:
+            doc_id_re = re.compile(args.doc_id_regex)
+
+        unit_counts = defaultdict(int)
+        for writer, pages in writer_pages.items():
+            doc_ids = set()
+            for page_id, _ in pages:
+                if doc_map is not None:
+                    if page_id not in doc_map:
+                        raise ValueError(
+                            f"Page '{page_id}' missing from documents mapping. "
+                            "Check --documents-dir."
+                        )
+                    doc_ids.add(doc_map[page_id])
+                else:
+                    doc_ids.add(extract_document_id(page_id, doc_id_re))
+            unit_counts[writer] = len(doc_ids)
+
     writer_pages_policy, writer_policy_rows = apply_writer_policy(
-        writer_pages, args.writer_policy
+        writer_pages,
+        args.writer_policy,
+        unit_counts=unit_counts,
+        unit_label=unit_label,
     )
     included_pages = {
         page_id for pages in writer_pages_policy.values() for page_id, _ in pages
@@ -999,16 +1385,26 @@ def main():
     summaries = []
 
     policy_tag = "" if args.writer_policy == "allow_train_only" else f"_{args.writer_policy}"
+    disjoint_tag = ""
+    if args.disjoint_mode == "document":
+        disjoint_tag = "_document"
 
     if not args.verify_only:
         for seed in parse_seeds(args.seeds):
             split_map, current, targets = split_writer_pages(
-                writer_pages_policy, seed, ratios, writer_policy=args.writer_policy
+                writer_pages_policy,
+                seed,
+                ratios,
+                writer_policy=args.writer_policy,
+                disjoint_mode=args.disjoint_mode,
+                doc_id_re=doc_id_re,
+                doc_map=doc_map,
             )
-            validate_splits(split_map, page_to_writer_policy)
+            validate_splits(split_map, page_to_writer_policy, writer_policy=args.writer_policy)
 
             split_path = os.path.join(
-                args.out_splits, f"page_disjoint{policy_tag}_seed_{seed}.csv"
+                args.out_splits,
+                f"page_disjoint{disjoint_tag}{policy_tag}_seed_{seed}.csv",
             )
             write_split_csv(
                 split_path, split_map, page_to_writer_policy, page_line_counts_policy
@@ -1063,26 +1459,27 @@ def main():
             )
 
             coverage_path = os.path.join(
-                args.out_stats, f"page_disjoint{policy_tag}_writer_coverage_seed_{seed}.csv"
+                args.out_stats,
+                f"page_disjoint{disjoint_tag}{policy_tag}_writer_coverage_seed_{seed}.csv",
             )
             write_writer_coverage_csv(
                 coverage_path, seed, split_map, page_to_writer_policy, writer_pages_policy
             )
 
     stats_csv = os.path.join(
-        args.out_stats, f"page_disjoint{policy_tag}_writer_stats.csv"
+        args.out_stats, f"page_disjoint{disjoint_tag}{policy_tag}_writer_stats.csv"
     )
     stats_md = os.path.join(
-        args.out_stats, f"page_disjoint{policy_tag}_summary.md"
+        args.out_stats, f"page_disjoint{disjoint_tag}{policy_tag}_summary.md"
     )
     policy_csv = os.path.join(
-        args.out_stats, f"page_disjoint{policy_tag}_writer_eligibility.csv"
+        args.out_stats, f"page_disjoint{disjoint_tag}{policy_tag}_writer_eligibility.csv"
     )
     line_stats_csv = os.path.join(
-        args.out_stats, f"page_disjoint{policy_tag}_line_stats.csv"
+        args.out_stats, f"page_disjoint{disjoint_tag}{policy_tag}_line_stats.csv"
     )
     line_stats_md = os.path.join(
-        args.out_stats, f"page_disjoint{policy_tag}_line_stats.md"
+        args.out_stats, f"page_disjoint{disjoint_tag}{policy_tag}_line_stats.md"
     )
     wrote_stats_csv = False
     if writer_stats_rows:
@@ -1096,6 +1493,8 @@ def main():
         page_line_counts_policy,
         args.writer_policy,
         args.filter_xml,
+        doc_id_re=doc_id_re,
+        doc_map=doc_map,
     )
     write_summary_md(
         stats_md,
@@ -1118,14 +1517,16 @@ def main():
         writer_policy_rows,
         dropped_pages_count,
         dropped_lines_count,
+        args.disjoint_mode,
+        unit_label,
     )
 
     if args.report_xml_mismatches:
         xml_report_csv = os.path.join(
-            args.out_stats, f"page_disjoint_xml_mismatches{policy_tag}.csv"
+            args.out_stats, f"page_disjoint{disjoint_tag}_xml_mismatches{policy_tag}.csv"
         )
         xml_report_md = os.path.join(
-            args.out_stats, f"page_disjoint_xml_mismatches{policy_tag}.md"
+            args.out_stats, f"page_disjoint{disjoint_tag}_xml_mismatches{policy_tag}.md"
         )
         report_xml_mismatches(
             args.xml_dir,

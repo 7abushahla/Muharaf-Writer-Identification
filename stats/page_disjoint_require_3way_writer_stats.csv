@@ -1,0 +1,127 @@
+seed,writer,pages_total,lines_total,pages_train,pages_val,pages_test,lines_train,lines_val,lines_test,min_lines_page,max_lines_page,splittable_3_way,has_val,has_test
+42,Your son George,11,135,8,1,2,101,12,22,7,15,True,True,True
+42,Amin Farhat,3,66,1,1,1,25,20,21,20,25,True,True,True
+42,Patriarch Elias Hoayek,4,68,2,1,1,38,12,18,12,22,True,True,True
+42,Ameen Rihani,43,949,26,12,5,518,299,132,11,37,True,True,True
+42,Shibli N. Damus,13,266,9,2,2,171,70,25,11,48,True,True,True
+42,Girgi Dimitri Sursock,8,100,4,2,2,52,22,26,7,15,True,True,True
+42,Felix Faris,27,480,22,1,4,398,14,68,5,27,True,True,True
+42,May Ziadeh,12,202,5,3,4,109,40,53,10,23,True,True,True
+42,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,18,1,1,241,3,26,3,27,True,True,True
+42,Prof. Ign. Kratchkovsky,6,89,4,1,1,63,13,13,9,21,True,True,True
+42,Bechara El Khoury,6,107,4,1,1,70,26,11,8,26,True,True,True
+42,Ghnatyos Mbarak,5,95,2,2,1,37,32,26,15,26,True,True,True
+42,Bishop Mkhayel Akhrass,5,93,3,1,1,53,21,19,14,22,True,True,True
+42,Bishop Aghnathios Mbarak,9,163,5,2,2,91,38,34,15,23,True,True,True
+42,Elias Sarkis,18,325,12,2,4,208,27,90,5,25,True,True,True
+42,Habib Massoud,5,100,3,1,1,63,14,23,14,26,True,True,True
+42,Zaghloul,28,505,25,1,2,462,14,29,13,26,True,True,True
+42,Father Youhanna Habib Baysari,9,198,5,1,3,108,24,66,13,28,True,True,True
+42,Mkhayel Daher,3,73,1,1,1,25,24,24,24,25,True,True,True
+42,Father Botros Hasan,6,128,4,1,1,82,24,22,19,24,True,True,True
+42,Father Youssef Hajj,3,63,1,1,1,22,21,20,20,22,True,True,True
+42,Father Mkhayel Zreiby,9,200,4,3,2,89,72,39,13,26,True,True,True
+42,Jean Philipp Kmeid,24,532,17,4,3,359,100,73,5,30,True,True,True
+42,Michel Saykali,45,791,38,4,3,655,69,67,5,28,True,True,True
+42,Hanna Ghayth (Juan Gait),68,934,42,18,8,582,241,111,9,16,True,True,True
+42,Yousef Hobeiche,23,432,15,5,3,262,113,57,14,25,True,True,True
+42,Angele Ellis,4,75,2,1,1,37,23,15,10,27,True,True,True
+42,Khalil Yossuf Nader Raad,22,453,19,1,2,385,20,48,5,32,True,True,True
+42,Maurice Gemayel,6,67,4,1,1,43,12,12,6,17,True,True,True
+42,Michel Kahwaji,25,412,16,5,4,256,87,69,6,22,True,True,True
+42,Emily Nasrallah,48,602,27,14,7,357,151,94,8,15,True,True,True
+42,Father Boulos El-Mender,10,171,8,1,1,136,12,23,12,23,True,True,True
+42,Father Elias Bassil,3,50,1,1,1,21,17,12,12,21,True,True,True
+42,Father Tobia al-Issa,3,37,1,1,1,13,12,12,12,13,True,True,True
+42,Assad Darouich Zacharias,5,94,2,1,2,42,17,35,17,25,True,True,True
+42,Asaad Koury Tobia Attallah,3,42,1,1,1,20,12,10,10,20,True,True,True
+42,Krouger Tobia Attallah,14,401,12,1,1,337,32,32,25,32,True,True,True
+42,Toufic El Bacha,6,118,4,1,1,76,22,20,17,22,True,True,True
+42,Catherine Yazbek Al-Badawi,4,67,2,1,1,33,17,17,15,18,True,True,True
+42,Youssef Fadlallah Salemeh,12,199,8,2,2,128,36,35,12,20,True,True,True
+42,Bishop Youssef Darian,9,163,7,1,1,134,14,15,14,22,True,True,True
+42,Youssef Hanna El-Sawda,17,339,8,3,6,176,62,101,10,28,True,True,True
+570,Your son George,11,135,9,1,1,111,12,12,7,15,True,True,True
+570,Amin Farhat,3,66,1,1,1,25,21,20,20,25,True,True,True
+570,Patriarch Elias Hoayek,4,68,2,1,1,34,18,16,12,22,True,True,True
+570,Ameen Rihani,43,949,30,1,12,636,14,299,11,37,True,True,True
+570,Shibli N. Damus,13,266,10,1,2,221,20,25,11,48,True,True,True
+570,Girgi Dimitri Sursock,8,100,4,2,2,49,26,25,7,15,True,True,True
+570,Felix Faris,27,480,19,4,4,352,68,60,5,27,True,True,True
+570,May Ziadeh,12,202,5,4,3,109,53,40,10,23,True,True,True
+570,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,18,1,1,221,26,23,3,27,True,True,True
+570,Prof. Ign. Kratchkovsky,6,89,4,1,1,63,13,13,9,21,True,True,True
+570,Bechara El Khoury,6,107,4,1,1,70,26,11,8,26,True,True,True
+570,Ghnatyos Mbarak,5,95,2,2,1,37,32,26,15,26,True,True,True
+570,Bishop Mkhayel Akhrass,5,93,3,1,1,62,14,17,14,22,True,True,True
+570,Bishop Aghnathios Mbarak,9,163,5,2,2,91,38,34,15,23,True,True,True
+570,Elias Sarkis,18,325,12,2,4,208,27,90,5,25,True,True,True
+570,Habib Massoud,5,100,3,1,1,57,23,20,14,26,True,True,True
+570,Zaghloul,28,505,25,1,2,463,13,29,13,26,True,True,True
+570,Father Youhanna Habib Baysari,9,198,4,3,2,95,66,37,13,28,True,True,True
+570,Mkhayel Daher,3,73,1,1,1,25,24,24,24,25,True,True,True
+570,Father Botros Hasan,6,128,4,1,1,82,24,22,19,24,True,True,True
+570,Father Youssef Hajj,3,63,1,1,1,22,21,20,20,22,True,True,True
+570,Father Mkhayel Zreiby,9,200,6,1,2,148,13,39,13,26,True,True,True
+570,Jean Philipp Kmeid,24,532,17,4,3,359,100,73,5,30,True,True,True
+570,Michel Saykali,45,791,38,4,3,655,69,67,5,28,True,True,True
+570,Hanna Ghayth (Juan Gait),68,934,42,18,8,582,241,111,9,16,True,True,True
+570,Yousef Hobeiche,23,432,15,5,3,262,113,57,14,25,True,True,True
+570,Angele Ellis,4,75,2,1,1,37,23,15,10,27,True,True,True
+570,Khalil Yossuf Nader Raad,22,453,18,2,2,359,48,46,5,32,True,True,True
+570,Maurice Gemayel,6,67,4,1,1,43,12,12,6,17,True,True,True
+570,Michel Kahwaji,25,412,16,5,4,256,87,69,6,22,True,True,True
+570,Emily Nasrallah,48,602,27,14,7,357,151,94,8,15,True,True,True
+570,Father Boulos El-Mender,10,171,8,1,1,127,23,21,12,23,True,True,True
+570,Father Elias Bassil,3,50,1,1,1,21,17,12,12,21,True,True,True
+570,Father Tobia al-Issa,3,37,1,1,1,13,12,12,12,13,True,True,True
+570,Assad Darouich Zacharias,5,94,2,2,1,42,35,17,17,25,True,True,True
+570,Asaad Koury Tobia Attallah,3,42,1,1,1,20,12,10,10,20,True,True,True
+570,Krouger Tobia Attallah,14,401,12,1,1,337,32,32,25,32,True,True,True
+570,Toufic El Bacha,6,118,4,1,1,76,22,20,17,22,True,True,True
+570,Catherine Yazbek Al-Badawi,4,67,2,1,1,35,15,17,15,18,True,True,True
+570,Youssef Fadlallah Salemeh,12,199,9,1,2,146,17,36,12,20,True,True,True
+570,Bishop Youssef Darian,9,163,7,1,1,122,21,20,14,22,True,True,True
+570,Youssef Hanna El-Sawda,17,339,8,6,3,176,101,62,10,28,True,True,True
+1073,Your son George,11,135,9,1,1,111,12,12,7,15,True,True,True
+1073,Amin Farhat,3,66,1,1,1,25,21,20,20,25,True,True,True
+1073,Patriarch Elias Hoayek,4,68,2,1,1,40,12,16,12,22,True,True,True
+1073,Ameen Rihani,43,949,26,5,12,518,132,299,11,37,True,True,True
+1073,Shibli N. Damus,13,266,10,1,2,221,20,25,11,48,True,True,True
+1073,Girgi Dimitri Sursock,8,100,4,2,2,49,26,25,7,15,True,True,True
+1073,Felix Faris,27,480,19,4,4,352,68,60,5,27,True,True,True
+1073,May Ziadeh,12,202,5,4,3,109,53,40,10,23,True,True,True
+1073,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,20,270,18,1,1,221,26,23,3,27,True,True,True
+1073,Prof. Ign. Kratchkovsky,6,89,4,1,1,63,13,13,9,21,True,True,True
+1073,Bechara El Khoury,6,107,4,1,1,70,26,11,8,26,True,True,True
+1073,Ghnatyos Mbarak,5,95,2,1,2,37,26,32,15,26,True,True,True
+1073,Bishop Mkhayel Akhrass,5,93,3,1,1,53,21,19,14,22,True,True,True
+1073,Bishop Aghnathios Mbarak,9,163,6,1,2,106,19,38,15,23,True,True,True
+1073,Elias Sarkis,18,325,9,4,5,152,90,83,5,25,True,True,True
+1073,Habib Massoud,5,100,3,1,1,57,23,20,14,26,True,True,True
+1073,Zaghloul,28,505,25,2,1,456,29,20,13,26,True,True,True
+1073,Father Youhanna Habib Baysari,9,198,4,3,2,95,66,37,13,28,True,True,True
+1073,Mkhayel Daher,3,73,1,1,1,25,24,24,24,25,True,True,True
+1073,Father Botros Hasan,6,128,4,1,1,82,24,22,19,24,True,True,True
+1073,Father Youssef Hajj,3,63,1,1,1,22,20,21,20,22,True,True,True
+1073,Father Mkhayel Zreiby,9,200,4,3,2,89,72,39,13,26,True,True,True
+1073,Jean Philipp Kmeid,24,532,17,4,3,359,100,73,5,30,True,True,True
+1073,Michel Saykali,45,791,43,1,1,764,13,14,5,28,True,True,True
+1073,Hanna Ghayth (Juan Gait),68,934,42,18,8,582,241,111,9,16,True,True,True
+1073,Yousef Hobeiche,23,432,15,5,3,262,113,57,14,25,True,True,True
+1073,Angele Ellis,4,75,2,1,1,42,10,23,10,27,True,True,True
+1073,Khalil Yossuf Nader Raad,22,453,18,2,2,359,48,46,5,32,True,True,True
+1073,Maurice Gemayel,6,67,4,1,1,43,12,12,6,17,True,True,True
+1073,Michel Kahwaji,25,412,16,5,4,256,87,69,6,22,True,True,True
+1073,Emily Nasrallah,48,602,33,1,14,440,11,151,8,15,True,True,True
+1073,Father Boulos El-Mender,10,171,8,1,1,127,23,21,12,23,True,True,True
+1073,Father Elias Bassil,3,50,1,1,1,21,17,12,12,21,True,True,True
+1073,Father Tobia al-Issa,3,37,1,1,1,13,12,12,12,13,True,True,True
+1073,Assad Darouich Zacharias,5,94,2,1,2,42,17,35,17,25,True,True,True
+1073,Asaad Koury Tobia Attallah,3,42,1,1,1,20,12,10,10,20,True,True,True
+1073,Krouger Tobia Attallah,14,401,12,1,1,337,32,32,25,32,True,True,True
+1073,Toufic El Bacha,6,118,4,1,1,83,17,18,17,22,True,True,True
+1073,Catherine Yazbek Al-Badawi,4,67,2,1,1,33,17,17,15,18,True,True,True
+1073,Youssef Fadlallah Salemeh,12,199,8,2,2,128,36,35,12,20,True,True,True
+1073,Bishop Youssef Darian,9,163,7,1,1,122,21,20,14,22,True,True,True
+1073,Youssef Hanna El-Sawda,17,339,8,6,3,176,101,62,10,28,True,True,True

@@ -1,0 +1,43 @@
+seed,writer,splits,pages_total,lines_total
+42,Abdulaziz bin Abdul Rahman Al Faisal Al Saud,"test,train,val",20,270
+42,Ameen Rihani,"test,train,val",43,949
+42,Amin Farhat,"test,train,val",3,66
+42,Angele Ellis,"test,train,val",4,75
+42,Asaad Koury Tobia Attallah,"test,train,val",3,42
+42,Assad Darouich Zacharias,"test,train,val",5,94
+42,Bechara El Khoury,"test,train,val",6,107
+42,Bishop Aghnathios Mbarak,"test,train,val",9,163
+42,Bishop Mkhayel Akhrass,"test,train,val",5,93
+42,Bishop Youssef Darian,"test,train,val",9,163
+42,Catherine Yazbek Al-Badawi,"test,train,val",4,67
+42,Elias Sarkis,"test,train,val",18,325
+42,Emily Nasrallah,"test,train,val",48,602
+42,Father Botros Hasan,"test,train,val",6,128
+42,Father Boulos El-Mender,"test,train,val",10,171
+42,Father Elias Bassil,"test,train,val",3,50
+42,Father Mkhayel Zreiby,"test,train,val",9,200
+42,Father Tobia al-Issa,"test,train,val",3,37
+42,Father Youhanna Habib Baysari,"test,train,val",9,198
+42,Father Youssef Hajj,"test,train,val",3,63
+42,Felix Faris,"test,train,val",27,480
+42,Ghnatyos Mbarak,"test,train,val",5,95
+42,Girgi Dimitri Sursock,"test,train,val",8,100
+42,Habib Massoud,"test,train,val",5,100
+42,Hanna Ghayth (Juan Gait),"test,train,val",68,934
+42,Jean Philipp Kmeid,"test,train,val",24,532
+42,Khalil Yossuf Nader Raad,"test,train,val",22,453
+42,Krouger Tobia Attallah,"test,train,val",14,401
+42,Maurice Gemayel,"test,train,val",6,67
+42,May Ziadeh,"test,train,val",12,202
+42,Michel Kahwaji,"test,train,val",25,412
+42,Michel Saykali,"test,train,val",45,791
+42,Mkhayel Daher,"test,train,val",3,73
+42,Patriarch Elias Hoayek,"test,train,val",4,68
+42,Prof. Ign. Kratchkovsky,"test,train,val",6,89
+42,Shibli N. Damus,"test,train,val",13,266
+42,Toufic El Bacha,"test,train,val",6,118
+42,Your son George,"test,train,val",11,135
+42,Yousef Hobeiche,"test,train,val",23,432
+42,Youssef Fadlallah Salemeh,"test,train,val",12,199
+42,Youssef Hanna El-Sawda,"test,train,val",17,339
+42,Zaghloul,"test,train,val",28,505

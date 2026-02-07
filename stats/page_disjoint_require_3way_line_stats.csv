@@ -1,0 +1,9 @@
+metric,value
+total_writers,42
+total_lines,10654
+mean_lines_per_writer,253.6667
+std_lines_per_writer,237.2824
+min_lines_per_writer,37
+max_lines_per_writer,949
+min_writer,Father Tobia al-Issa
+max_writer,Ameen Rihani

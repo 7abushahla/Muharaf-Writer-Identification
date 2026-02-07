@@ -1,0 +1,21 @@
+metric,value
+total_writers,42
+total_lines,10654
+mean_lines_per_writer,253.6667
+std_lines_per_writer,237.2824
+min_lines_per_writer,37
+max_lines_per_writer,949
+min_writer,Father Tobia al-Issa
+max_writer,Ameen Rihani
+mean_pages_per_writer,14.3810
+std_pages_per_writer,14.3984
+min_pages_per_writer,3
+max_pages_per_writer,68
+min_pages_writer,Amin Farhat
+max_pages_writer,Hanna Ghayth (Juan Gait)
+mean_documents_per_writer,6.3571
+std_documents_per_writer,4.7566
+min_documents_per_writer,3
+max_documents_per_writer,22
+min_documents_writer,Amin Farhat
+max_documents_writer,Michel Saykali
