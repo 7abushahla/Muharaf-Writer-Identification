@@ -56,6 +56,19 @@ def main():
         {'training-mode': 'finetune_all', 'use-attention': False},
         {'training-mode': 'finetune_all', 'use-attention': True},
     ]
+
+    # Optional: enable page/document-disjoint mode for ALL experiments
+    # Set any of these to None to disable
+    split_config = {
+        # 'line' or 'page_disjoint'
+        'split-mode': None,
+        # 'page' or 'document' (used only with page_disjoint)
+        'disjoint-mode': None,
+        # e.g., 'require_3way', 'drop_if_lt2', 'drop_if_lt3', 'allow_train_test_only'
+        'writer-policy': None,
+        # directory containing split CSVs
+        'split-dir': None,
+    }
     
     # Generate all combinations
     experiments = []
@@ -67,6 +80,10 @@ def main():
                     'seed': seed,
                     **train_config
                 }
+                # Apply split config if enabled
+                for k, v in split_config.items():
+                    if v is not None:
+                        config[k] = v
                 experiments.append(config)
     
     print(f"Total experiments to run: {len(experiments)}")
