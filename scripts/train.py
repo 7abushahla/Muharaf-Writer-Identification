@@ -34,7 +34,7 @@ from data_utils import (
     create_lazy_dataset
 )
 from custom_metrics import MacroPrecision, MacroRecall, MacroF1Score
-from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint
+from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint, TqdmCallback
 from utils.page_disjoint import load_split_map
 
 
@@ -487,6 +487,10 @@ def main():
     )
     callbacks.append(early_stop)
     
+    # TQDM progress bar
+    tqdm_callback = TqdmCallback(verbose=1)
+    callbacks.append(tqdm_callback)
+    
     # Optional: Clear output callback (for notebooks)
     # callbacks.append(ClearOutputEveryNEpochs(n=10))
     
@@ -502,7 +506,7 @@ def main():
         validation_data=val_dataset,
         epochs=args.epochs,
         callbacks=callbacks,
-        verbose=1 if args.verbose else 2
+        verbose=0  # tqdm callback handles progress display
     )
     
     end_time = time.time()

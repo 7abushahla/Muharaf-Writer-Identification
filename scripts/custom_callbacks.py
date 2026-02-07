@@ -4,6 +4,7 @@ Custom callbacks for Writer Identification Model
 import numpy as np
 from tensorflow.keras.callbacks import Callback
 from IPython.display import clear_output
+from tqdm.keras import TqdmCallback
 
 
 class ClearOutputEveryNEpochs(Callback):
