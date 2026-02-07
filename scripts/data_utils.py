@@ -13,6 +13,7 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
 # Add repo root to sys.path for shared utilities
 REPO_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+REPO_PARENT = os.path.dirname(REPO_ROOT)
 if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
@@ -72,6 +73,41 @@ def block_processor_opencv(img_path, target_size=(224, 224)):
     return Image.fromarray(new_img)
 
 
+def _resolve_data_dir(main_dir):
+    if not main_dir:
+        return main_dir
+    if os.path.isabs(main_dir):
+        return main_dir
+
+    candidates = [
+        os.path.abspath(main_dir),
+        os.path.join(REPO_ROOT, main_dir),
+        os.path.join(REPO_PARENT, main_dir),
+    ]
+    for candidate in candidates:
+        if os.path.isdir(candidate):
+            return candidate
+    return main_dir
+
+
+def _resolve_csv_file(csv_file):
+    if not csv_file:
+        return csv_file
+    if os.path.isabs(csv_file):
+        return csv_file
+
+    candidates = [
+        os.path.abspath(csv_file),
+        os.path.join(REPO_ROOT, csv_file),
+        os.path.join(REPO_PARENT, csv_file),
+        os.path.join(REPO_ROOT, "manual_labeling", os.path.basename(csv_file)),
+    ]
+    for candidate in candidates:
+        if os.path.isfile(candidate):
+            return candidate
+    return csv_file
+
+
 def load_dataset(
     main_dir='./Lines',
     csv_file='merged_writer.csv',
@@ -98,6 +134,18 @@ def load_dataset(
         writer_to_label: Dictionary mapping writer names to labels
         label_to_writer: Dictionary mapping labels to writer names
     """
+    # Resolve paths to allow running from repo root or scripts/
+    resolved_main_dir = _resolve_data_dir(main_dir)
+    resolved_csv_file = _resolve_csv_file(csv_file)
+    if verbose:
+        if resolved_main_dir != main_dir:
+            print(f"Using data dir: {resolved_main_dir}")
+        if resolved_csv_file != csv_file:
+            print(f"Using CSV file: {resolved_csv_file}")
+
+    main_dir = resolved_main_dir
+    csv_file = resolved_csv_file
+
     # Load the CSV data
     writer_data = pd.read_csv(csv_file)
     
