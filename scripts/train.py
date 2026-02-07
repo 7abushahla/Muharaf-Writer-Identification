@@ -76,9 +76,9 @@ def parse_args():
     parser.add_argument('--disjoint-mode', type=str, default='page',
                         choices=['page', 'document'],
                         help='Disjoint mode: page or document (only used with --split-mode page_disjoint)')
-    parser.add_argument('--writer-policy', type=str, default=None,
-                        choices=[None, 'require_3way', 'drop_if_lt2', 'drop_if_lt3', 'allow_train_test_only'],
-                        help='Writer policy suffix for split files (e.g., require_3way)')
+    parser.add_argument('--writer-policy', type=str, default='require_3way',
+                        choices=['require_3way', 'drop_if_lt2', 'drop_if_lt3', 'allow_train_test_only', 'allow_train_only'],
+                        help='Writer policy for page-disjoint splits (default: require_3way, not shown in experiment name)')
     
     # Training configuration
     parser.add_argument('--seed', type=int, default=42,
@@ -171,8 +171,8 @@ def generate_experiment_name(args):
         else:
             split_prefix = "PgDisj_"
         
-        # Add writer policy if specified
-        if args.writer_policy:
+        # Add writer policy only if it's NOT the default (require_3way)
+        if args.writer_policy and args.writer_policy != 'require_3way':
             split_prefix += f"{args.writer_policy}_"
     
     attention_str = "ATTN" if args.use_attention else "NoATTN"
@@ -189,19 +189,19 @@ def generate_experiment_name(args):
 def save_results(args, history, test_metrics, elapsed_time, experiment_name, output_dir):
     """Save training results to files"""
     # Save history
-    history_path = os.path.join(output_dir, f'{experiment_name}_history.pkl')
+    history_path = os.path.join(output_dir, 'history.pkl')
     with open(history_path, 'wb') as f:
         pickle.dump(history.history, f)
     print(f"Saved training history to {history_path}")
     
     # Save test metrics
-    metrics_path = os.path.join(output_dir, f'{experiment_name}_test_metrics.json')
+    metrics_path = os.path.join(output_dir, 'test_metrics.json')
     with open(metrics_path, 'w') as f:
         json.dump(test_metrics, f, indent=4)
     print(f"Saved test metrics to {metrics_path}")
     
     # Save elapsed time
-    time_path = os.path.join(output_dir, f'{experiment_name}_elapsed_time.txt')
+    time_path = os.path.join(output_dir, 'elapsed_time.txt')
     with open(time_path, 'w') as f:
         f.write(f"Total training time: {elapsed_time:.2f} seconds\n")
         f.write(f"Hours: {elapsed_time / 3600:.4f}\n")
@@ -209,7 +209,7 @@ def save_results(args, history, test_metrics, elapsed_time, experiment_name, out
     print(f"Saved elapsed time to {time_path}")
     
     # Save configuration
-    config_path = os.path.join(output_dir, f'{experiment_name}_config.json')
+    config_path = os.path.join(output_dir, 'config.json')
     with open(config_path, 'w') as f:
         json.dump(vars(args), f, indent=4)
     print(f"Saved configuration to {config_path}")
@@ -248,7 +248,7 @@ def plot_metrics(history, test_metrics, experiment_name, output_dir):
             plt.ylabel(metric_name)
             plt.legend()
             
-            plot_path = os.path.join(output_dir, f'{experiment_name}_{metric_key}.png')
+            plot_path = os.path.join(output_dir, f'{metric_key}.png')
             plt.savefig(plot_path, dpi=150, bbox_inches='tight')
             plt.close()
             
@@ -268,7 +268,7 @@ def save_classification_report(y_true, y_pred, label_to_writer, num_classes, exp
     report_dict = classification_report(y_true, y_pred, target_names=target_names, output_dict=True)
     report_df = pd.DataFrame(report_dict).transpose()
     
-    report_path = os.path.join(output_dir, f'{experiment_name}_classification_report.csv')
+    report_path = os.path.join(output_dir, 'classification_report.csv')
     report_df.to_csv(report_path, index=True)
     print(f"Saved classification report to {report_path}")
 
@@ -292,7 +292,7 @@ def save_confusion_matrix(y_true, y_pred, label_to_writer, num_classes, experime
     plt.ylabel('True Label')
     plt.title('Confusion Matrix on Test Set')
     
-    cm_path = os.path.join(output_dir, f'{experiment_name}_confusion_matrix.png')
+    cm_path = os.path.join(output_dir, 'confusion_matrix.png')
     plt.savefig(cm_path, dpi=150, bbox_inches='tight')
     plt.close()
     
@@ -350,8 +350,8 @@ def main():
     print(f"Experiment: {experiment_name}")
     print(f"{'='*80}\n")
     
-    # Create output directory
-    output_dir = os.path.join(args.output_dir, args.backbone)
+    # Create output directory (experiment-specific subfolder)
+    output_dir = os.path.join(args.output_dir, args.backbone, experiment_name)
     os.makedirs(output_dir, exist_ok=True)
     
     # Build model
@@ -443,7 +443,7 @@ def main():
     callbacks = []
     
     # Model checkpoint
-    checkpoint_path = os.path.join(output_dir, f'{experiment_name}_best_model.keras')
+    checkpoint_path = os.path.join(output_dir, 'best_model.keras')
     checkpoint_callback = ModelCheckpoint(
         checkpoint_path,
         monitor='val_f1_score',
@@ -454,7 +454,7 @@ def main():
     callbacks.append(checkpoint_callback)
     
     # Periodic checkpoint
-    periodic_checkpoint_path = os.path.join(output_dir, f'{experiment_name}_last_saved.keras')
+    periodic_checkpoint_path = os.path.join(output_dir, 'last_saved.keras')
     periodic_checkpoint_callback = PeriodicModelCheckpoint(
         filepath=periodic_checkpoint_path,
         save_freq_epochs=args.save_freq,
