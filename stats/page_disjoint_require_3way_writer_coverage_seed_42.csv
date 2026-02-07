@@ -5,39 +5,68 @@ seed,writer,splits,pages_total,lines_total
 42,Angele Ellis,"test,train,val",4,75
 42,Asaad Koury Tobia Attallah,"test,train,val",3,42
 42,Assad Darouich Zacharias,"test,train,val",5,94
+42,Aziz Khoury,"test,train,val",3,47
 42,Bechara El Khoury,"test,train,val",6,107
 42,Bishop Aghnathios Mbarak,"test,train,val",9,163
+42,Bishop Boulos Akl,"test,train,val",3,47
 42,Bishop Mkhayel Akhrass,"test,train,val",5,93
 42,Bishop Youssef Darian,"test,train,val",9,163
+42,Botros Feghaly,"test,train,val",3,66
 42,Catherine Yazbek Al-Badawi,"test,train,val",4,67
+42,Constantine Elias,"test,train,val",5,84
+42,Daoud Mujaes,"test,train,val",4,76
+42,Eissa alKhouri,"test,train,val",6,127
+42,Elias Abu Shabaki,"test,train,val",8,132
 42,Elias Sarkis,"test,train,val",18,325
+42,Elie Maroun Khalil,"test,train,val",4,69
 42,Emily Nasrallah,"test,train,val",48,602
+42,Fathallah Khoury,"test,train,val",4,73
 42,Father Botros Hasan,"test,train,val",6,128
 42,Father Boulos El-Mender,"test,train,val",10,171
 42,Father Elias Bassil,"test,train,val",3,50
+42,Father Mikhael Hanna,"test,train,val",4,71
 42,Father Mkhayel Zreiby,"test,train,val",9,200
 42,Father Tobia al-Issa,"test,train,val",3,37
 42,Father Youhanna Habib Baysari,"test,train,val",9,198
 42,Father Youssef Hajj,"test,train,val",3,63
+42,Father Youssef Hanna & Father Botros Hasan,"test,train,val",3,63
 42,Felix Faris,"test,train,val",27,480
+42,Fouad Chehab,"test,train,val",21,264
+42,George Saad,"test,train,val",7,111
 42,Ghnatyos Mbarak,"test,train,val",5,95
 42,Girgi Dimitri Sursock,"test,train,val",8,100
 42,Habib Massoud,"test,train,val",5,100
 42,Hanna Ghayth (Juan Gait),"test,train,val",68,934
+42,Hanna Moussa,"test,train,val",41,876
+42,Ibrahim Mejahid Al-Jaza'eri,"test,train,val",3,62
 42,Jean Philipp Kmeid,"test,train,val",24,532
+42,Joseph Oussani,"test,train,val",16,400
 42,Khalil Yossuf Nader Raad,"test,train,val",22,453
 42,Krouger Tobia Attallah,"test,train,val",14,401
+42,Mansour Eid,"test,train,val",12,271
 42,Maurice Gemayel,"test,train,val",6,67
 42,May Ziadeh,"test,train,val",12,202
+42,Mayor of Kfarshima,"test,train,val",13,426
 42,Michel Kahwaji,"test,train,val",25,412
 42,Michel Saykali,"test,train,val",45,791
 42,Mkhayel Daher,"test,train,val",3,73
+42,Mkhayel Meneem,"test,train,val",5,123
+42,Mohammed Amin al-Husseini ,"test,train,val",3,49
+42,Murshid Habashi,"test,train,val",4,96
+42,Naoum Mokarzel,"test,train,val",3,58
 42,Patriarch Elias Hoayek,"test,train,val",4,68
 42,Prof. Ign. Kratchkovsky,"test,train,val",6,89
+42,Salah Tizani,"test,train,val",48,875
 42,Shibli N. Damus,"test,train,val",13,266
+42,Shukri Kanaan,"test,train,val",4,134
+42,Sister Victor N. Khoury,"test,train,val",3,57
+42,Sohayl Tohmeh,"test,train,val",28,848
 42,Toufic El Bacha,"test,train,val",6,118
+42,Toufiq Wehbeh,"test,train,val",8,157
+42,Your nephew Maroun,"test,train,val",4,68
 42,Your son George,"test,train,val",11,135
 42,Yousef Hobeiche,"test,train,val",23,432
 42,Youssef Fadlallah Salemeh,"test,train,val",12,199
 42,Youssef Hanna El-Sawda,"test,train,val",17,339
+42,Youssef Ibrahim Yazbek,"test,train,val",3,72
 42,Zaghloul,"test,train,val",28,505

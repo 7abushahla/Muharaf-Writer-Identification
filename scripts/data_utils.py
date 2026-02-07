@@ -18,6 +18,7 @@ if REPO_ROOT not in sys.path:
     sys.path.insert(0, REPO_ROOT)
 
 from utils.page_disjoint import load_split_map, validate_split_map
+import tensorflow as tf
 
 
 def block_processor_opencv(img_path, target_size=(224, 224)):
@@ -108,27 +109,23 @@ def _resolve_csv_file(csv_file):
     return csv_file
 
 
-def load_dataset(
+def load_dataset_metadata(
     main_dir='./Lines',
     csv_file='merged_writer.csv',
-    image_size=(224, 224),
-    preprocess_fn=None,
     verbose=True,
     allowed_page_ids=None,
 ):
     """
-    Load the writer identification dataset.
+    Load dataset metadata (paths and labels) without loading images into RAM.
     
     Args:
         main_dir: Directory containing the image folders
         csv_file: Path to the CSV file with writer labels
-        image_size: Target image size
-        preprocess_fn: Preprocessing function for images
         verbose: Whether to print progress
         allowed_page_ids: Optional set of page IDs to include (filters CSV rows)
         
     Returns:
-        images: Array of preprocessed images
+        image_paths: List of image file paths
         labels: Array of integer labels
         page_ids: Array of page IDs (for page-disjoint splits)
         writer_to_label: Dictionary mapping writer names to labels
@@ -153,8 +150,8 @@ def load_dataset(
     writer_to_label = {}
     current_label = 0
     
-    # Initialize lists to store image data, labels, and page IDs
-    images = []
+    # Initialize lists to store metadata only (not images!)
+    image_paths = []
     labels = []
     page_ids = []
     
@@ -179,43 +176,16 @@ def load_dataset(
             # Look for images within the folder
             for filename in os.listdir(folder_path):
                 if filename.lower().endswith(('.png', '.jpeg', '.jpg')):
-                    try:
-                        img_path = os.path.join(folder_path, filename)
-                        # Process the image using BlockProcessor
-                        processed_img = block_processor_opencv(img_path, target_size=image_size)
-                        
-                        # Convert PIL Image to NumPy array
-                        img_array = np.array(processed_img)
-                        
-                        # Ensure the image is in RGB format
-                        if img_array.shape[-1] != 3:
-                            img_array = cv2.cvtColor(img_array, cv2.COLOR_GRAY2RGB)
-                        
-                        # Preprocess the image
-                        if preprocess_fn is not None:
-                            processed_img_array = preprocess_fn(img_array)
-                        else:
-                            processed_img_array = img_array
-                        
-                        # Append the image, label, and page ID
-                        images.append(processed_img_array)
-                        labels.append(writer_to_label[writer_name])
-                        page_ids.append(image_filename)  # Store page ID for page-disjoint splits
-                        
-                        del img_array, processed_img_array
-                    except Exception as e:
-                        if verbose:
-                            print(f"Error processing image {img_path}: {e}")
+                    img_path = os.path.join(folder_path, filename)
+                    # Only store the path, don't load the image!
+                    image_paths.append(img_path)
+                    labels.append(writer_to_label[writer_name])
+                    page_ids.append(image_filename)  # Store page ID for page-disjoint splits
         else:
             if verbose:
                 print(f"Folder not found: {folder_path}")
     
-    # Validate dataset sizes
-    if len(images) != len(labels):
-        raise ValueError(f"Number of images ({len(images)}) does not match number of labels ({len(labels)})")
-    
     # Convert lists to numpy arrays
-    images = np.array(images).reshape(-1, image_size[0], image_size[1], 3)
     labels = np.array(labels)
     page_ids = np.array(page_ids)
     
@@ -223,13 +193,96 @@ def load_dataset(
     label_to_writer = {label: writer for writer, label in writer_to_label.items()}
     
     if verbose:
-        print(f"Loaded {len(images)} images from {len(writer_to_label)} writers")
+        print(f"Found {len(image_paths)} images from {len(writer_to_label)} writers (metadata only, ~{len(image_paths) * 200 / 1024 / 1024:.1f} MB RAM)")
     
-    return images, labels, page_ids, writer_to_label, label_to_writer
+    return image_paths, labels, page_ids, writer_to_label, label_to_writer
+
+
+def load_and_preprocess_image(img_path, image_size, preprocess_fn):
+    """
+    Load and preprocess a single image (used by tf.data.Dataset).
+    
+    Args:
+        img_path: Path to the image file
+        image_size: Target image size (height, width)
+        preprocess_fn: Preprocessing function for the image
+        
+    Returns:
+        Preprocessed image tensor
+    """
+    def _load_image(path):
+        """Python function to load image using our custom block_processor"""
+        path_str = path.numpy().decode('utf-8') if isinstance(path, tf.Tensor) else path
+        processed_img = block_processor_opencv(path_str, target_size=image_size)
+        img_array = np.array(processed_img, dtype=np.float32)
+        
+        # Ensure RGB format
+        if img_array.shape[-1] != 3:
+            img_array = cv2.cvtColor(img_array, cv2.COLOR_GRAY2RGB)
+        
+        # Apply preprocessing
+        if preprocess_fn is not None:
+            img_array = preprocess_fn(img_array)
+        
+        return img_array
+    
+    # Use tf.py_function to wrap our custom Python preprocessing
+    img = tf.py_function(_load_image, [img_path], tf.float32)
+    img.set_shape([image_size[0], image_size[1], 3])
+    return img
+
+
+def create_lazy_dataset(
+    image_paths,
+    labels,
+    image_size=(224, 224),
+    preprocess_fn=None,
+    batch_size=256,
+    shuffle=False,
+    augmentation_fn=None,
+    seed=None
+):
+    """
+    Create a tf.data.Dataset that loads images lazily on-demand.
+    
+    Args:
+        image_paths: List or array of image file paths
+        labels: Array of one-hot encoded labels
+        image_size: Target image size (height, width)
+        preprocess_fn: Preprocessing function (e.g., backbone's preprocess_input)
+        batch_size: Batch size
+        shuffle: Whether to shuffle the dataset
+        augmentation_fn: Optional data augmentation function (ImageDataGenerator flow)
+        seed: Random seed for shuffling
+        
+    Returns:
+        tf.data.Dataset
+    """
+    # Create dataset from paths and labels
+    dataset = tf.data.Dataset.from_tensor_slices((image_paths, labels))
+    
+    # Shuffle if requested
+    if shuffle:
+        buffer_size = min(10000, len(image_paths))
+        dataset = dataset.shuffle(buffer_size=buffer_size, seed=seed)
+    
+    # Load and preprocess images lazily
+    dataset = dataset.map(
+        lambda path, label: (load_and_preprocess_image(path, image_size, preprocess_fn), label),
+        num_parallel_calls=tf.data.AUTOTUNE
+    )
+    
+    # Batch the dataset
+    dataset = dataset.batch(batch_size)
+    
+    # Prefetch for performance
+    dataset = dataset.prefetch(tf.data.AUTOTUNE)
+    
+    return dataset
 
 
 def prepare_data_splits(
-    images, 
+    image_paths, 
     labels, 
     page_ids=None,
     split_mode='line',
@@ -245,7 +298,7 @@ def prepare_data_splits(
     Split data into train, validation, and test sets.
     
     Args:
-        images: Array of images
+        image_paths: List/array of image file paths
         labels: Array of one-hot encoded labels
         page_ids: Array of page IDs (required for page_disjoint mode)
         split_mode: 'line' for line-level splits, 'page_disjoint' for page-disjoint splits
@@ -258,8 +311,12 @@ def prepare_data_splits(
         verbose: Whether to print split information
         
     Returns:
-        train_images, val_images, test_images, train_labels, val_labels, test_labels
+        train_paths, val_paths, test_paths, train_labels, val_labels, test_labels
     """
+    # Convert to numpy arrays if needed
+    if not isinstance(image_paths, np.ndarray):
+        image_paths = np.array(image_paths)
+    
     if split_mode == 'page_disjoint':
         if page_ids is None:
             raise ValueError("page_ids must be provided for page_disjoint split mode")
@@ -277,9 +334,9 @@ def prepare_data_splits(
         test_mask = split_labels == "test"
         
         # Split data using masks
-        train_images, train_labels = images[train_mask], labels[train_mask]
-        val_images, val_labels = images[val_mask], labels[val_mask]
-        test_images, test_labels = images[test_mask], labels[test_mask]
+        train_paths, train_labels = image_paths[train_mask], labels[train_mask]
+        val_paths, val_labels = image_paths[val_mask], labels[val_mask]
+        test_paths, test_labels = image_paths[test_mask], labels[test_mask]
         
         if verbose:
             # Count unique pages in each split
@@ -287,23 +344,23 @@ def prepare_data_splits(
             val_pages = len(set(page_ids[val_mask]))
             test_pages = len(set(page_ids[test_mask]))
             print(f"Page-disjoint split pages: train={train_pages}, val={val_pages}, test={test_pages}")
-            print(f"Page-disjoint split lines: train={len(train_images)}, val={len(val_images)}, test={len(test_images)}")
+            print(f"Page-disjoint split lines: train={len(train_paths)}, val={len(val_paths)}, test={len(test_paths)}")
     
     else:  # line-level split
         # First split: 70% training and 30% (validation + test)
-        train_images, temp_images, train_labels, temp_labels = train_test_split(
-            images, labels, test_size=test_size, random_state=seed, stratify=labels
+        train_paths, temp_paths, train_labels, temp_labels = train_test_split(
+            image_paths, labels, test_size=test_size, random_state=seed, stratify=labels
         )
         
         # Second split: Split the temporary set into validation and test
-        val_images, test_images, val_labels, test_labels = train_test_split(
-            temp_images, temp_labels, test_size=val_size, random_state=seed, stratify=temp_labels
+        val_paths, test_paths, val_labels, test_labels = train_test_split(
+            temp_paths, temp_labels, test_size=val_size, random_state=seed, stratify=temp_labels
         )
         
         if verbose:
-            print(f"Line-level split: train={len(train_images)}, val={len(val_images)}, test={len(test_images)}")
+            print(f"Line-level split: train={len(train_paths)}, val={len(val_paths)}, test={len(test_paths)}")
     
-    return train_images, val_images, test_images, train_labels, val_labels, test_labels
+    return train_paths, val_paths, test_paths, train_labels, val_labels, test_labels
 
 
 def create_data_generators(

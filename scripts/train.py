@@ -29,10 +29,9 @@ from sklearn.metrics import classification_report, confusion_matrix
 # Import custom modules
 from model_builder import build_writer_identification_model
 from data_utils import (
-    load_dataset, 
+    load_dataset_metadata, 
     prepare_data_splits, 
-    create_data_generators,
-    infinite_generator
+    create_lazy_dataset
 )
 from custom_metrics import MacroPrecision, MacroRecall, MacroF1Score
 from custom_callbacks import ClearOutputEveryNEpochs, PeriodicModelCheckpoint
@@ -310,7 +309,7 @@ def main():
     set_seed(args.seed)
     
     # Load data first to determine num_classes
-    print("\nLoading dataset...")
+    print("\nLoading dataset metadata...")
     
     # We need to build model first to get preprocess_fn, but use dummy num_classes
     # Then rebuild after knowing actual num_classes
@@ -328,11 +327,9 @@ def main():
         allowed_page_ids = set(split_map.keys())
         print(f"Filtering dataset to {len(allowed_page_ids)} pages from split file")
 
-    images, labels, page_ids, writer_to_label, label_to_writer = load_dataset(
+    image_paths, labels, page_ids, writer_to_label, label_to_writer = load_dataset_metadata(
         main_dir=args.data_dir,
         csv_file=args.csv_file,
-        image_size=(args.image_size, args.image_size),
-        preprocess_fn=preprocess_fn,
         verbose=args.verbose,
         allowed_page_ids=allowed_page_ids
     )
@@ -391,8 +388,8 @@ def main():
     
     # Split data
     print(f"\nSplitting dataset (mode: {args.split_mode})...")
-    train_images, val_images, test_images, train_labels, val_labels, test_labels = prepare_data_splits(
-        images, 
+    train_paths, val_paths, test_paths, train_labels, val_labels, test_labels = prepare_data_splits(
+        image_paths, 
         labels_categorical,
         page_ids=page_ids,
         split_mode=args.split_mode,
@@ -403,24 +400,44 @@ def main():
         verbose=args.verbose
     )
     
-    print(f"Training samples: {len(train_images)}")
-    print(f"Validation samples: {len(val_images)}")
-    print(f"Test samples: {len(test_images)}")
+    print(f"Training samples: {len(train_paths)}")
+    print(f"Validation samples: {len(val_paths)}")
+    print(f"Test samples: {len(test_paths)}")
     
     # Clean up memory
-    del images, labels_categorical
+    del image_paths, labels_categorical
     gc.collect()
     
-    # Create data generators
-    print("\nCreating data generators...")
-    train_generator, validation_generator, test_generator = create_data_generators(
-        train_images, train_labels, val_images, val_labels, test_images, test_labels,
-        batch_size=args.batch_size
+    # Create lazy data loaders (images loaded on-demand)
+    print("\nCreating lazy data loaders...")
+    train_dataset = create_lazy_dataset(
+        train_paths, train_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=True,
+        seed=args.seed
+    )
+    
+    val_dataset = create_lazy_dataset(
+        val_paths, val_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=False
+    )
+    
+    test_dataset = create_lazy_dataset(
+        test_paths, test_labels,
+        image_size=(args.image_size, args.image_size),
+        preprocess_fn=preprocess_fn,
+        batch_size=args.batch_size,
+        shuffle=False
     )
     
     # Calculate steps
-    steps_per_epoch = math.ceil(len(train_images) / args.batch_size)
-    validation_steps = math.ceil(len(val_images) / args.batch_size)
+    steps_per_epoch = math.ceil(len(train_paths) / args.batch_size)
+    validation_steps = math.ceil(len(val_paths) / args.batch_size)
     
     # Setup callbacks
     print("\nSetting up callbacks...")
@@ -479,9 +496,9 @@ def main():
     start_time = time.time()
     
     history = model.fit(
-        infinite_generator(train_generator),
+        train_dataset,
         steps_per_epoch=steps_per_epoch,
-        validation_data=infinite_generator(validation_generator),
+        validation_data=val_dataset,
         validation_steps=validation_steps,
         epochs=args.epochs,
         callbacks=callbacks,
@@ -500,8 +517,8 @@ def main():
     
     test_generator.reset()
     test_results = model.evaluate(
-        test_generator,
-        steps=math.ceil(len(test_images) / args.batch_size),
+        test_dataset,
+        steps=math.ceil(len(test_paths) / args.batch_size),
         verbose=1
     )
     
@@ -522,8 +539,8 @@ def main():
     print("\nGenerating predictions...")
     test_generator.reset()
     test_preds = model.predict(
-        test_generator,
-        steps=math.ceil(len(test_images) / args.batch_size),
+        test_dataset,
+        steps=math.ceil(len(test_paths) / args.batch_size),
         verbose=0
     )
     
