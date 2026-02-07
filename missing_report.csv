@@ -1,8 +1,0 @@
-section,architecture,config_key,config_label,issue,details,paths
-models,DenseNet201,frozen|attention,Frozen + Attention,missing_config,,models/DenseNet201/DenseNet201 + Frozen + Attention
-models,DenseNet201,frozen|no_attention,Frozen + No Attention,missing_seeds,42,models/DenseNet201/DenseNet201 + Frozen + No Attention
-models,ResNet50,frozen|no_attention,Frozen + No Attention,missing_config,,models/ResNet50/ResNet50 + Frozen + No Attention
-models,ResNet50,frozen|attention,Frozen + Attention,missing_config,,models/ResNet50/ResNet50 + Frozen + Attention
-models,Xception,frozen|attention,Frozen + Attention,missing_config,,models/Xception/Xception + Frozen + Attention
-models,Xception,from_scratch|no_attention,From Scratch + No Attention,missing_config,,models/Xception/Xception + From Scratch + No Attention
-models,Xception,finetuned_all|attention,Finetuned All ImageNet + Attention,missing_config,,models/Xception/Xception + Finetuned All ImageNet + Attention
