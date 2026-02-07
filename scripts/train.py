@@ -344,14 +344,17 @@ def main():
         print(f"Using actual: {actual_num_classes}")
         args.num_classes = actual_num_classes
     
-    # Generate experiment name
+    # Generate experiment name (without seed - this is the config name)
     experiment_name = generate_experiment_name(args)
+    config_name = experiment_name.replace(f"_seed{args.seed}", "")  # Remove seed suffix
+    
     print(f"\n{'='*80}")
-    print(f"Experiment: {experiment_name}")
+    print(f"Configuration: {config_name}")
+    print(f"Experiment: {experiment_name} (Seed: {args.seed})")
     print(f"{'='*80}\n")
     
-    # Create output directory (experiment-specific subfolder)
-    output_dir = os.path.join(args.output_dir, args.backbone, experiment_name)
+    # Create output directory: Results/{backbone}/{config}/seed_{seed}/
+    output_dir = os.path.join(args.output_dir, args.backbone, config_name, f"seed_{args.seed}")
     os.makedirs(output_dir, exist_ok=True)
     
     # Build model

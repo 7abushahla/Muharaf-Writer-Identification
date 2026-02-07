@@ -7,6 +7,8 @@ This directory contains refactored, modular training scripts for the Writer Iden
 ```
 scripts/
 ├── train.py                  # Main training script
+├── aggregate_results.py      # Aggregate results across multiple seeds
+├── run_three_seeds.sh        # Helper script to run all 3 seeds + aggregate
 ├── batch_train.py            # Batch training for multiple experiments
 ├── model_builder.py          # Model architecture builder
 ├── data_utils.py             # Data loading and preprocessing
@@ -157,6 +159,118 @@ python train.py --backbone resnet50 \
 - `--no-plots`: Skip generating plots
   - Flag
 
+## Multi-Seed Training and Aggregation
+
+For robust evaluation, it's recommended to run each experiment configuration with **3 random seeds** (42, 570, 1073) and report aggregated results.
+
+### Quick Start: Run All 3 Seeds
+
+Use the helper script to automatically run all 3 seeds and aggregate results:
+
+```bash
+./run_three_seeds.sh \
+  --backbone densenet201 \
+  --training-mode frozen \
+  --split-mode page_disjoint \
+  --disjoint-mode page
+```
+
+This will:
+1. Train with seeds 42, 570, and 1073
+2. Automatically aggregate results
+3. Compute mean ± std (population std with N denominator)
+
+### Manual Seed Runs
+
+If you prefer to run seeds individually:
+
+```bash
+# Train with each seed
+python train.py --backbone densenet201 --training-mode frozen --seed 42
+python train.py --backbone densenet201 --training-mode frozen --seed 570
+python train.py --backbone densenet201 --training-mode frozen --seed 1073
+
+# Then aggregate results
+python aggregate_results.py --all
+```
+
+### Aggregation Script Usage
+
+**Aggregate all configurations:**
+```bash
+python aggregate_results.py --all
+```
+
+**Aggregate specific backbone:**
+```bash
+python aggregate_results.py --backbone densenet201
+```
+
+**Aggregate specific configuration:**
+```bash
+python aggregate_results.py Results/densenet201/PgDisj_densenet201_Frozen_NoATTN
+```
+
+### Output Structure
+
+Results are organized by configuration, with each seed in its own subdirectory:
+
+```
+Results/
+  densenet201/
+    PgDisj_densenet201_Frozen_NoATTN/
+      ├── seed_42/
+      │   ├── best_model.keras
+      │   ├── test_metrics.json
+      │   ├── classification_report.csv
+      │   └── ... (plots, history, etc.)
+      ├── seed_570/
+      │   └── ...
+      ├── seed_1073/
+      │   └── ...
+      └── aggregated/
+          ├── aggregated_metrics.json          # Mean ± Std for all metrics
+          └── classification_report_aggregated.csv
+```
+
+### Aggregated Metrics Format
+
+**`aggregated_metrics.json`** contains:
+- `metrics_mean`: Mean values across seeds
+- `metrics_std`: Population standard deviation (N denominator)
+- `metrics_formatted`: Human-readable "mean ± std" format
+
+Example:
+```json
+{
+  "seeds": ["42", "570", "1073"],
+  "num_seeds": 3,
+  "metrics_formatted": {
+    "test_accuracy": "0.2446 ± 0.0123",
+    "test_f1_score": "0.1387 ± 0.0098",
+    "test_precision": "0.0985 ± 0.0067",
+    "test_recall": "0.2342 ± 0.0145"
+  }
+}
+```
+
+**Terminal Output:**
+```
+================================================================================
+AGGREGATED RESULTS ACROSS 3 SEEDS: 42, 570, 1073
+================================================================================
+
+Test Metrics (Mean ± Std):
+--------------------------------------------------
+test_accuracy       : 0.2446 ± 0.0123
+test_top_5_accuracy : 0.4419 ± 0.0201
+test_precision      : 0.0985 ± 0.0067
+test_recall         : 0.2342 ± 0.0145
+test_f1_score       : 0.1387 ± 0.0098
+test_loss           : 3.3812 ± 0.1523
+================================================================================
+```
+
 ## Examples
 
 ### Example 1: Frozen ResNet50 without Attention
@@ -267,40 +381,65 @@ This appends the split options to every experiment (across all backbones/seeds).
 
 ## Output Files
 
-Each training run creates the following files in the output directory:
+Each training run creates files organized by configuration and seed:
 
 ```
-Results/{backbone}/
-├── {experiment_name}_best_model.keras          # Best model checkpoint
-├── {experiment_name}_last_saved.keras          # Last saved checkpoint
-├── {experiment_name}_history.pkl               # Training history
-├── {experiment_name}_test_metrics.json         # Test set metrics
-├── {experiment_name}_elapsed_time.txt          # Training time
-├── {experiment_name}_config.json               # Experiment configuration
-├── {experiment_name}_classification_report.csv # Per-class metrics
-├── {experiment_name}_confusion_matrix.png      # Confusion matrix plot
-├── {experiment_name}_accuracy.png              # Accuracy plot
-├── {experiment_name}_top_5_accuracy.png        # Top-5 accuracy plot
-├── {experiment_name}_loss.png                  # Loss plot
-├── {experiment_name}_f1_score.png              # F1 score plot
-├── {experiment_name}_precision.png             # Precision plot
-└── {experiment_name}_recall.png                # Recall plot
+Results/{backbone}/{config_name}/
+├── seed_{seed}/
+│   ├── best_model.keras               # Best model checkpoint
+│   ├── last_saved.keras               # Last saved checkpoint
+│   ├── history.pkl                    # Training history
+│   ├── test_metrics.json              # Test set metrics
+│   ├── elapsed_time.txt               # Training time
+│   ├── config.json                    # Experiment configuration
+│   ├── classification_report.csv      # Per-class metrics
+│   ├── confusion_matrix.png           # Confusion matrix plot
+│   ├── accuracy.png                   # Accuracy plot
+│   ├── top_5_accuracy.png             # Top-5 accuracy plot
+│   ├── loss.png                       # Loss plot
+│   ├── f1_score.png                   # F1 score plot
+│   ├── precision.png                  # Precision plot
+│   └── recall.png                     # Recall plot
+└── aggregated/                        # Created by aggregate_results.py
+    ├── aggregated_metrics.json        # Mean ± Std across seeds
+    └── classification_report_aggregated.csv
+
+Example:
+Results/densenet201/PgDisj_densenet201_Frozen_NoATTN/
+├── seed_42/
+├── seed_570/
+├── seed_1073/
+└── aggregated/
 ```
 
 ## Experiment Naming
 
 Experiments are automatically named based on configuration:
 
+**Configuration name (folder):**
 ```
-{backbone}_{training_mode}_{attention}_{seed}
+[{split_prefix}]{backbone}_{training_mode}_{attention}
 ```
+
+**Full experiment name (for logs):**
+```
+[{split_prefix}]{backbone}_{training_mode}_{attention}_seed{seed}
+```
+
+Where `split_prefix` is:
+- `PgDisj_` for page-disjoint splits (default policy: require_3way, not shown)
+- `DocDisj_` for document-disjoint splits
+- `PgDisj_{policy}_` for non-default writer policies (e.g., `PgDisj_drop_if_lt3_`)
+- Empty for line-level splits
 
 Examples:
-- `resnet50_Frozen_NoATTN_seed42`
-- `xception_Scratch_ATTN_seed570`
-- `densenet201_Finetune10Layers_ATTN_seed1073`
+- `PgDisj_densenet201_Frozen_NoATTN` (config folder)
+  - `seed_42/`, `seed_570/`, `seed_1073/` (subdirectories)
+- `DocDisj_resnet50_Scratch_ATTN` (document-disjoint)
+- `PgDisj_drop_if_lt3_xception_Finetune10Layers_ATTN` (non-default policy)
+- `mobilenetv3_Frozen_NoATTN` (line-level split)
 
-You can override this with `--experiment-name`:
+You can override the full name with `--experiment-name`:
 
 ```bash
 python train.py --experiment-name my_custom_experiment ...
