@@ -9,6 +9,7 @@ import sys
 import json
 import pickle
 import argparse
+import re
 import numpy as np
 import pandas as pd
 from pathlib import Path
@@ -66,6 +67,26 @@ def aggregate_metrics(all_metrics):
     return aggregated_mean, aggregated_std
 
 
+def load_elapsed_times(seed_dirs):
+    """Load elapsed times from all seed directories and convert to hours"""
+    elapsed_times = []
+    
+    for seed_dir in seed_dirs:
+        time_path = os.path.join(seed_dir, 'elapsed_time.txt')
+        if os.path.exists(time_path):
+            with open(time_path, 'r') as f:
+                content = f.read().strip()
+                # Parse time - could be in format like "1234.56 seconds" or just "1234.56"
+                # Extract numeric value
+                match = re.search(r'([\d.]+)', content)
+                if match:
+                    seconds = float(match.group(1))
+                    hours = seconds / 3600.0
+                    elapsed_times.append(hours)
+    
+    return elapsed_times
+
+
 def load_classification_reports(seed_dirs):
     """Load classification reports from all seed directories"""
     all_reports = []
@@ -108,7 +129,7 @@ def aggregate_classification_reports(all_reports):
     return base_df
 
 
-def save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds):
+def save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds, elapsed_times=None):
     """Save aggregated metrics to JSON"""
     output_dir = os.path.join(config_dir, 'aggregated')
     os.makedirs(output_dir, exist_ok=True)
@@ -121,6 +142,14 @@ def save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds):
         'metrics_std': aggregated_std,
         'metrics_formatted': {}
     }
+    
+    # Add elapsed time if available
+    if elapsed_times:
+        mean_hours = np.mean(elapsed_times)
+        std_hours = np.std(elapsed_times, ddof=0)
+        combined['elapsed_time_hours_mean'] = float(mean_hours)
+        combined['elapsed_time_hours_std'] = float(std_hours)
+        combined['elapsed_time_hours_formatted'] = f"{mean_hours:.2f} ({std_hours:.2f})"
     
     # Format as "mean (std)"
     for key in aggregated_mean.keys():
@@ -152,7 +181,7 @@ def save_aggregated_classification_report(config_dir, aggregated_report):
     return output_path
 
 
-def print_summary(aggregated_mean, aggregated_std, seeds):
+def print_summary(aggregated_mean, aggregated_std, seeds, elapsed_times=None):
     """Print formatted summary of aggregated results"""
     print("\n" + "="*80)
     print(f"AGGREGATED RESULTS ACROSS {len(seeds)} SEEDS: {', '.join(seeds)}")
@@ -177,6 +206,13 @@ def print_summary(aggregated_mean, aggregated_std, seeds):
             mean_val = aggregated_mean[key]
             std_val = aggregated_std[key]
             print(f"{key:20s}: {mean_val:.4f} ({std_val:.4f})")
+    
+    # Print elapsed time if available
+    if elapsed_times:
+        mean_hours = np.mean(elapsed_times)
+        std_hours = np.std(elapsed_times, ddof=0)
+        print("-" * 50)
+        print(f"{'elapsed_time (hours)':20s}: {mean_hours:.2f} ({std_hours:.2f})")
     
     print("="*80 + "\n")
 
@@ -205,8 +241,13 @@ def aggregate_config_directory(config_dir, verbose=True):
     
     aggregated_mean, aggregated_std = aggregate_metrics(all_metrics)
     
+    # Load elapsed times
+    elapsed_times = load_elapsed_times(seed_dirs)
+    if not elapsed_times or len(elapsed_times) != len(seeds):
+        elapsed_times = None  # Don't use partial data
+    
     # Save aggregated metrics
-    save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds)
+    save_aggregated_results(config_dir, aggregated_mean, aggregated_std, seeds, elapsed_times)
     
     # Load and aggregate classification reports
     all_reports = load_classification_reports(seed_dirs)
@@ -216,7 +257,7 @@ def aggregate_config_directory(config_dir, verbose=True):
     
     # Print summary
     if verbose:
-        print_summary(aggregated_mean, aggregated_std, seeds)
+        print_summary(aggregated_mean, aggregated_std, seeds, elapsed_times)
     
     return True
 
