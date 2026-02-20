@@ -77,8 +77,30 @@ def extract_config_name(dir_name):
     # Find the config part (after backbone)
     if 'PgDisj' in parts[0]:
         # Format: PgDisj_backbone_config_parts
-        return '_'.join(parts[2:])
-    return None
+        config = '_'.join(parts[2:])
+    else:
+        config = dir_name
+    
+    # Normalize config names to match CONFIG_ORDER
+    # Map directory names to CONFIG_ORDER names
+    config_mappings = {
+        'Finetune1Layers_NoATTN': 'FinetuneLast1_NoATTN',
+        'Finetune1Layers_ATTN': 'FinetuneLast1_ATTN',
+        'Finetune5Layers_NoATTN': 'FinetuneLast5_NoATTN',
+        'Finetune5Layers_ATTN': 'FinetuneLast5_ATTN',
+        'Finetune10Layers_NoATTN': 'FinetuneLast10_NoATTN',
+        'Finetune10Layers_ATTN': 'FinetuneLast10_ATTN',
+        'Finetune25Layers_NoATTN': 'FinetuneLast25_NoATTN',
+        'Finetune25Layers_ATTN': 'FinetuneLast25_ATTN',
+        'Finetune_all_NoATTN': 'FinetuneAll_NoATTN',
+        'Finetune_all_ATTN': 'FinetuneAll_ATTN',
+    }
+    
+    # Apply mapping if exists
+    if config in config_mappings:
+        return config_mappings[config]
+    
+    return config
 
 
 def load_aggregated_results(results_dir):
@@ -94,6 +116,7 @@ def load_aggregated_results(results_dir):
     for backbone in BACKBONES:
         backbone_dir = results_path / backbone
         if not backbone_dir.exists():
+            print(f"  Backbone directory not found: {backbone}")
             continue
         
         # Iterate through config directories
@@ -104,21 +127,28 @@ def load_aggregated_results(results_dir):
             # Look for aggregated results
             agg_file = config_dir / 'aggregated' / 'aggregated_metrics.json'
             if not agg_file.exists():
+                print(f"  No aggregated results for {backbone}/{config_dir.name}")
                 continue
             
             # Load the aggregated metrics
-            with open(agg_file, 'r') as f:
-                data = json.load(f)
+            try:
+                with open(agg_file, 'r') as f:
+                    data = json.load(f)
+            except Exception as e:
+                print(f"  Error loading {agg_file}: {e}")
+                continue
             
             # Extract config name
             config_name = extract_config_name(config_dir.name)
             if not config_name:
+                print(f"  Could not extract config name from: {config_dir.name}")
                 continue
             
-            # Store results
+            # Store results - this works per cell!
             if config_name not in results:
                 results[config_name] = {}
             results[config_name][backbone] = data
+            print(f"  ✓ Loaded {backbone}/{config_name}")
     
     return results
 
@@ -155,12 +185,18 @@ def create_metric_table(results, metric_key):
 def generate_results_tables(results_dir, output_file):
     """Generate CSV file with all metrics tables"""
     print(f"Loading aggregated results from: {results_dir}")
+    print()
     results = load_aggregated_results(results_dir)
+    print()
     
     if not results:
         print("No aggregated results found - generating empty table template")
     else:
+        # Count total cells filled
+        total_cells = sum(len(backbones) for backbones in results.values())
         print(f"Found results for {len(results)}/{len(CONFIG_ORDER)} configurations")
+        print(f"Total cells filled: {total_cells}/{len(CONFIG_ORDER) * len(BACKBONES)}")
+        print()
     
     # Create dataframes for each metric
     all_tables = []

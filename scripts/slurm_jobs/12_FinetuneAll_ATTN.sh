@@ -68,7 +68,7 @@ COMMON_ARGS="\
   --disjoint-mode page \
   --writer-policy require_3way \
   --split-dir ../splits \
-  --batch-size 256 \
+  --batch-size 128 \
   --epochs 450"
 
 echo ""

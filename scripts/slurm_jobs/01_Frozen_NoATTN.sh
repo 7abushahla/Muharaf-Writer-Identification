@@ -55,9 +55,43 @@ cd Muharaf-Writer-Identification/scripts
 # GPU cleanup function
 cleanup_gpu() {
     echo "Cleaning up GPU memory..."
-    "$ENV_PY" -c "import tensorflow as tf; tf.keras.backend.clear_session()" 2>/dev/null || true
-    "$ENV_PY" -c "import gc; gc.collect()" 2>/dev/null || true
+    
+    # Force TensorFlow to release all GPU memory by resetting default graph
+    "$ENV_PY" << 'CLEANUP_SCRIPT'
+import os
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+import tensorflow as tf
+
+# Reset TensorFlow state
+tf.keras.backend.clear_session()
+
+# Force garbage collection
+import gc
+gc.collect()
+
+# Reset CUDA memory allocator by creating and destroying a tiny session
+# This forces CUDA to defragment and release memory back to the driver
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    try:
+        tf.config.set_visible_devices(gpus[0], 'GPU')
+        tf.config.experimental.set_memory_growth(gpus[0], True)
+        # Create minimal tensor to initialize CUDA context, then clear
+        _ = tf.constant([[1.0]])
+        tf.keras.backend.clear_session()
+        gc.collect()
+        print("GPU memory cleanup completed")
+    except Exception as e:
+        print(f"GPU cleanup warning: {e}")
+CLEANUP_SCRIPT
+    
+    # Give CUDA driver time to complete cleanup
     sleep 5
+    
+    # Show current GPU memory usage for monitoring
+    echo "Current GPU memory usage:"
+    nvidia-smi --query-gpu=memory.used --format=csv,noheader,nounits -i 0 || true
+    echo ""
 }
 
 # Common training arguments

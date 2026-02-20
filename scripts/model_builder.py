@@ -231,10 +231,12 @@ def build_writer_identification_model(
     x = L2Normalization(axis=-1)(x)
     
     # Classification head
+    # Use float32 for the output layer (required for mixed precision training)
     classification_output = Dense(
         num_classes, 
         activation='softmax', 
-        name='classification_output'
+        name='classification_output',
+        dtype='float32'  # Force float32 for numerical stability
     )(x)
     print(f'Shape after classification_output: {classification_output.shape}')
     

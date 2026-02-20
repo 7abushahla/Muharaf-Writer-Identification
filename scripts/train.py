@@ -4,6 +4,11 @@ Main training script for Writer Identification Model
 Supports multiple backbones, training strategies, and configurations via command-line arguments
 """
 import os
+
+# CRITICAL: Disable XLA before importing TensorFlow (RTX 5090 ptxas workaround)
+os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices=false'
+os.environ['TF_XLA_ENABLE_XLA_DEVICES'] = '0'
+
 import argparse
 import json
 import pickle
@@ -128,6 +133,11 @@ def setup_gpu(args):
     # Suppress TensorFlow warnings
     os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
     
+    # CRITICAL: Disable XLA to avoid ptxas crashes on RTX 5090
+    os.environ['TF_XLA_FLAGS'] = '--tf_xla_enable_xla_devices=false'
+    os.environ['TF_XLA_ENABLE_XLA_DEVICES'] = '0'
+    tf.config.optimizer.set_jit(False)
+    
     if args.disable_gpu:
         tf.config.set_visible_devices([], 'GPU')
         print("GPU disabled. Using CPU.")
@@ -140,6 +150,7 @@ def setup_gpu(args):
                     tf.config.set_visible_devices(gpus[args.gpu], 'GPU')
                     tf.config.experimental.set_memory_growth(gpus[args.gpu], True)
                     print(f"Using GPU {args.gpu}: {gpus[args.gpu]}")
+                    print("XLA disabled - using CUDA driver compilation")
                 else:
                     print(f"Warning: GPU {args.gpu} not found. Using GPU 0.")
                     tf.config.set_visible_devices(gpus[0], 'GPU')
@@ -383,7 +394,8 @@ def main():
             MacroPrecision(num_classes=args.num_classes, name='precision'),
             MacroRecall(num_classes=args.num_classes, name='recall'),
             MacroF1Score(num_classes=args.num_classes, name='f1_score')
-        ]
+        ],
+        jit_compile=False  # Disable XLA JIT compilation
     )
     
     # One-hot encode labels

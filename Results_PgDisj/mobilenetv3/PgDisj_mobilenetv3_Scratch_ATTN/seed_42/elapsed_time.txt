@@ -1,0 +1,3 @@
+Total training time: 1935.25 seconds
+Hours: 0.5376
+Minutes: 32.2542

@@ -7,3 +7,9 @@ min_lines_per_writer,10
 max_lines_per_writer,949
 min_writer,Father Elias
 max_writer,Ameen Rihani
+mean_pages_per_writer,5.6704
+std_pages_per_writer,10.0178
+min_pages_per_writer,1
+max_pages_per_writer,68
+min_pages_writer,Malvina Choieree
+max_pages_writer,Hanna Ghayth (Juan Gait)
